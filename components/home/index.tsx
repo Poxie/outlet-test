@@ -1,3 +1,4 @@
+import HomeFollow from "./follow";
 import HomeHero from "./hero";
 import HomeProducts from "./products";
 import HomeWeeklyProducts from "./weekly-products";
@@ -8,6 +9,7 @@ export default function Home() {
             <HomeHero />
             <HomeWeeklyProducts />
             <HomeProducts />
+            <HomeFollow />
         </main>
     )
 }

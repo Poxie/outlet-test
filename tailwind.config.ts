@@ -20,6 +20,7 @@ const config: Config = {
         primary: '#0f172a',
         muted: '#475569',
         light: '#fff',
+        'c-primary': '#E73128',
       },
       borderColor: {
         primary: '#fff',
