@@ -1,6 +1,6 @@
 [
     { "categoryId": "sommar", "banner": "header.png", "title": "Sommar", "description": "Snart är det äntligen sommar! Hos oss finner du ett blandat sortiment med allt som hör sommaren till. Picknick, stranden, sommarkvällar med mera. Välkommen!", "products": [
-        "1", "2", "3", "4", "5", "6", "7"
+        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"
     ] },
     { "categoryId": "sommarmode", "banner": "header.png", "title": "Sommarmode", "description": "Som vi längtar till sommaren! Fina sommarplagg som passar till sommarens alla festligheter. Välkommen in till oss!", "products": [
         "1", "2", "3", "4", "5", "6", "7"
