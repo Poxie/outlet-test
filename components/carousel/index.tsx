@@ -36,7 +36,10 @@ export default function Carousel({ className, imagePaths, carouselGap, itemsPerR
     }, [rowCount]);
 
     const canGoBack = () => currentStep > 0;
-    const canGoNext = () => currentStep < Math.ceil(imagePaths.length / rowCount) - 1;
+    const canGoNext = () => {
+        const totalSteps = imagePaths.length - rowCount;
+        return currentStep < totalSteps;
+    }
 
     const goNext = () => {
         // If we are at the last step, we should not go further
@@ -75,8 +78,8 @@ export default function Carousel({ className, imagePaths, carouselGap, itemsPerR
             <ul 
                 className="flex transition-transform"
                 style={{
-                    transform: `translateX(calc(-${currentStep} * (100% / var(--items-per-row) + (var(--carousel-gap) / var(--items-per-row))))`,
                     gap: `${carouselGap}px`,
+                    transform: `translateX(calc(-${currentStep} * (100% / var(--items-per-row) + (var(--carousel-gap) / var(--items-per-row))))`,
                 } as React.CSSProperties}
                 ref={ref}
             >
