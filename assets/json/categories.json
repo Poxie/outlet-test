@@ -1,5 +1,11 @@
 [
-    { "categoryId": "sommar", "banner": "header.png", "title": "Sommar", "description": "Gör sommaren kängre genom att tidigt fixa din uteplats eller altan. Vi har allt fårn kuddarna, växterna, möblerna, krukorna och en och annan matta. Välkommen in och låt dig inspireras!", "products": [
+    { "categoryId": "sommar", "banner": "header.png", "title": "Sommar", "description": "Snart är det äntligen sommar! Hos oss finner du ett blandat sortiment med allt som hör sommaren till. Picknick, stranden, sommarkvällar med mera. Välkommen!", "products": [
+        "1", "2", "3", "4", "5", "6", "7"
+    ] },
+    { "categoryId": "sommarmode", "banner": "header.png", "title": "Sommarmode", "description": "Som vi längtar till sommaren! Fina sommarplagg som passar till sommarens alla festligheter. Välkommen in till oss!", "products": [
+        "1", "2", "3", "4", "5", "6", "7"
+    ] },
+    { "categoryId": "uteplatsen", "banner": "header.png", "title": "Uteplatsen", "description": "Gör sommaren kängre genom att tidigt fixa din uteplats eller altan. Vi har allt fårn kuddarna, växterna, möblerna, krukorna och en och annan matta. Välkommen in och låt dig inspireras!", "products": [
         "1", "2", "3", "4", "5", "6", "7"
     ] }
 ]
