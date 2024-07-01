@@ -65,7 +65,7 @@ export default function Carousel({ className, imagePaths, carouselGap, itemsPerR
             className={twMerge(
                 "relative overflow-hidden",
                 "[--items-per-row:var(--optimisitc-items-per-row)]",
-                itemsPerRow > 2 && "[--items-per-row:1] sm:[--items-per-row:3] lg:[--items-per-row:var(--optimisitc-items-per-row)]",
+                itemsPerRow > 2 && "[--items-per-row:2] sm:[--items-per-row:3] lg:[--items-per-row:var(--optimisitc-items-per-row)]",
                 className,
             )}
         >
