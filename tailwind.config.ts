@@ -33,6 +33,9 @@ const config: Config = {
         't-primary': '#0f172a',
         'c-primary': '#E73128',
       },
+      stroke: {
+        'c-primary': '#E73128',
+      },
       width: {
         main: '1100px',
       },

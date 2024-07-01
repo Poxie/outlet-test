@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
+import ProductCard from "../product-card";
 
 export default function ProductList({ images, className }: {
     images: string[];
@@ -17,12 +18,8 @@ export default function ProductList({ images, className }: {
                     )}
                     key={image}
                 >
-                    <Image 
-                        className="w-full"
-                        src={image}
-                        width={200}
-                        height={200}
-                        alt=""
+                    <ProductCard 
+                        image={image}
                     />
                 </li>
             ))}

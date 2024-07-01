@@ -107,7 +107,7 @@ export default function Navbar() {
                         className="flex items-center gap-2"
                         aria-label="Favoriter"
                     >
-                        <HeartIcon size={24} />
+                        <HeartIcon size={20} />
                         Favoriter
                     </button>
                 </div>
