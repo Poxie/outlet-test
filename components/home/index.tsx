@@ -1,4 +1,5 @@
 import HomeHero from "./hero";
+import HomeProducts from "./products";
 import HomeWeeklyProducts from "./weekly-products";
 
 export default function Home() {
@@ -6,6 +7,7 @@ export default function Home() {
         <main>
             <HomeHero />
             <HomeWeeklyProducts />
+            <HomeProducts />
         </main>
     )
 }
