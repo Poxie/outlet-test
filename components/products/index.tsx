@@ -1,6 +1,7 @@
 // These would be dynamically fetch from the API
 import categories from '@/assets/json/categories.json';
 import ProductHeader from './ProductHeader';
+import ProductList from './ProductList';
 
 export default function Products({ params: { categoryId } }: {
     params: { categoryId: string };
@@ -17,6 +18,11 @@ export default function Products({ params: { categoryId } }: {
                     title={title}
                     description={description}
                     image={banner}
+                />
+                <ProductList 
+                    imageIds={products}
+                    categoryId={categoryId}
+                    className="mt-4"
                 />
             </div>
         </main>
