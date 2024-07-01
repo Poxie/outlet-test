@@ -10,7 +10,7 @@ export default function HomeProductRow({ title, productIds }: {
     const imagePaths = productIds.map(id => `/images/products/${title.toLowerCase()}/${id}.png`);
 
     return(
-        <div className="py-4">
+        <div className="mb-10">
             <SectionHeader
                 buttonText="Visa fler"
                 buttonHref={`/products/${title.toLowerCase()}`}

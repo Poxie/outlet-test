@@ -7,7 +7,7 @@ const PRODUCT_IDS = ['1','2','3','4','5','6','7'];
 export default function HomeProducts() {
     return(
         <section className="main-width p-section">
-            <h2 className="mb-4 text-3xl text-center">
+            <h2 className="mb-10 text-3xl text-center">
                 Upptäck vårt sortiment
             </h2>
             <HomeProductRow 

@@ -12,7 +12,7 @@ export default function SectionHeader({ children, buttonText, buttonHref, button
 }) {
     return(
         <div className={twMerge(
-            "mb-8 flex justify-between items-center",
+            "mb-4 flex justify-between items-center",
             className,
         )}>
             <h2 className="text-2xl">
