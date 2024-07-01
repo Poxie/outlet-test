@@ -2,6 +2,7 @@
 import categories from '@/assets/json/categories.json';
 import ProductHeader from './ProductHeader';
 import ProductList from './ProductList';
+import SicklaNotice from '../sickla-notice';
 
 export default function Products({ params: { categoryId } }: {
     params: { categoryId: string };
@@ -25,6 +26,7 @@ export default function Products({ params: { categoryId } }: {
                     className="mt-4"
                 />
             </div>
+            <SicklaNotice />
         </main>
     )
 }
