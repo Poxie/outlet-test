@@ -58,8 +58,6 @@ export default function Carousel({ className, imagePaths, carouselGap, itemsPerR
     return(
         <div 
             style={{
-                '--current-step': currentStep,
-                '--item-count': imagePaths.length,
                 '--optimisitc-items-per-row': itemsPerRow,
                 '--carousel-gap': `${carouselGap}px`,
             } as React.CSSProperties}
