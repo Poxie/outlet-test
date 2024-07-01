@@ -11,8 +11,8 @@ const NAVBAR_TABS = [
 export default function Navbar() {
     return(
         <header>
-            <div className="main-width py-5 grid items-center grid-cols-3">
-                <div className="flex">
+            <div className="main-width py-5 grid items-center grid-cols-8">
+                <div className="flex col-span-2">
                     <Link 
                         href="/"
                         aria-label="Hem"
@@ -25,7 +25,7 @@ export default function Navbar() {
                         />
                     </Link>
                 </div>
-                <nav>
+                <nav className="col-span-4">
                     <ul className="flex justify-center gap-4">
                         {NAVBAR_TABS.map(tab => (
                             <li>
@@ -36,7 +36,7 @@ export default function Navbar() {
                         ))}
                     </ul>
                 </nav>
-                <div className="flex justify-end">
+                <div className="flex justify-end col-span-2">
                     <button 
                         className="flex items-center gap-2"
                         aria-label="Favoriter"
