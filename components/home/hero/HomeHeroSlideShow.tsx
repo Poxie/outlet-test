@@ -53,19 +53,22 @@ export default function HomeHeroSlideShow({ className }: {
             updateTransformPositions();
 
             // Get the first and last items of the rows
+            const firstRowFirstItem = firstRowList.children[0];
             const firstRowLastItem = firstRowList.children[firstRowList.children.length - 1];
             const secondRowFirstItem = secondRowRef.current.children[0];
 
-            // Get the image ids of the first and last items
+            // Get the image ids of the first and last items in the rows
             const firstRowImageId = firstRowLastItem.getAttribute('data-hero-image-id');
             const secondRowImageId = secondRowFirstItem.getAttribute('data-hero-image-id');
             if(!firstRowImageId || !secondRowImageId) return;
             
-            // Check if the first row has gone out of the screen
-            const { left } = firstRowLastItem.getBoundingClientRect();
+            // Check if the first item of the first row is within the viewport
+            const { left } = firstRowFirstItem.getBoundingClientRect();
             
-            if(left > window.document.documentElement.clientWidth) {
-                // Move the last item of the first row to the beginning of the second row & vice versa
+            // If the first item of the first row is within the viewport, 
+            // we should move the last item of the first row to the end of the second row &
+            // the first item of the second row to the beginning of the first row
+            if(left > 0) {
                 setFirstRow(prev => {
                     const newFirstRow = [...prev];
                     newFirstRow.pop();
@@ -93,7 +96,7 @@ export default function HomeHeroSlideShow({ className }: {
 
     return(
         <div className={twMerge(
-            "[--items-per-row:6] overflow-hidden",
+            "[--items-per-row:2] sm:[--items-per-row:4] md:[--items-per-row:6] overflow-hidden",
             className,
         )}>
             <div className="-translate-x-[calc((1/var(--items-per-row))*100%)]">
