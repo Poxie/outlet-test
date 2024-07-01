@@ -37,7 +37,10 @@ export default function Navbar() {
                     </ul>
                 </nav>
                 <div className="flex justify-end">
-                    <button className="flex items-center gap-2">
+                    <button 
+                        className="flex items-center gap-2"
+                        aria-label="Favoriter"
+                    >
                         <HeartIcon size={24} />
                         Favoriter
                     </button>
