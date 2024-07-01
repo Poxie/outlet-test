@@ -9,6 +9,7 @@ export default function HomeFollow() {
     return(
         <section className="main-width p-section pt-0">
             <SectionHeader
+                className="mb-4"
                 buttonText="Följ oss"
                 buttonHref="https://www.instagram.com/ahlens_outlet/"
                 buttonTarget="_blank"
