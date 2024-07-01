@@ -8,7 +8,7 @@ export default function ProductList({ categoryId, imageIds, className }: {
 }) {
     return(
         <ul className={twMerge(
-            "grid grid-cols-5 gap-2",
+            "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2",
             className,
         )}>
             {imageIds.map(id => (
