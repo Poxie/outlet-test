@@ -35,7 +35,8 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    const toggleMenu = () => setMenuOpen(prev => !prev);
+    const openMenu = () => setMenuOpen(true);
+    const closeMenu = () => setMenuOpen(false);
 
     return(
         <header className={twMerge(
@@ -45,7 +46,7 @@ export default function Navbar() {
             <div className="main-width py-5 grid items-center gap-10 grid-cols-3 lg:grid-cols-8">
                 <div className="flex items-center gap-3 col-span-2">
                     <button
-                        onClick={toggleMenu}
+                        onClick={openMenu}
                         className="block lg:hidden"
                         aria-label="Öppna meny"
                     >
@@ -74,7 +75,7 @@ export default function Navbar() {
                     )}>
                         <li className="block lg:hidden">
                             <button 
-                                onClick={toggleMenu}
+                                onClick={closeMenu}
                                 className="p-4 flex items-center gap-2"
                                 aria-label={'Stäng meny'}
                             >
@@ -90,6 +91,8 @@ export default function Navbar() {
                                         "lg:p-0 lg:text-base",
                                     )}
                                     href={tab.path}
+                                    onClick={closeMenu}
+                                    aria-label={tab.text}
                                 >
                                     {tab.text}
 
