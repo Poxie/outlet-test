@@ -83,7 +83,7 @@ export default function Navbar() {
                             </button>
                         </li>
                         {NAVBAR_TABS.map(tab => (
-                            <li>
+                            <li key={tab.text}>
                                 <Link 
                                     className={twMerge(
                                         "p-4 flex items-center justify-between text-xl",
