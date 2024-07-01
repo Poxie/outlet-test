@@ -6,6 +6,7 @@ const FavoritesContext = React.createContext<null | {
     addFavorite: (image: string) => void;
     removeFavorite: (image: string) => void;
     isFavorite: (image: string) => boolean;
+    getFavoriteCount: () => number;
 }>(null)
 
 export const useFavorites = () => {
@@ -54,12 +55,16 @@ export default function FavoritesProvider({ children }: {
     const isFavorite = (image: string) => {
         return favorites.includes(image);
     }
+    const getFavoriteCount = () => {
+        return favorites.length;
+    }
 
     const value = {
         favorites,
         addFavorite,
         removeFavorite,
         isFavorite,
+        getFavoriteCount,
     };
     return(
         <FavoritesContext.Provider value={value}>

@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { twMerge } from "tailwind-merge";
+import NavbarFavorites from "./NavbarFavorites";
 
 const NAVBAR_TABS = [
     { text: 'Startsida', path: '/' },
@@ -103,13 +104,7 @@ export default function Navbar() {
                     </ul>
                 </nav>
                 <div className="flex justify-end lg:col-span-2">
-                    <button 
-                        className="flex items-center gap-2"
-                        aria-label="Favoriter"
-                    >
-                        <HeartIcon size={20} />
-                        Favoriter
-                    </button>
+                    <NavbarFavorites />
                 </div>
             </div>
         </header>
