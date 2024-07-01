@@ -31,7 +31,7 @@ export default function Footer() {
                         height={40}
                         alt="Logo"
                     />
-                    <span className="text-lg text-light font-medium">
+                    <span className="text-center md:text-left text-lg text-light font-medium">
                         30 - 70% rabatt på kända varumärken.
                     </span>
                 </div>
