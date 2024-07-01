@@ -31,7 +31,13 @@ const config: Config = {
         light: '#fff',
         't-primary': '#0f172a',
         'c-primary': '#E73128',
-      }
+      },
+      width: {
+        main: '1100px',
+      },
+      maxWidth: {
+        main: '90%',
+      },
     },
   },
   plugins: [],
