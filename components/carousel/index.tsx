@@ -4,10 +4,11 @@ import CarouselItem from "./CarouselItem";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CarouselNavigationButton from "./CarouselNavigationButton";
 
-export default function Carousel({ className, imagePaths, carouselGap, itemsPerRow }: {
+export default function Carousel({ className, imagePaths, carouselGap, itemsPerRow, smItemsPerRow }: {
     imagePaths: string[];
     itemsPerRow: number;
     carouselGap: number;
+    smItemsPerRow?: number;
     className?: string;
 }) {
     const [currentStep, setCurrentStep] = useState(0);
@@ -60,11 +61,13 @@ export default function Carousel({ className, imagePaths, carouselGap, itemsPerR
             style={{
                 '--optimisitc-items-per-row': itemsPerRow,
                 '--carousel-gap': `${carouselGap}px`,
+                '--sm-items-per-row': smItemsPerRow ?? '2',
+                '--md-items-per-row': '3',
             } as React.CSSProperties}
             className={twMerge(
                 "relative overflow-hidden",
                 "[--items-per-row:var(--optimisitc-items-per-row)]",
-                itemsPerRow > 2 && "[--items-per-row:2] sm:[--items-per-row:3] lg:[--items-per-row:var(--optimisitc-items-per-row)]",
+                itemsPerRow > 2 && "[--items-per-row:var(--sm-items-per-row)] sm:[--items-per-row:var(--md-items-per-row)] lg:[--items-per-row:var(--optimisitc-items-per-row)]",
                 className,
             )}
         >

@@ -25,6 +25,7 @@ export default function HomeWeeklyProducts() {
                 <div className="mt-4 p-4 bg-primary rounded-md">
                     <Carousel 
                         imagePaths={IMAGE_PATHS}
+                        smItemsPerRow={1}
                         carouselGap={0}
                         itemsPerRow={4}
                     />
