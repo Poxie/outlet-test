@@ -8,7 +8,7 @@ const HERO_IMAGES = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '1
 const MIDDLE = Math.floor(HERO_IMAGES.length / 2);
 
 // Settings for the slideshow
-const TRANSFORM_AMOUNT = .08;
+const TRANSFORM_AMOUNT = .1;
 
 export default function HomeHeroSlideShow({ className }: {
     className?: string;
@@ -64,7 +64,7 @@ export default function HomeHeroSlideShow({ className }: {
             // Check if the first row has gone out of the screen
             const { left } = firstRowLastItem.getBoundingClientRect();
             
-            if(left > window.innerWidth) {
+            if(left > window.document.documentElement.clientWidth) {
                 // Move the last item of the first row to the beginning of the second row & vice versa
                 setFirstRow(prev => {
                     const newFirstRow = [...prev];
