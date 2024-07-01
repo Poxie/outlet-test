@@ -19,12 +19,14 @@ export default function SectionHeader({ children, buttonText, buttonHref, button
                 {children}
             </h2>
             <Link 
-                className="flex items-center gap-1 hover:underline"
+                className="flex items-center gap-1"
                 href={buttonHref}
                 target={buttonTarget}
             >
-                {buttonText}
-                <SmallArrowIcon size={20} />
+                <span className="border-b-[1px] border-b-transparent hover:border-b-current transition-colors">
+                    {buttonText}
+                </span>
+                <SmallArrowIcon className="-mt-0.5" size={20} />
             </Link>
         </div>
     )

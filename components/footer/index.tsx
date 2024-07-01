@@ -46,7 +46,10 @@ export default function Footer() {
                         <ul className="mt-3 grid gap-1">
                             {section.items.map(item => (
                                 <li key={item.text}>
-                                    <Link href={item.path}>
+                                    <Link 
+                                        href={item.path}
+                                        className="border-b-[1px] border-b-transparent hover:border-b-primary transition-colors"
+                                    >
                                         {item.text}
                                     </Link>
                                 </li>
