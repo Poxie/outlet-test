@@ -39,7 +39,7 @@ export default function Navbar() {
 
     return(
         <header className={twMerge(
-            "z-50 left-0 -top-[100px] w-full bg-primary transition-[top] duration-500",
+            "z-50 left-0 -top-[100px] w-full border-b-[1px] border-b-tertiary bg-primary transition-[top] duration-500",
             hasScrolled && "shadow-md sticky top-0",
         )}>
             <div className="main-width py-5 grid items-center gap-10 grid-cols-3 lg:grid-cols-8">
