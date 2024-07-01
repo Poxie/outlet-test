@@ -22,7 +22,12 @@ export default function Carousel({ className, items, carouselGap, optimisticItem
 
     // Return to the start of the carousel if the items per row changes
     useEffect(() => {
-        const onResize = () => setCurrentStep(0);
+        let windowWidth = window.innerWidth;
+        const onResize = () => {
+            if(windowWidth === window.innerWidth) return;
+            setCurrentStep(0);
+            windowWidth = window.innerWidth;
+        }
 
         window.addEventListener('resize', onResize);
         return () => window.removeEventListener('resize', onResize);
