@@ -1,4 +1,5 @@
 import Carousel from "@/components/carousel";
+import SectionHeader from "@/components/section-header";
 import SmallArrowIcon from "@/icons/SmallArrowIcon";
 import Link from "next/link";
 
@@ -10,20 +11,12 @@ export default function HomeProductRow({ title, productIds }: {
 
     return(
         <div className="py-4">
-            <div className="mb-8 flex justify-between items-center">
-                <h2 className="text-2xl">
-                    {title}
-                </h2>
-                <Link
-                    href={`/products/${title.toLowerCase()}`}
-                    className="flex items-center gap-1 hover:underline"
-                >
-                    Visa fler
-                    <SmallArrowIcon 
-                        size={18}
-                    />
-                </Link>
-            </div>
+            <SectionHeader
+                buttonText="Visa fler"
+                buttonHref={`/products/${title.toLowerCase()}`}
+            >
+                {title}
+            </SectionHeader>
             <Carousel 
                 carouselGap={8}
                 imagePaths={imagePaths}
