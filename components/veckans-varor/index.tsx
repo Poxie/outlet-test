@@ -1,4 +1,4 @@
-import HomeProductBanner from "../home/products/HomeProductBanner";
+import ProductBanner from "../products/ProductBanner";
 import ProductHeader from "../products/ProductHeader";
 import ProductList from "../products/ProductList";
 import SicklaNotice from "../sickla-notice";
@@ -7,7 +7,7 @@ export default function VeckansVaror() {
     return(
         <main>
             <div className="pb-8 main-width relative">
-                <HomeProductBanner 
+                <ProductBanner 
                     categoryId="veckans-varor"
                 />
                 <ProductHeader 

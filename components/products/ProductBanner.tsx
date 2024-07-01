@@ -2,7 +2,7 @@ import ArrowIcon from "@/icons/ArrowIcon";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-export default function HomeProductBanner({ categoryId, className, origin }: {
+export default function ProductBanner({ categoryId, className, origin }: {
     categoryId: string;
     className?: string;
     origin?: {
