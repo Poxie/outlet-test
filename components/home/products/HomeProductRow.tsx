@@ -20,7 +20,7 @@ export default function HomeProductRow({ title, productIds }: {
         <div className="mb-10">
             <SectionHeader
                 buttonText="Visa fler"
-                buttonHref={`/products/${title.toLowerCase()}`}
+                buttonHref={`/produkter/${title.toLowerCase()}`}
             >
                 {title}
             </SectionHeader>
