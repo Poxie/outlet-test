@@ -1,6 +1,7 @@
 import Carousel from "@/components/carousel";
 import Link from "next/link";
 import SmallArrowIcon from "@/icons/SmallArrowIcon";
+import SectionHeader from "@/components/section-header";
 
 // Those should be fetched from the API
 const DEAL_IDS = ['1', '2', '3', '4', '5'];
@@ -10,18 +11,13 @@ export default function HomeWeeklyProducts() {
     return(
         <section className="p-section bg-c-primary">
             <div className="main-width">
-                <div className="flex items-end justify-between">
-                    <h2 className="text-2xl font-medium text-light">
-                        Veckans varor
-                    </h2>
-                    <Link 
-                        className="flex items-center gap-1 text-light"
-                        href="/veckans-varor"
-                    >
-                        Se alla varor
-                        <SmallArrowIcon size={18} />
-                    </Link>
-                </div>
+                <SectionHeader 
+                    className="text-light"
+                    buttonHref="/veckans-varor"
+                    buttonText="Se alla varor"
+                >
+                    Veckans varor
+                </SectionHeader>
                 <div className="mt-4 p-4 bg-primary rounded-md">
                     <Carousel 
                         imagePaths={IMAGE_PATHS}
