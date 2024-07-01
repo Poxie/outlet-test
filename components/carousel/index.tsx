@@ -26,6 +26,7 @@ export default function Carousel({ className, imagePaths, carouselGap, itemsPerR
         const onResize = () => {
             setRowCount(getItemsPerRow());
         }
+        onResize();
 
         window.addEventListener('resize', onResize);
         return () => window.removeEventListener('resize', onResize);
