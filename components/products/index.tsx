@@ -3,6 +3,7 @@ import categories from '@/assets/json/categories.json';
 import ProductHeader from './ProductHeader';
 import ProductList from './ProductList';
 import SicklaNotice from '../sickla-notice';
+import HomeProductBanner from '../home/products/HomeProductBanner';
 
 export default function Products({ params: { categoryId } }: {
     params: { categoryId: string };
@@ -13,7 +14,11 @@ export default function Products({ params: { categoryId } }: {
     const { title, description, banner, products } = category;
     return(
         <main>
-            <div className="py-8 main-width">
+            <HomeProductBanner 
+                className="main-width"
+                categoryId={categoryId}
+            />
+            <div className="pb-8 main-width">
                 <ProductHeader 
                     categoryId={categoryId}
                     title={title}
