@@ -20,10 +20,10 @@ export default function ProductHeader({ title, description, image, categoryId }:
                 alt=""
             />
             <div className="z-10 absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-center text-light">
-                <h1 className="text-5xl">
+                <h1 className="text-4xl">
                     {title}
                 </h1>
-                <p className="mt-3 w-[650px] max-w-full text-xl">
+                <p className="mt-3 w-[650px] max-w-full text-lg">
                     {description}
                 </p>
             </div>
