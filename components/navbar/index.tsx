@@ -1,6 +1,9 @@
+"use client";
 import HeartIcon from "@/icons/HeartIcon"
 import Image from "next/image"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import { twMerge } from "tailwind-merge";
 
 const NAVBAR_TABS = [
     { text: 'Startsida', path: '/' },
@@ -8,9 +11,32 @@ const NAVBAR_TABS = [
     { text: 'Inspiration', path: '/inspiration' },
     { text: 'Info', path: '/info' },
 ]
+
+const SCROLL_THRESHOLD = 150;
 export default function Navbar() {
+    const [hasScrolled, setHasScrolled] = useState(false);
+
+    useEffect(() => {
+        const onScroll = () => {
+            if(window.scrollY >= SCROLL_THRESHOLD) {
+                setHasScrolled(true);
+                return;
+            }
+            if(window.scrollY === 0) {
+                setHasScrolled(false);
+            }
+        }
+        onScroll();
+
+        window.addEventListener('scroll', onScroll);
+        return () => window.removeEventListener('scroll', onScroll);
+    })
+
     return(
-        <header>
+        <header className={twMerge(
+            "z-50 left-0 -top-[100px] w-full bg-primary transition-[top] duration-500",
+            hasScrolled && "shadow-md sticky top-0",
+        )}>
             <div className="main-width py-5 grid items-center grid-cols-8">
                 <div className="flex col-span-2">
                     <Link 
