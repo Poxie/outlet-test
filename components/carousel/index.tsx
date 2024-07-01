@@ -1,7 +1,7 @@
 "use client";
 import { twMerge } from "tailwind-merge";
 import CarouselItem from "./CarouselItem";
-import { useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CarouselNavigationButton from "./CarouselNavigationButton";
 
 export default function Carousel({ className, imagePaths, carouselGap, itemsPerRow }: {
@@ -11,11 +11,32 @@ export default function Carousel({ className, imagePaths, carouselGap, itemsPerR
     className?: string;
 }) {
     const [currentStep, setCurrentStep] = useState(0);
+    const [rowCount, setRowCount] = useState(itemsPerRow);
 
     const ref = useRef<HTMLUListElement>(null);
 
+    useLayoutEffect(() => {
+        const getItemsPerRow = () => {
+            if(!ref.current) return itemsPerRow;
+    
+            const rowCount = parseInt(getComputedStyle(ref.current).getPropertyValue('--items-per-row'));
+    
+            return rowCount;
+        }
+        const onResize = () => {
+            setRowCount(getItemsPerRow());
+        }
+
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
+    useEffect(() => {
+        if(!ref.current) return;
+        setCurrentStep(0);
+    }, [rowCount]);
+
     const canGoBack = () => currentStep > 0;
-    const canGoNext = () => currentStep < Math.ceil(imagePaths.length / itemsPerRow) - 1;
+    const canGoNext = () => currentStep < Math.ceil(imagePaths.length / rowCount) - 1;
 
     const goNext = () => {
         // If we are at the last step, we should not go further
@@ -33,11 +54,13 @@ export default function Carousel({ className, imagePaths, carouselGap, itemsPerR
     return(
         <div 
             style={{
-                '--items-per-row': itemsPerRow,
+                '--optimisitc-items-per-row': itemsPerRow,
                 '--carousel-gap': `${carouselGap}px`,
             } as React.CSSProperties}
             className={twMerge(
                 "relative overflow-hidden",
+                "[--items-per-row:var(--optimisitc-items-per-row)]",
+                itemsPerRow > 2 && "[--items-per-row:1] sm:[--items-per-row:3] lg:[--items-per-row:var(--optimisitc-items-per-row)]",
                 className,
             )}
         >
