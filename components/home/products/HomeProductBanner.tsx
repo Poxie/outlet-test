@@ -2,9 +2,13 @@ import ArrowIcon from "@/icons/ArrowIcon";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-export default function HomeProductBanner({ categoryId, className }: {
+export default function HomeProductBanner({ categoryId, className, origin }: {
     categoryId: string;
     className?: string;
+    origin?: {
+        title: string;
+        href: string;
+    }
 }) {
     return(
         <div className={twMerge(
@@ -21,12 +25,14 @@ export default function HomeProductBanner({ categoryId, className }: {
                 </span>
             </Link>
             <span>
-                <Link 
-                    href="/produkter"
-                    className="hover-underline"
-                >
-                    produkter
-                </Link>
+                {origin && (
+                    <Link 
+                        href={origin.href}
+                        className="hover-underline"
+                    >
+                        {origin?.title}
+                    </Link>
+                )}
                 {' '}
                 /
                 {' '}

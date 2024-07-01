@@ -17,17 +17,17 @@ export default function Products({ params: { categoryId } }: {
             <HomeProductBanner 
                 className="main-width"
                 categoryId={categoryId}
+                origin={{ href: '/products', title: 'produkter' }}
             />
             <div className="pb-8 main-width">
                 <ProductHeader 
                     categoryId={categoryId}
                     title={title}
                     description={description}
-                    image={banner}
+                    image={`/images/products/${categoryId}/${banner}`}
                 />
                 <ProductList 
-                    imageIds={products}
-                    categoryId={categoryId}
+                    images={products.map(imageId => `/images/products/${categoryId}/${imageId}.png`)}
                     className="mt-4"
                 />
             </div>

@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 
-export default function ProductList({ categoryId, imageIds, className }: {
-    imageIds: string[];
-    categoryId: string;
+export default function ProductList({ images, className }: {
+    images: string[];
     className?: string;
 }) {
     return(
@@ -11,14 +10,16 @@ export default function ProductList({ categoryId, imageIds, className }: {
             "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2",
             className,
         )}>
-            {imageIds.map(id => (
+            {images.map(image => (
                 <li 
-                    className="first:col-span-2 first:row-span-2"
-                    key={id}
+                    className={twMerge(
+                        images.length > 7 && "first:col-span-2 first:row-span-2",
+                    )}
+                    key={image}
                 >
                     <Image 
                         className="w-full"
-                        src={`/images/products/${categoryId}/${id}.png`}
+                        src={image}
                         width={200}
                         height={200}
                         alt=""
