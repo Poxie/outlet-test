@@ -54,6 +54,8 @@ export default function Carousel({ className, imagePaths, carouselGap, itemsPerR
     return(
         <div 
             style={{
+                '--current-step': currentStep,
+                '--item-count': imagePaths.length,
                 '--optimisitc-items-per-row': itemsPerRow,
                 '--carousel-gap': `${carouselGap}px`,
             } as React.CSSProperties}
@@ -71,16 +73,16 @@ export default function Carousel({ className, imagePaths, carouselGap, itemsPerR
                 onClick={goBack}
             />
             <ul 
-                className="flex transition-transform "
+                className="flex transition-transform"
                 style={{
-                    transform: `translateX(calc(-${currentStep}*(100%/var(--items-per-row))))`,
-                    gap: `${carouselGap}px` 
+                    transform: `translateX(calc(-${currentStep} * (100% / var(--items-per-row) + (var(--carousel-gap) / var(--items-per-row))))`,
+                    gap: `${carouselGap}px`,
                 } as React.CSSProperties}
                 ref={ref}
             >
                 {imagePaths.map(imagePath => (
                     <li 
-                        className="min-w-[calc(((1/var(--items-per-row))*(100%-var(--carousel-gap)))-var(--carousel-gap)/2)]"
+                        className="min-w-[calc((1/var(--items-per-row))*(100%-var(--carousel-gap)*(var(--items-per-row)-1)))]"
                         key={imagePath}
                     >
                         <CarouselItem 
