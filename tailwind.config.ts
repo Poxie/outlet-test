@@ -38,6 +38,9 @@ const config: Config = {
       maxWidth: {
         main: '90%',
       },
+      padding: {
+        section: '4rem 0',
+      },
     },
   },
   plugins: [],
