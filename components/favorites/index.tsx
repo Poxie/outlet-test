@@ -15,7 +15,7 @@ export default function Favorites() {
                     { text: 'Favoriter', path: '/favoriter' },
                 ]}
             />
-            <div className="pt-4 pb-8 grid gap-3 border-b-[1px] border-b-tertiary">
+            <div className="pt-4 pb-8 flex flex-col gap-3 border-b-[1px] border-b-tertiary">
                 <h1 className="text-4xl font-medium">
                     Favoriter
                 </h1>
