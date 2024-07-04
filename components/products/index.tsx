@@ -3,7 +3,7 @@ import categories from '@/assets/json/categories.json';
 import ProductHeader from './ProductHeader';
 import ProductList from './ProductList';
 import SicklaNotice from '../sickla-notice';
-import ProductBanner from './ProductBanner';
+import PageBanner from '../page-banner';
 
 export default function Products({ params: { categoryId } }: {
     params: { categoryId: string };
@@ -14,10 +14,13 @@ export default function Products({ params: { categoryId } }: {
     const { title, description, banner, products } = category;
     return(
         <main>
-            <ProductBanner 
+            <PageBanner 
                 className="main-width"
-                categoryId={categoryId}
-                origin={{ href: '/products', title: 'produkter' }}
+                steps={[
+                    { text: 'Start', path: '/' },
+                    { text: 'Produkter', path: '/products' },
+                    { text: category.title, path: `/products/${category.title.toLowerCase()}` },
+                ]}
             />
             <div className="pb-8 main-width">
                 <ProductHeader 

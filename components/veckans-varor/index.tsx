@@ -1,4 +1,4 @@
-import ProductBanner from "../products/ProductBanner";
+import PageBanner from "../page-banner";
 import ProductHeader from "../products/ProductHeader";
 import ProductList from "../products/ProductList";
 import SicklaNotice from "../sickla-notice";
@@ -7,8 +7,11 @@ export default function VeckansVaror() {
     return(
         <main>
             <div className="pb-8 main-width relative">
-                <ProductBanner 
-                    categoryId="veckans-varor"
+                <PageBanner 
+                    steps={[
+                        { text: 'Start', path: '/' },
+                        { text: 'Veckans Varor', path: '/veckans-varor' },
+                    ]}
                 />
                 <ProductHeader 
                     categoryId="veckans-varor"
