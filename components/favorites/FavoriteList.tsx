@@ -1,0 +1,17 @@
+import { useFavorites } from "@/contexts/favorites";
+import ProductCard from "../product-card";
+
+export default function FavoriteList() {
+    const { favorites } = useFavorites();
+
+    return(
+        <div className="grid grid-cols-5 gap-2">
+            {favorites.map(favorite => (
+                <ProductCard 
+                    image={favorite}
+                    key={favorite}
+                />
+            ))}
+        </div>
+    )
+}

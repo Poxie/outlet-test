@@ -19,7 +19,7 @@ export default function HomeProducts() {
             <div className="mt-8 flex justify-center relative">
                 <Link
                     className="px-5 bg-primary after:z-[-1] after:absolute after:top-2/4 after:left-0 after:-translate-y-2/4 after:w-full after:h-[1px] after:bg-tertiary"
-                    href={'/products'}
+                    href={'/produkter'}
                 >
                     Utforska mer
                 </Link>

@@ -27,6 +27,7 @@ const config: Config = {
         secondary: '#F2F2F2',
         tertiary: '#E7E7E7',
         quaternary: '#DBDBDB',
+        'text-primary': '#0f172a',
       },
       fill: {
         light: '#fff',

@@ -1,13 +1,15 @@
 import { useFavorites } from "@/contexts/favorites";
 import HeartIcon from "@/icons/HeartIcon";
+import Link from "next/link";
 
 export default function NavbarFavorites() {
     const { getFavoriteCount } = useFavorites();
 
     const favoriteCount = getFavoriteCount();
     return(
-        <button 
+        <Link 
             className="relative flex items-center gap-2"
+            href="/favoriter"
             aria-label="Favoriter"
         >
             {favoriteCount !== 0 && (
@@ -17,6 +19,6 @@ export default function NavbarFavorites() {
             )}
             <HeartIcon size={24} />
             Favoriter
-        </button>
+        </Link>
     )
 }
