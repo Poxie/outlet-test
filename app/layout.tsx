@@ -23,9 +23,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={montserrat.className}>
         <FavoritesProvider>
-          <Navbar />
-          {children}
-          <Footer />
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
         </FavoritesProvider>
       </body>
     </html>

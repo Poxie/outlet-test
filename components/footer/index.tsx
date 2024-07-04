@@ -21,7 +21,7 @@ const SECTIONS = [
 
 export default function Footer() {
     return(
-        <footer className="p-section bg-c-primary-accent">
+        <footer className="p-section mt-auto bg-c-primary-accent">
             <div className="main-width flex justify-between gap-8 flex-wrap md:flex-nowrap">
                 <div className="mb-4 md:mb-0 w-full md:w-[240px] grid gap-2 justify-center">
                     <Image 
