@@ -22,15 +22,14 @@ export default function Carousel({ className, items, carouselGap, optimisticItem
 
     // Return to the start of the carousel if the items per row changes
     useEffect(() => {
-        let windowWidth = window.innerWidth;
-        const onResize = () => {
-            if(windowWidth === window.innerWidth) return;
-            setCurrentStep(0);
-            windowWidth = window.innerWidth;
-        }
+        if(!listRef.current) return;
 
-        window.addEventListener('resize', onResize);
-        return () => window.removeEventListener('resize', onResize);
+        const onResize = () => setCurrentStep(0);
+
+        const resizeObserver = new ResizeObserver(onResize);
+        resizeObserver.observe(listRef.current);
+
+        return () => resizeObserver.disconnect();
     }, []);
 
     // If the current step changes, update the translation
