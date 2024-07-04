@@ -12,7 +12,7 @@ export default function HomeProducts() {
             {categories.map(category => (
                 <HomeProductRow 
                     title={category.title}
-                    productIds={category.products}
+                    products={category.products}
                     key={category.categoryId}
                 />
             ))}

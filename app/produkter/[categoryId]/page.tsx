@@ -1,3 +1,3 @@
-import Products from "@/components/products";
+import ProductPage from "@/components/product-page";
 
-export default Products;
+export default ProductPage;

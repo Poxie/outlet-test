@@ -1,11 +1,11 @@
 [
     { "categoryId": "sommar", "banner": "header.png", "title": "Sommar", "description": "Snart är det äntligen sommar! Hos oss finner du ett blandat sortiment med allt som hör sommaren till. Picknick, stranden, sommarkvällar med mera. Välkommen!", "products": [
-        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"
+        "/images/products/sommar/1.png","/images/products/sommar/2.png","/images/products/sommar/3.png","/images/products/sommar/4.png","/images/products/sommar/5.png","/images/products/sommar/6.png","/images/products/sommar/7.png","/images/products/sommar/8.png","/images/products/sommar/9.png","/images/products/sommar/10.png","/images/products/sommar/11.png","/images/products/sommar/12.png","/images/products/sommar/13.png","/images/products/sommar/14.png","/images/products/sommar/15.png","/images/products/sommar/16.png","/images/products/sommar/17.png"
     ] },
     { "categoryId": "sommarmode", "banner": "header.png", "title": "Sommarmode", "description": "Som vi längtar till sommaren! Fina sommarplagg som passar till sommarens alla festligheter. Välkommen in till oss!", "products": [
-        "1", "2", "3", "4", "5", "6", "7"
+        "/images/products/sommarmode/1.png","/images/products/sommarmode/2.png","/images/products/sommarmode/3.png","/images/products/sommarmode/4.png","/images/products/sommarmode/5.png","/images/products/sommarmode/6.png","/images/products/sommarmode/7.png"
     ] },
     { "categoryId": "uteplatsen", "banner": "header.png", "title": "Uteplatsen", "description": "Gör sommaren kängre genom att tidigt fixa din uteplats eller altan. Vi har allt fårn kuddarna, växterna, möblerna, krukorna och en och annan matta. Välkommen in och låt dig inspireras!", "products": [
-        "1", "2", "3", "4", "5", "6", "7"
+        "/images/products/uteplatsen/1.png","/images/products/uteplatsen/2.png","/images/products/uteplatsen/3.png","/images/products/uteplatsen/4.png","/images/products/uteplatsen/5.png","/images/products/uteplatsen/6.png","/images/products/uteplatsen/7.png"
     ] }
 ]
