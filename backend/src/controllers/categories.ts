@@ -5,6 +5,7 @@ import CategoryUtils from '@/utils/categories/categoryUtils';
 import CustomError from '@/utils/errors';
 import { StatusCodes } from '@/utils/errors/statusCodes';
 import ImageHandler from '@/utils/images/imageHandler';
+import ProductQueries from '@/utils/products/productQueries';
 import { createCategorySchema } from '@/validation/categorySchemas';
 import express from 'express';
 
@@ -94,6 +95,15 @@ router.delete('/:id', asyncHandler(async (req, res, next) => {
     }
 
     res.status(StatusCodes.NO_CONTENT).send();
+}))
+
+// Products
+router.get('/:categoryId/products', asyncHandler(async (req, res) => {
+    const { categoryId } = req.params;
+
+    const products = await ProductQueries.getProductsByParentId(categoryId);
+
+    res.json(products);
 }))
 
 export default router;

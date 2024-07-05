@@ -26,3 +26,9 @@ model Category {
   description String
   bannerURL   String
 }
+
+model Product {
+  id       String @id
+  imageURL String
+  parentId String
+}
