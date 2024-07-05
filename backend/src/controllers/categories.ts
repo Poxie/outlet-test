@@ -5,6 +5,7 @@ import CategoryUtils from '@/utils/categories/categoryUtils';
 import CustomError from '@/utils/errors';
 import { StatusCodes } from '@/utils/errors/statusCodes';
 import ImageHandler from '@/utils/images/imageHandler';
+import ProductMutations from '@/utils/products/productMutations';
 import ProductQueries from '@/utils/products/productQueries';
 import { createCategorySchema } from '@/validation/categorySchemas';
 import express from 'express';
@@ -87,6 +88,7 @@ router.delete('/:id', asyncHandler(async (req, res, next) => {
     const { id } = req.params;
 
     await CategoryMutations.deleteCategory(id);
+    await ProductMutations.deleteByParentId(id);
 
     try {
         await ImageHandler.deleteFolder(`categories/${id}`);

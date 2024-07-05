@@ -27,4 +27,12 @@ export default class ProductMutations {
             }
         }
     }
+
+    static async deleteByParentId(parentId: string) {
+        await client.product.deleteMany({
+            where: {
+                parentId,
+            }
+        });
+    }
 }
