@@ -1,16 +1,16 @@
 import Carousel from "@/components/carousel";
 import SectionHeader from "@/components/section-header";
-import SmallArrowIcon from "@/icons/SmallArrowIcon";
 import HomeProductItem from "./HomeProductItem";
+import { Product } from "@/utils/types";
 
 export default function HomeProductRow({ title, products }: {
     title: string;
-    products: string[];
+    products: Product[];
 }) {
-    const imageComponents = products.map(image => (
+    const imageComponents = products.map(product => (
         <HomeProductItem 
-            imagePath={image}
-            key={image}
+            imagePath={product.imageURL}
+            key={product.id}
         />
     ))
 
