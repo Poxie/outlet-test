@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { USER_ID_LENGTH } from "./userConstants";
 import UserQueries from "./userQueries";
 
@@ -9,5 +10,10 @@ export default class UserUtils {
         if(await UserQueries.getUserById(id)) return this.generateUserId();
 
         return id;
+    }
+
+    static async formatUser(user: User) {
+        const { password, ...rest } = user;
+        return rest;
     }
 }

@@ -1,4 +1,5 @@
 import client from "@/client";
+import UserUtils from "./userUtils";
 
 export default class UserQueries {
     static async getUserById(id: string) {
@@ -7,6 +8,8 @@ export default class UserQueries {
                 id,
             }
         });
-        return user;
+        if(!user) return null;
+
+        return UserUtils.formatUser(user);
     }
 }

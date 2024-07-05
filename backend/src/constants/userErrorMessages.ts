@@ -7,4 +7,7 @@ export const UserErrorMessages = {
     maxEmailLength: `Email must be less than ${EMAIL_MAX_LENGTH} characters`,
     minPasswordLength: `Password must be at least ${PASSWORD_MIN_LENGTH} characters long`,
     maxPasswordLength: `Password must be at least ${PASSWORD_MAX_LENGTH} characters long`,
+
+    userNotFound: "User not found",
+    emailTaken: "Email is already taken",
 };

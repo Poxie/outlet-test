@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt';
 import client from "@/client";
 import { User } from "@prisma/client";
 import UserUtils from "./userUtils";
-import { EmailTakenError } from '../errors/userError';
 import { PrismaCodes } from '../errors/prismaCodes';
+import { EmailTakenError } from '../errors/userErrors';
 
 export default class UserMutations {
     static async createUser({ email, name, password }: Pick<User, 'name' | 'email' | 'password'>) {
