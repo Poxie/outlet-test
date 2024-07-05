@@ -1,6 +1,4 @@
 import client from "@/client";
-import { Product } from "@prisma/client";
-import ProductUtils from "./productUtils";
 
 export default class ProductQueries {
     static async getProductsByParentId(parentId: string) {
@@ -18,14 +16,6 @@ export default class ProductQueries {
             where: {
                 id,
             }
-        });
-
-        return product;
-    }
-
-    static async createProduct(data: Product) {
-        const product = await client.product.create({
-            data,
         });
 
         return product;

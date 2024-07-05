@@ -34,7 +34,7 @@ router.post('/', asyncHandler(async (req, res) => {
         `categories/${data.parentId}/${id}`,
     )
 
-    const product = await ProductQueries.createProduct({
+    const product = await ProductMutations.createProduct({
         id,
         imageURL,
         parentId: data.parentId,
