@@ -19,3 +19,10 @@ model User {
   email    String @unique
   password String
 }
+
+model Category {
+  id          String @id
+  title       String
+  description String
+  bannerURL   String
+}
