@@ -26,9 +26,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env.production
-.env.development
-.env.test
+frontend/.env.production
+frontend/.env.development
+frontend/.env.test
 
 # vercel
 .vercel
@@ -36,3 +36,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# backend
+backend/node_modules
+backend/.env
