@@ -1,17 +1,22 @@
-// These would be dynamically fetch from the API
-import categories from '@/assets/json/categories.json';
+"use client";
 import ProductHeader from './ProductHeader';
 import ProductList from './ProductList';
 import SicklaNotice from '../sickla-notice';
 import PageBanner from '../page-banner';
+import { useQuery } from '@tanstack/react-query';
+import getCategoryWithProducts from '@/api/products/getCategoryWithProducts';
 
-export default function Products({ params: { categoryId } }: {
-    params: { categoryId: string };
+export default function Products({ categoryId }: {
+    categoryId: string;
 }) {
-    const category = categories.find(category => category.categoryId === categoryId);
-    if(!category) return <div>Category not found</div>;
+    const { data: category } = useQuery({
+        queryKey: ['products', categoryId],
+        queryFn: () => getCategoryWithProducts(categoryId),
+    })
 
-    const { title, description, banner, products } = category;
+    if(!category) return null;
+
+    const { title, description, bannerURL, products } = category;
     return(
         <main>
             <PageBanner 
@@ -27,7 +32,7 @@ export default function Products({ params: { categoryId } }: {
                     categoryId={categoryId}
                     title={title}
                     description={description}
-                    image={`/images/products/${categoryId}/${banner}`}
+                    image={bannerURL}
                 />
                 <ProductList 
                     products={products}

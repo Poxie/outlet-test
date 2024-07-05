@@ -2,6 +2,7 @@ export type Category = {
     id: string,
     title: string;
     description: string;
+    bannerURL: string;
     products: Product[];
 }
 export type Product = {
