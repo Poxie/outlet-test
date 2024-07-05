@@ -1,6 +1,8 @@
 import asyncHandler from '@/utils/asyncHandler';
+import { StatusCodes } from '@/utils/errors/statusCodes';
 import ImageHandler from '@/utils/images/imageHandler';
 import { ProductNotFoundError } from '@/utils/products/productErrors';
+import ProductMutations from '@/utils/products/productMutations';
 import ProductQueries from '@/utils/products/productQueries';
 import ProductUtils from '@/utils/products/productUtils';
 import { createProductSchema } from '@/validation/productShemas';
@@ -8,7 +10,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/products/:productId', asyncHandler(async (req, res) => {
+router.get('/:productId', asyncHandler(async (req, res) => {
     const { productId } = req.params;
 
     const product = await ProductQueries.getProductById(productId);
@@ -17,7 +19,7 @@ router.get('/products/:productId', asyncHandler(async (req, res) => {
     res.json(product);
 }))
 
-router.post('/products', asyncHandler(async (req, res) => {
+router.post('/', asyncHandler(async (req, res) => {
     const data = req.body;
 
     createProductSchema
@@ -39,6 +41,16 @@ router.post('/products', asyncHandler(async (req, res) => {
     });
 
     res.json(product);
+}))
+
+router.delete('/:productId', asyncHandler(async (req, res) => {
+    const { productId } = req.params;
+
+    await ImageHandler.deleteImage(`categories/${productId}`);
+
+    await ProductMutations.deleteProduct(productId);
+
+    res.status(StatusCodes.NO_CONTENT).send();
 }))
 
 export default router;
