@@ -1,4 +1,5 @@
 import asyncHandler from '@/utils/asyncHandler';
+import { CategoryNotFound } from '@/utils/categories/categoryErrors';
 import CategoryMutations from '@/utils/categories/categoryMutations';
 import CategoryQueries from '@/utils/categories/categoryQueries';
 import CategoryUtils from '@/utils/categories/categoryUtils';
@@ -46,8 +47,19 @@ router.post('/', asyncHandler(async (req, res, next) => {
 
 router.get('/:id', asyncHandler(async (req, res, next) => {
     const { id } = req.params;
+    const withProducts = req.query.withProducts === 'true';
 
     const category = await CategoryQueries.getCategoryById(id);
+    if(!category) throw new CategoryNotFound();
+
+    if(withProducts) {
+        const products = await ProductQueries.getProductsByParentId(id);
+        res.json({
+            ...category,
+            products,
+        });
+        return;
+    }
 
     res.json(category);
 }))
