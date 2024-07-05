@@ -29,4 +29,21 @@ export default class UserMutations {
             }
         }
     }
+
+    static async updateUser(id: string, data: Partial<Exclude<User, 'id'>>) {
+        if(!process.env.BCRYPT_SALT_ROUNDS) throw new Error('BCRYPT_SALT_ROUNDS not set');
+
+        if(data.password) {
+            data.password = await bcrypt.hash(data.password, parseInt(process.env.BCRYPT_SALT_ROUNDS));
+        }
+
+        const user = await client.user.update({
+            where: {
+                id,
+            },
+            data,
+        });
+
+        return UserUtils.formatUser(user);
+    }
 }

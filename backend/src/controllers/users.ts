@@ -26,4 +26,18 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
     res.json(user);
 }))
 
+router.patch('/:id', asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+    const data = req.body;
+
+    createUserSchema
+        .strict()
+        .partial()
+        .parse(data);
+
+    const user = await UserMutations.updateUser(id, data);
+
+    res.json(user);
+}))
+
 export default router;
