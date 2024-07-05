@@ -25,6 +25,7 @@ model Category {
   title       String
   description String
   bannerURL   String
+  createdAt   String
 }
 
 model Product {

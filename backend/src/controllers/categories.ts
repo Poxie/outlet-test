@@ -40,6 +40,7 @@ router.post('/', asyncHandler(async (req, res, next) => {
         title: data.title,
         description: data.description,
         bannerURL: bannerImage,
+        createdAt: Date.now().toString(),
     });
 
     res.send(category);
