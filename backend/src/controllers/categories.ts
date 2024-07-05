@@ -1,5 +1,6 @@
 import asyncHandler from '@/utils/asyncHandler';
 import CategoryMutations from '@/utils/categories/categoryMutations';
+import CategoryQueries from '@/utils/categories/categoryQueries';
 import CategoryUtils from '@/utils/categories/categoryUtils';
 import CustomError from '@/utils/errors';
 import { StatusCodes } from '@/utils/errors/statusCodes';
@@ -39,6 +40,14 @@ router.post('/', asyncHandler(async (req, res, next) => {
     });
 
     res.send(category);
+}))
+
+router.get('/:id', asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+
+    const category = await CategoryQueries.getCategoryById(id);
+
+    res.json(category);
 }))
 
 export default router;
