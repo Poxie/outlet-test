@@ -46,6 +46,28 @@ router.post('/', asyncHandler(async (req, res, next) => {
     res.send(category);
 }))
 
+router.get('/', asyncHandler(async (req, res, next) => {
+    const withProducts = req.query.withProducts === 'true';
+
+    const categories = await CategoryQueries.getCategories();
+    if(withProducts) {
+        const categoriesWithProducts = await Promise.all(
+            categories.map(async category => {
+                const products = await ProductQueries.getProductsByParentId(category.id);
+                return {
+                    ...category,
+                    products,
+                }
+            })
+        );
+
+        res.json(categoriesWithProducts);
+        return;
+    }
+
+    res.json(categories);
+}))
+
 router.get('/:id', asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const withProducts = req.query.withProducts === 'true';
