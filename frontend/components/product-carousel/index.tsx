@@ -1,13 +1,14 @@
+import { Product } from "@/utils/types";
 import Carousel from "../carousel";
 import ProductCard from "../product-card";
 
 export default function ProductCarousel({ products }: {
-    products: string[];
+    products: Product[];
 }) {
     const ProductComponents = products.map(product => (
         <ProductCard 
-            image={product}
-            key={product}
+            image={product.imageURL}
+            key={product.id}
         />
     ))
 

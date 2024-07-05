@@ -1,9 +1,10 @@
+import { Product } from "@/utils/types";
 import ProductCarousel from "../product-carousel";
 import SectionHeader from "../section-header";
 
 export default function ProductRow({ title, products }: {
     title: string;
-    products: string[];
+    products: Product[];
 }) {
     return(
         <div className="mb-8">

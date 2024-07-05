@@ -1,10 +1,19 @@
+"use client";
 import React from 'react';
-import categories from '@/assets/json/categories.json';
 import PageBanner from "../page-banner";
 import SicklaNotice from '../sickla-notice';
 import ProductRow from './ProductRow';
+import { useQuery } from '@tanstack/react-query';
+import getCategoriesWithProducts from '@/api/products/getCategoriesWithProducts';
 
 export default function Products() {
+    const { data: categories } = useQuery({
+        queryKey: ['products'],
+        queryFn: getCategoriesWithProducts,
+    })
+
+    if(!categories) return null;
+
     return(
         <main>
             <PageBanner 
@@ -15,11 +24,11 @@ export default function Products() {
                 ]}
             />
             <div className="main-width pt-4 pb-8">
-                {categories.map(category => (
+                {categories.map(({ id, title, products }) => (
                     <ProductRow 
-                        title={category.title}
-                        products={category.products}
-                        key={category.categoryId}
+                        title={title}
+                        products={products}
+                        key={id}
                     />
                 ))}
             </div>
