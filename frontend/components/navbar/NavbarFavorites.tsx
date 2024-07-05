@@ -1,5 +1,5 @@
 import { useFavorites } from "@/contexts/favorites";
-import HeartIcon from "@/icons/HeartIcon";
+import HeartIcon from "@/assets/icons/HeartIcon";
 import Link from "next/link";
 
 export default function NavbarFavorites() {

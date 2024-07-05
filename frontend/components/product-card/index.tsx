@@ -1,6 +1,6 @@
 "use client";
 import { useFavorites } from "@/contexts/favorites";
-import HeartIcon from "@/icons/HeartIcon";
+import HeartIcon from "@/assets/icons/HeartIcon";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 

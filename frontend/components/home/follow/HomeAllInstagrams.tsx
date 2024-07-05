@@ -1,4 +1,4 @@
-import InstagramIcon from "@/icons/InstagramIcon";
+import InstagramIcon from "@/assets/icons/InstagramIcon";
 
 const ACCOUNTS = ['Länna', 'Bernstorp', 'Västerås', 'Uppsala', 'Sickla', 'Uddevalla', 'Örebro', 'Center Syd', 'Eskilstuna', 'Södertälje', 'Norrköping', 'Sundsvall', 'Växjö', 'Väla', 'Kristianstad'];
 

@@ -1,4 +1,4 @@
-import SmallArrowIcon from "@/icons/SmallArrowIcon";
+import SmallArrowIcon from "@/assets/icons/SmallArrowIcon";
 import Link from "next/link";
 import { HTMLAttributeAnchorTarget } from "react";
 import { twMerge } from "tailwind-merge";

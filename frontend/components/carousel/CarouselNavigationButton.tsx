@@ -1,4 +1,4 @@
-import ArrowIcon from "@/icons/ArrowIcon";
+import ArrowIcon from "@/assets/icons/ArrowIcon";
 import { twMerge } from "tailwind-merge";
 
 export default function CarouselNavigationButton({ className, disabled, onClick, ariaLabel }: {

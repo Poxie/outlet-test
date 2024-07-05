@@ -1,4 +1,4 @@
-import WarningIcon from "@/icons/WarningIcon";
+import WarningIcon from "@/assets/icons/WarningIcon";
 
 export default function SicklaNotice() {
     const sicklaPhoneNumber = "073-052 93 74";

@@ -1,7 +1,6 @@
 "use client";
-import ArrowIcon from "@/icons/ArrowIcon";
-import HamIcon from "@/icons/HamIcon";
-import HeartIcon from "@/icons/HeartIcon"
+import ArrowIcon from "@/assets/icons/ArrowIcon";
+import HamIcon from "@/assets/icons/HamIcon";
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
