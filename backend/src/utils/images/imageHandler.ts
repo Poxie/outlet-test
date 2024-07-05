@@ -7,4 +7,7 @@ export default class ImageHandler {
         })
         return uploadedImage.secure_url;
     }
+    static async deleteFolder(path: string) {
+        await cloudinary.api.delete_resources_by_prefix(path);
+    }
 }

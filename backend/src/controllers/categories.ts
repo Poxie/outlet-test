@@ -87,6 +87,12 @@ router.delete('/:id', asyncHandler(async (req, res, next) => {
 
     await CategoryMutations.deleteCategory(id);
 
+    try {
+        await ImageHandler.deleteFolder(`categories/${id}`);
+    } catch(error) {
+        // If an error is thrown, save it somewhere for later inspection
+    }
+
     res.status(StatusCodes.NO_CONTENT).send();
 }))
 
