@@ -50,4 +50,36 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
     res.json(category);
 }))
 
+router.patch('/:id', asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+    const data = req.body;
+
+    // Make sure the data is valid
+    createCategorySchema
+        .strict()
+        .partial()
+        .parse(data);
+
+    // If there is a new banner image, upload & update the URL
+    if(data.banner) {
+        let bannerImage: string;
+        try {
+            bannerImage = await ImageHandler.uploadImage(
+                data.banner,
+                `categories/${id}/banner`,
+            );
+        } catch (error) {
+            console.error(error);
+            throw new CustomError('Failed to upload image', StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+
+        data.bannerURL = bannerImage;
+        delete data.banner;
+    }
+
+    const category = await CategoryMutations.updateCategory(id, data);
+
+    res.json(category);
+}))
+
 export default router;

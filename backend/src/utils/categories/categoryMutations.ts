@@ -8,4 +8,12 @@ export default class CategoryMutations {
             data: category,
         });
     }
+    static async updateCategory(id: string, category: Partial<Exclude<Category, 'id'>>) {
+        return await client.category.update({
+            where: {
+                id,
+            },
+            data: category,
+        });
+    }
 }
