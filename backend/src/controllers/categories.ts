@@ -82,4 +82,12 @@ router.patch('/:id', asyncHandler(async (req, res, next) => {
     res.json(category);
 }))
 
+router.delete('/:id', asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+
+    await CategoryMutations.deleteCategory(id);
+
+    res.status(StatusCodes.NO_CONTENT).send();
+}))
+
 export default router;
