@@ -1,10 +1,11 @@
 import asyncHandler from '@/utils/asyncHandler';
+import { StatusCodes } from '@/utils/errors/statusCodes';
 import ImageHandler from '@/utils/images/imageHandler';
 import WeeklyProductMutations from '@/utils/weekly-products/weeklyProductMutations';
 import WeeklyProductQueries from '@/utils/weekly-products/weeklyProductQueries';
 import { InvalidDealDateError } from '@/utils/weekly-products/weeklyProductsErrors';
 import WeeklyProductsUtils from '@/utils/weekly-products/weeklyProductsUtils';
-import { createWeeklyProductSchema } from '@/validation/weeklyProductSchemas';
+import { createWeeklyProductSchema, deleteWeeklyProductsSchema } from '@/validation/weeklyProductSchemas';
 import express from 'express';
 
 const router = express.Router();
@@ -59,6 +60,16 @@ router.post('/:date?', asyncHandler(async (req, res) => {
     const allProducts = await WeeklyProductQueries.getWeeklyProducts(dateString);
 
     res.json(allProducts);
+}))
+
+router.delete('/', asyncHandler(async (req, res) => {
+    const { productIds } = req.body;
+
+    deleteWeeklyProductsSchema.parse({ productIds });
+
+    await WeeklyProductMutations.deleteWeeklyProducts(productIds);
+
+    res.status(StatusCodes.NO_CONTENT).send();
 }))
 
 export default router;

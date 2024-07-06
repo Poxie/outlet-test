@@ -7,4 +7,13 @@ export default class WeeklyProductMutations {
             data,
         })
     }
+    static async deleteWeeklyProducts(ids: string[]) {
+        return await client.weeklyProduct.deleteMany({
+            where: {
+                id: {
+                    in: ids,
+                }
+            }
+        })
+    }
 }
