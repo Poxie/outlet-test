@@ -10,6 +10,7 @@ export default function SidebarHeader() {
             <button
                 onClick={toggleCollapse}
                 className="p-1 -m-1 hover:bg-secondary active:bg-tertiary transition-colors rounded-md"
+                aria-label={collapsed ? "Open meny" : "Close meny"}
             >
                 <HamIcon size={24} />
             </button>
