@@ -39,7 +39,7 @@ export default function WeeksProducts({ date }: {
                 steps={[
                     { text: 'Start', href: '/' },
                     { text: 'Veckans varor', href: '/veckans-varor' },
-                    { text: `Week ${productWeek.week}`, href: `/veckans-varor/${productWeek.date}` },
+                    { text: getWeekText(productWeek), href: `/veckans-varor/${productWeek.date}` },
                 ]}
             />
             <div className="p-5">
