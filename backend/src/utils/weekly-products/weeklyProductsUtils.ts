@@ -2,14 +2,14 @@ import WeeklyProductQueries from "./weeklyProductQueries";
 import { WEEKLY_PRODUCT_ID_LENGTH } from "./weeklyProductsConstants";
 
 export default class WeeklyProductsUtils {
-    static getUpcomingWeeks() {
-        const upcomingWeeks: {
+    static getAllProductWeeks() {
+        const weeks: {
             date: string;
             week: number;
         }[] = [];
 
-        // Get the next 4 weeks, start from 1 to skip the current week
-        for(let i = 1; i < 5; i++) {
+        // Get the next 5 weeks, including the current week
+        for(let i = 0; i < 5; i++) {
             const date = new Date(this.getCurrentWeek());
             date.setDate(date.getDate() + 7 * i);
             const year = date.getFullYear();
@@ -18,13 +18,13 @@ export default class WeeklyProductsUtils {
 
             const dateString = `${year}-${month}-${dayOfMonth}`;
 
-            upcomingWeeks.push({
+            weeks.push({
                 date: dateString,
                 week: this.getWeekNumber(dateString),
             });
         }
 
-        return upcomingWeeks;
+        return weeks;
     }
 
     static getWeekNumber(dateString: string) {

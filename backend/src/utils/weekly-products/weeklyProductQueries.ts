@@ -20,14 +20,15 @@ export default class WeeklyProductQueries {
 
         return weeklyProduct;
     }
-    static async getUpcomingWeeklyProducts() {
-        const upcomingWeekDates = WeeklyProductsUtils.getUpcomingWeeks();
+    static async getAllProductWeeks() {
+        const weekDates = WeeklyProductsUtils.getAllProductWeeks();
 
-        const upcomingWeeks: {
+        // Create an array of objects with the date, week number, and an empty array of products
+        const productWeeksData: {
             date: string;
             week: number;
             products: WeeklyProduct[];
-        }[] = upcomingWeekDates.map(({ date, week }) => {
+        }[] = weekDates.map(({ date, week }) => {
             return {
                 date,
                 week,
@@ -35,19 +36,21 @@ export default class WeeklyProductQueries {
             };
         });
 
-        const upcomingProducts = await client.weeklyProduct.findMany({
+        // Get all products for each week
+        const productWeekProducts = await client.weeklyProduct.findMany({
             where: {
                 date: {
-                    in: upcomingWeekDates.map(week => week.date),
+                    in: weekDates.map(week => week.date),
                 }
             }
         });
 
-        for(const product of upcomingProducts) {
-            const index = upcomingWeeks.findIndex(week => week.date === product.date);
-            upcomingWeeks[index].products.push(product);
+        // Add products to the correct week object
+        for(const product of productWeekProducts) {
+            const index = productWeeksData.findIndex(week => week.date === product.date);
+            productWeeksData[index].products.push(product);
         }
 
-        return upcomingWeeks;
+        return productWeeksData;
     }
 }

@@ -11,26 +11,28 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/upcoming', auth, asyncHandler(async (req, res, next) => {
-    const upcomingProducts = await WeeklyProductQueries.getUpcomingWeeklyProducts();
+router.get('/', auth, asyncHandler(async (req, res, next) => {
+    const upcomingProducts = await WeeklyProductQueries.getAllProductWeeks();
 
     res.json(upcomingProducts);
 }))
 
-router.get('/:date?', asyncHandler(async (req, res, next) => {
-    const { date } = req.params;
-    const dateString = date || WeeklyProductsUtils.getCurrentWeek();
+router.get('/:date', asyncHandler(async (req, res, next) => {
+    let { date } = req.params;
+    if(date === 'current') {
+        date = WeeklyProductsUtils.getCurrentWeek();
+    }
 
-    const isDealDate = WeeklyProductsUtils.isDealDate(dateString);
+    const isDealDate = WeeklyProductsUtils.isDealDate(date);
     if(!isDealDate) {
         throw new InvalidDealDateError();
     }
 
-    const products = await WeeklyProductQueries.getWeeklyProducts(dateString);
-    const week = WeeklyProductsUtils.getWeekNumber(dateString);
+    const products = await WeeklyProductQueries.getWeeklyProducts(date);
+    const week = WeeklyProductsUtils.getWeekNumber(date);
 
     res.json({
-        date: dateString,
+        date,
         week,
         products,
     });
