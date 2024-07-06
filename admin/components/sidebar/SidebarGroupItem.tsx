@@ -3,13 +3,15 @@ import Link from "next/link";
 import { SidebarItem } from "./SidebarGroups"
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
+import { useSidebar } from ".";
 
 export default function SidebarGroupItem({ item: { text, path, icon } }: {
     item: SidebarItem;
 }) {
+    const { collapsed } = useSidebar();
+
     const pathname = usePathname();
     const isActive = pathname.startsWith(path);
-
     return(
         <Link
             href={path}
@@ -19,7 +21,7 @@ export default function SidebarGroupItem({ item: { text, path, icon } }: {
             )}
         >
             {icon}
-            {text}
+            {!collapsed && text}
         </Link>
     )
 }
