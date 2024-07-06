@@ -7,6 +7,8 @@ export default async function fetchFromAPI<T>(path: string, options: RequestInit
             ...options.headers,
         },
     });
+    if(res.status === 204) return;
+
     const data = await res.json();
 
     if(!res.ok) {
