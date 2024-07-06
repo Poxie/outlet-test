@@ -22,7 +22,9 @@ export default function MainLayout({ children }: {
     return(
         <div className="min-h-screen flex">
             <Sidebar />
-            {children}
+            <div className="flex-1">
+                {children}
+            </div>
         </div>
     );
 }
