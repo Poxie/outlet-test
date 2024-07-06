@@ -1,3 +1,6 @@
+import WeeklyProductQueries from "./weeklyProductQueries";
+import { WEEKLY_PRODUCT_ID_LENGTH } from "./weeklyProductsConstants";
+
 export default class WeeklyProductsUtils {
     static getCurrentWeek() {
         const date = new Date();
@@ -23,5 +26,17 @@ export default class WeeklyProductsUtils {
         const day = date.getDay();
 
         return day === 1;
+    }
+
+    static async generateWeeklyProductId(): Promise<string> {
+        const mathOffset = 2;
+        const id = Math.random().toString().slice(mathOffset, WEEKLY_PRODUCT_ID_LENGTH + mathOffset);
+
+        // Check if the id already exists
+        if(await WeeklyProductQueries.getWeeklyProductById(id)) {
+            return this.generateWeeklyProductId();
+        }
+
+        return id;
     }
 }

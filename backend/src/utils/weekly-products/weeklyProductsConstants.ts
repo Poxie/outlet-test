@@ -1,0 +1,1 @@
+export const WEEKLY_PRODUCT_ID_LENGTH = 8;
