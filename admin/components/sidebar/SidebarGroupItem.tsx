@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { SidebarItem } from "./SidebarGroups"
 import { usePathname } from "next/navigation";

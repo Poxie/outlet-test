@@ -6,8 +6,8 @@ import SectionHeader from "@/components/section-header";
 import { useQuery } from "@tanstack/react-query";
 import WeekProducts from "./WeekProducts";
 
-export default function WeeksProducts({ params: { date } }: {
-    params: { date: string };
+export default function WeeksProducts({ date }: {
+    date: string;
 }) {
     const { data: productWeek } = useQuery({
         queryKey: ['weekly-products', date],

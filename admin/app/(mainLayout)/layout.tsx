@@ -1,23 +1,16 @@
-"use client";
-import getCurrentUser from "@/api/users/getCurrentUser";
+import fetchFromAPI from "@/api/fetchFromAPI";
 import Sidebar from "@/components/sidebar";
-import { useQuery } from "@tanstack/react-query";
+import { cookies } from "next/headers";
 
-export default function MainLayout({ children }: {
+export default async function MainLayout({ children }: {
     children: React.ReactNode;
 }) {
-    const { data, isLoading } = useQuery({
-        queryKey: ['currentUser'],
-        queryFn: getCurrentUser,
-        retry: false,
+    const user = await fetchFromAPI('/users/me', {
+        headers: {
+            Cookie: cookies().toString(),
+        }
     })
-
-    if(isLoading) return null;
-
-    if(!data) {
-        window.location.href = '/login';
-        return null;
-    }
+    if(!user) return null;
 
     return(
         <div className="min-h-screen flex">
