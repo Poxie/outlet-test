@@ -8,7 +8,7 @@ export default function SidebarGroupItem({ item: { text, path, icon } }: {
     item: SidebarItem;
 }) {
     const pathname = usePathname();
-    const isActive = pathname === path;
+    const isActive = pathname.startsWith(path);
 
     return(
         <Link
