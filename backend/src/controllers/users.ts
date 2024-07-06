@@ -19,7 +19,12 @@ router.post('/', auth, asyncHandler(async (req, res, next) => {
 }))
 
 router.get('/:id', auth, asyncHandler(async (req, res, next) => {
-    const { id } = req.params;
+    let { id } = req.params;
+    const loggedInId = res.locals.userId;
+
+    if(id === 'me' && loggedInId) {
+        id = loggedInId;
+    }
 
     const user = await UserQueries.getUserById(id);
     if(!user) throw new UserNotFoundError();
