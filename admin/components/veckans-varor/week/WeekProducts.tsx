@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import useAddWeeklyProducts from "@/hooks/useAddWeeklyProducts";
 import useRemoveWeeklyProducts from "@/hooks/useRemoveWeeklyProducts";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
+import HasChangesNotice from "@/components/has-changes-notice";
 
 const TEMP_PREFIX = 'temp_';
 export default function WeekProducts({ date, products: _products }: {
@@ -12,16 +13,23 @@ export default function WeekProducts({ date, products: _products }: {
 }) {
     const refetchQuery = useRefetchQuery();
 
-    const { mutateAsync: addProducts } = useAddWeeklyProducts();
-    const { mutateAsync: removeProducts } = useRemoveWeeklyProducts();
+    const { mutateAsync: addProducts, isPending: loadingAddProducts } = useAddWeeklyProducts();
+    const { mutateAsync: removeProducts, isPending: loadingRemoveProducts } = useRemoveWeeklyProducts();
 
     const [products, setProducts] = useState(_products);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        setProducts(_products);
-    }, [_products]);
+    const reset = () => setProducts(_products);
+    useEffect(reset, [_products]);
+
+    const getHasChanges = () => {
+        const currentProductIds = products.map(product => product.id);
+        const productIdsToRemove = _products.filter(product => !currentProductIds.includes(product.id)).map(product => product.id);
+        const productsToAdd = products.filter(product => product.id.startsWith(TEMP_PREFIX));
+
+        return productIdsToRemove.length > 0 || productsToAdd.length > 0;
+    }
 
     const handleSave = async () => {
         const productsToAdd = products.filter(product => product.id.startsWith(TEMP_PREFIX));
@@ -102,9 +110,12 @@ export default function WeekProducts({ date, products: _products }: {
                 </span>
             </div>
         </div>
-        <button onClick={handleSave}>
-            Save
-        </button>
+        <HasChangesNotice 
+            onCancel={reset}
+            onConfirm={handleSave}
+            hasChanges={getHasChanges()}
+            loading={loadingAddProducts || loadingRemoveProducts}
+        />
         </>
     )
 }
