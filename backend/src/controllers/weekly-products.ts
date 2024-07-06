@@ -27,8 +27,13 @@ router.get('/:date?', asyncHandler(async (req, res, next) => {
     }
 
     const products = await WeeklyProductQueries.getWeeklyProducts(dateString);
+    const week = WeeklyProductsUtils.getWeekNumber(dateString);
 
-    res.json(products);
+    res.json({
+        date: dateString,
+        week,
+        products,
+    });
 }))
 
 router.post('/:date?', auth, asyncHandler(async (req, res) => {

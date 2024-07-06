@@ -20,14 +20,15 @@ export default class WeeklyProductsUtils {
 
             upcomingWeeks.push({
                 date: dateString,
-                week: this.getWeekNumber(date),
+                week: this.getWeekNumber(dateString),
             });
         }
 
         return upcomingWeeks;
     }
 
-    static getWeekNumber(date: Date) {
+    static getWeekNumber(dateString: string) {
+        const date = new Date(dateString);
         const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         const dayNum = d.getUTCDay() || 7;
         d.setUTCDate(d.getUTCDate() + 4 - dayNum);
