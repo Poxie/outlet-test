@@ -1,19 +1,13 @@
-"use client";
-import { useQuery } from "@tanstack/react-query";
 import SectionHeader from "../section-header";
-import getUpcomingWeekProducts from "@/api/weekly-products/getUpcomingWeekProducts";
 import ArrowIcon from "@/assets/icons/ArrowIcon";
 import Link from "next/link";
 import Section from "../section";
+import getAllWeekProducts from "@/api/weekly-products/getAllWeekProducts";
+import { WeeklyProductGroup } from "@/utils/types";
 
-export default function UpcomingWeekProducts() {
-    const { data: weeks } = useQuery({
-        queryKey: ['weekly-products', 'upcoming'],
-        queryFn: getUpcomingWeekProducts,
-    })
-
-    if(!weeks) return null;
-
+export default function UpcomingWeekProducts({ weeks }: {
+    weeks: WeeklyProductGroup[];
+}) {
     return(
         <>
         <SectionHeader 

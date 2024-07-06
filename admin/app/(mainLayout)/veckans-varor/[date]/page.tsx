@@ -1,4 +1,4 @@
-import getProductsByDate from "@/api/weekly-products/getProductsByDate";
+import getAllWeekProducts from "@/api/weekly-products/getAllWeekProducts";
 import WeeksProducts from "@/components/veckans-varor/week";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { cookies } from "next/headers";
@@ -9,8 +9,8 @@ export default async function WeeksProductsPage({ params: { date } }: {
     const queryClient = new QueryClient();
 
     await queryClient.prefetchQuery({
-        queryKey: ['weekly-products', date],
-        queryFn: () => getProductsByDate(date, {
+        queryKey: ['weekly-products', 'all'],
+        queryFn: () => getAllWeekProducts({
             headers: {
                 Cookie: cookies().toString(),
             }

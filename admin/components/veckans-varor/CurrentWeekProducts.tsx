@@ -1,28 +1,21 @@
-"use client";
-import { useQuery } from "@tanstack/react-query";
-import SectionHeader from "../section-header";
-import getCurrentWeekProducts from "@/api/weekly-products/getCurrentWeekProducts";
 import Image from "next/image";
 import Section from "../section";
+import SectionHeader from "../section-header";
+import { WeeklyProductGroup } from "@/utils/types";
 
-export default function CurrentWeekProducts() {
-    const { data: productWeek } = useQuery({
-        queryKey: ['weekly-products', 'current'],
-        queryFn: getCurrentWeekProducts,
-    })
-
-    if(!productWeek) return null;
-
+export default function CurrentWeekProducts({ week }: {
+    week: WeeklyProductGroup;
+}) {
     return(
         <>
             <SectionHeader 
                 title="This week's products"
                 buttonText="Edit products"
-                buttonHref={`/veckans-varor/${productWeek.date}`}
+                buttonHref={`/veckans-varor/${week.date}`}
                 className="mb-2"
             />
             <Section className="grid grid-cols-8 gap-2">
-                {productWeek.products.map(product => (
+                {week.products.map(product => (
                     <Image 
                         alt=""
                         width={200}
