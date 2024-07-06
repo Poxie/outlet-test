@@ -8,11 +8,18 @@ dotenv.config();
 
 const app = express();
 
-// Apply fetch options
+// Apply cors options
+const CLIENT_URL = process.env.CLIENT_URL;
+const ADMIN_URL = process.env.ADMIN_URL;
+if(!CLIENT_URL || !ADMIN_URL) {
+    throw new Error('Client URL or Admin URL not provided');
+}
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: [CLIENT_URL, ADMIN_URL],
     credentials: true,
 }));
+
+// Apply body & cookie parser
 app.use(express.json({
     limit: '50mb',
 }));

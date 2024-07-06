@@ -3,6 +3,7 @@ declare global {
         interface ProcessEnv {
             PORT: string;
             CLIENT_URL: string;
+            ADMIN_URL: string;
             BCRYPT_SALT_ROUNDS: string;
             CLOUDINARY_CLOUD_NAME: string;
             CLOUDINARY_API_KEY: string;
