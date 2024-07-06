@@ -39,6 +39,7 @@ const config: Config = {
       },
       width: {
         main: '1100px',
+        sidebar: '300px',
       },
       maxWidth: {
         main: '90%',

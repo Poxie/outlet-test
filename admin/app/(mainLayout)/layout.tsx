@@ -1,5 +1,6 @@
 "use client";
 import getCurrentUser from "@/api/users/getCurrentUser";
+import Sidebar from "@/components/sidebar";
 import { useQuery } from "@tanstack/react-query";
 
 export default function MainLayout({ children }: {
@@ -18,5 +19,10 @@ export default function MainLayout({ children }: {
         return null;
     }
 
-    return children;
+    return(
+        <div className="min-h-screen flex">
+            <Sidebar />
+            {children}
+        </div>
+    );
 }
