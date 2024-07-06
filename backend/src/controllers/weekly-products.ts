@@ -11,6 +11,12 @@ import express from 'express';
 
 const router = express.Router();
 
+router.get('/upcoming', auth, asyncHandler(async (req, res, next) => {
+    const upcomingProducts = await WeeklyProductQueries.getUpcomingWeeklyProducts();
+
+    res.json(upcomingProducts);
+}))
+
 router.get('/:date?', asyncHandler(async (req, res, next) => {
     const { date } = req.params;
     const dateString = date || WeeklyProductsUtils.getCurrentWeek();
