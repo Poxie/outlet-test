@@ -5,6 +5,8 @@ import Section from "@/components/section";
 import SectionHeader from "@/components/section-header";
 import { useQuery } from "@tanstack/react-query";
 import WeekProducts from "./WeekProducts";
+import Dropdown from "@/components/dropdown";
+import getUpcomingWeekProducts from "@/api/weekly-products/getUpcomingWeekProducts";
 
 export default function WeeksProducts({ date }: {
     date: string;
@@ -12,10 +14,19 @@ export default function WeeksProducts({ date }: {
     const { data: productWeek } = useQuery({
         queryKey: ['weekly-products', date],
         queryFn: () => getProductsByDate(date),
+    });
+    const { data: allWeeks } = useQuery({
+        queryKey: ['weekly-products'],
+        queryFn: getUpcomingWeekProducts,
     })
 
-    if(!productWeek) return null;
+    if(!productWeek || !allWeeks) return null;
 
+    const dropdownItems = allWeeks.map(week => ({
+        id: week.date,
+        text: `Week ${week.week}`,
+        href: `/veckans-varor/${week.date}`,
+    }));
     return(
         <main>
             <PageBanner 
@@ -26,10 +37,15 @@ export default function WeeksProducts({ date }: {
                 ]}
             />
             <div className="p-5">
-                <SectionHeader 
-                    title={`Week ${productWeek.week}'s products`}
-                    className="mb-2"
-                />
+                <div className="mb-2 flex items-center justify-between">
+                    <SectionHeader 
+                        title={`Week ${productWeek.week}'s products`}
+                    />
+                    <Dropdown 
+                        items={dropdownItems}
+                        activeItemId={productWeek.date}
+                    />
+                </div>
                 <Section>
                     <WeekProducts 
                         products={productWeek.products}
