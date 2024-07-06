@@ -41,6 +41,9 @@ const config: Config = {
         main: '1100px',
         sidebar: '300px',
       },
+      height: {
+        'sidebar-header': '72px',
+      },
       maxWidth: {
         main: '90%',
       },
