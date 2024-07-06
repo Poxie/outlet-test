@@ -1,29 +1,51 @@
 import { WeeklyProduct } from "@/utils/types"
 import WeekProduct from "./WeekProduct";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useAddWeeklyProducts from "@/hooks/useAddWeeklyProducts";
+import useRemoveWeeklyProducts from "@/hooks/useRemoveWeeklyProducts";
+import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 
 const TEMP_PREFIX = 'temp_';
 export default function WeekProducts({ date, products: _products }: {
     products: WeeklyProduct[];
     date: string;
 }) {
+    const refetchQuery = useRefetchQuery();
+
     const { mutateAsync: addProducts } = useAddWeeklyProducts();
+    const { mutateAsync: removeProducts } = useRemoveWeeklyProducts();
 
     const [products, setProducts] = useState(_products);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
+    useEffect(() => {
+        setProducts(_products);
+    }, [_products]);
+
     const handleSave = async () => {
         const productsToAdd = products.filter(product => product.id.startsWith(TEMP_PREFIX));
         const productImagesToAdd = productsToAdd.map(product => product.imageURL);
 
+        const currentProductIds = products.map(product => product.id);
+        const productsToRemove = _products.filter(product => !currentProductIds.includes(product.id));
+        const productIdsToRemove = productsToRemove.map(product => product.id);
+
         try {
-            const products = await addProducts({ date, images: productImagesToAdd });
-            setProducts(products);
+            if(productIdsToRemove.length > 0) {
+                await removeProducts({ productIds: productIdsToRemove });
+            }
+            if(productImagesToAdd.length > 0) {
+                await addProducts({ date, images: productImagesToAdd });
+            }
+            refetchQuery(['weekly-products', date]);
         } catch(error) {
             console.error(error);
         }
+    }
+
+    const handleRemoveProduct = (id: string) => {
+        setProducts(products.filter(product => product.id !== id));
     }
 
     const convertToBase64 = (file: File) => {
@@ -61,6 +83,7 @@ export default function WeekProducts({ date, products: _products }: {
         <div className="grid grid-cols-8 gap-2">
             {products.map(product => (
                 <WeekProduct 
+                    onRemove={handleRemoveProduct}
                     product={product}
                     key={product.id}
                 />

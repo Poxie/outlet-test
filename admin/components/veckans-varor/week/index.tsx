@@ -10,7 +10,7 @@ export default function WeeksProducts({ params: { date } }: {
     params: { date: string };
 }) {
     const { data: productWeek } = useQuery({
-        queryKey: ['weeklyProducts', date],
+        queryKey: ['weekly-products', date],
         queryFn: () => getProductsByDate(date),
     })
 
