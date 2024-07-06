@@ -46,7 +46,7 @@ export default function WeekProducts({ date, products: _products }: {
             if(productImagesToAdd.length > 0) {
                 await addProducts({ date, images: productImagesToAdd });
             }
-            refetchQuery(['weekly-products', date]);
+            refetchQuery(['weekly-products', 'all']);
         } catch(error) {
             console.error(error);
         }
