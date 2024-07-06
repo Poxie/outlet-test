@@ -1,4 +1,5 @@
 import PageBanner from "../page-banner";
+import CurrentWeekProducts from "./CurrentWeekProducts";
 
 export default function VeckansVaror() {
     return(
@@ -9,6 +10,9 @@ export default function VeckansVaror() {
                     { text: 'Veckans varor', href: '/veckans-varor' },
                 ]}
             />
+            <div className="p-5">
+                <CurrentWeekProducts />
+            </div>
         </main>
     )
 }
