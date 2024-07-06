@@ -40,3 +40,13 @@ next-env.d.ts
 # backend
 backend/node_modules
 backend/.env
+
+# admin
+admin/.env.development
+admin/.env.production
+admin/.env.test
+
+admin/node_modules
+admin/.next/
+admin/out/
+admin/build/
