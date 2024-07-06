@@ -1,17 +1,19 @@
+"use client";
+import { useQuery } from "@tanstack/react-query";
 import PageBanner from "../page-banner";
 import ProductHeader from "../product-page/ProductHeader";
 import ProductList from "../product-page/ProductList";
 import SicklaNotice from "../sickla-notice";
+import getCurrentWeeksProducts from "@/api/weekly-products/getCurrentWeeksProducts";
 
-// These would be dynamically fetch from the API
-const PRODUCTS = [
-    "/images/weekly-products/1.png",
-    "/images/weekly-products/2.png",
-    "/images/weekly-products/3.png",
-    "/images/weekly-products/4.png",
-    "/images/weekly-products/5.png",
-]
 export default function VeckansVaror() {
+    const { data: products } = useQuery({
+        queryKey: ['weeklyProducts'],
+        queryFn: getCurrentWeeksProducts,
+    })
+
+    if(!products) return null;
+
     return(
         <main>
             <div className="pb-8 main-width relative">
@@ -27,7 +29,7 @@ export default function VeckansVaror() {
                 />
                 <ProductList 
                     className="mt-4"
-                    products={PRODUCTS}
+                    products={products}
                 />
             </div>
             <SicklaNotice />

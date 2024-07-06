@@ -10,3 +10,8 @@ export type Product = {
     parentId: string;
     imageURL: string;
 }
+export type WeeklyProduct = {
+    id: number;
+    imageURL: string;
+    date: string;
+}
