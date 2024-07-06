@@ -1,3 +1,4 @@
+import auth from '@/middlewares/auth';
 import asyncHandler from '@/utils/asyncHandler';
 import { StatusCodes } from '@/utils/errors/statusCodes';
 import ImageHandler from '@/utils/images/imageHandler';
@@ -24,7 +25,7 @@ router.get('/:date?', asyncHandler(async (req, res, next) => {
     res.json(products);
 }))
 
-router.post('/:date?', asyncHandler(async (req, res) => {
+router.post('/:date?', auth, asyncHandler(async (req, res) => {
     const { images } = req.body;
     const { date } = req.params;
     const dateString = date || WeeklyProductsUtils.getCurrentWeek();
@@ -62,7 +63,7 @@ router.post('/:date?', asyncHandler(async (req, res) => {
     res.json(allProducts);
 }))
 
-router.delete('/', asyncHandler(async (req, res) => {
+router.delete('/', auth, asyncHandler(async (req, res) => {
     const { productIds } = req.body;
 
     deleteWeeklyProductsSchema.parse({ productIds });

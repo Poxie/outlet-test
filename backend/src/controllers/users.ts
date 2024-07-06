@@ -1,3 +1,4 @@
+import auth from '@/middlewares/auth';
 import asyncHandler from '@/utils/asyncHandler';
 import { UserNotFoundError } from '@/utils/errors/userErrors';
 import UserMutations from '@/utils/users/userMutations';
@@ -7,7 +8,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.post('/', asyncHandler(async (req, res, next) => {
+router.post('/', auth, asyncHandler(async (req, res, next) => {
     const { name, email, password } = req.body;
 
     createUserSchema.parse({ name, email, password });
@@ -17,7 +18,7 @@ router.post('/', asyncHandler(async (req, res, next) => {
     res.json(user);
 }))
 
-router.get('/:id', asyncHandler(async (req, res, next) => {
+router.get('/:id', auth, asyncHandler(async (req, res, next) => {
     const { id } = req.params;
 
     const user = await UserQueries.getUserById(id);
@@ -26,7 +27,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
     res.json(user);
 }))
 
-router.patch('/:id', asyncHandler(async (req, res, next) => {
+router.patch('/:id', auth, asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const data = req.body;
 

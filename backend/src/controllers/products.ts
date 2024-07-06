@@ -1,3 +1,4 @@
+import auth from '@/middlewares/auth';
 import asyncHandler from '@/utils/asyncHandler';
 import { CategoryNotFound } from '@/utils/categories/categoryErrors';
 import CategoryQueries from '@/utils/categories/categoryQueries';
@@ -21,7 +22,7 @@ router.get('/:productId', asyncHandler(async (req, res) => {
     res.json(product);
 }))
 
-router.post('/', asyncHandler(async (req, res) => {
+router.post('/', auth, asyncHandler(async (req, res) => {
     const data = req.body;
 
     createProductSchema
@@ -55,7 +56,7 @@ router.post('/', asyncHandler(async (req, res) => {
     res.json(products);
 }))
 
-router.delete('/', asyncHandler(async (req, res) => {
+router.delete('/', auth, asyncHandler(async (req, res) => {
     const { productIds } = req.body;
 
     deleteProductsSchema.parse({ productIds });
