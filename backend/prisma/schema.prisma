@@ -33,3 +33,9 @@ model Product {
   imageURL String
   parentId String
 }
+
+model WeeklyProduct {
+  id       String @id
+  imageURL String
+  date     String
+}
