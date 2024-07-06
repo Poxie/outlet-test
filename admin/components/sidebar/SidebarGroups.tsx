@@ -4,7 +4,7 @@ import DiscountIcon from "@/assets/icons/DiscountIcon";
 import PeopleIcon from "@/assets/icons/PeopleIcon";
 import StoresIcon from "@/assets/icons/StoresIcon";
 
-const ICON_SIZE = 20;
+const ICON_SIZE = 24;
 const GROUPS = [
     {
         items: [
