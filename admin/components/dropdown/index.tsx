@@ -64,7 +64,10 @@ export default function Dropdown({ activeItemId, items, onChange }: {
                     >
                         {items.map(item => {
                             const props = {
-                                className: "w-full p-2 block text-left hover:bg-secondary active:bg-tertiary transition-colors rounded-md",
+                                className: twMerge(
+                                    "w-full p-2 block text-left hover:bg-secondary active:bg-tertiary transition-colors rounded-md",
+                                    item.id === activeItemId && 'bg-secondary',
+                                ),
                                 onClick: () => handleClick(item.id),
                             }
 
