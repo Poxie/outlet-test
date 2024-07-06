@@ -22,7 +22,7 @@ export default function HasChangesNotice({ onCancel, onConfirm, hasChanges, load
                         </span>
                         <div className="flex gap-2">
                             <button 
-                                className="p-3 text-sm hover:bg-secondary active:bg-tertiary transition-colors"
+                                className="p-3 text-sm hover:bg-secondary active:bg-tertiary transition-colors rounded-md"
                                 disabled={loading}
                                 onClick={onCancel}
                             >
