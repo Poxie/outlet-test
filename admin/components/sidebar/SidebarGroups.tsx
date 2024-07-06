@@ -27,11 +27,11 @@ export type SidebarItem = typeof GROUPS[number]['items'][number];
 export default function SidebarGroups() {
     return(
         <nav>
-            {GROUPS.map(group => (
+            {GROUPS.map((group, key) => (
                 <SidebarGroup 
                     title={group.title}
                     items={group.items}
-                    key={group.title}
+                    key={key}
                 />
             ))}
         </nav>
