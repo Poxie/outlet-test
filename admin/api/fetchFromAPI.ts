@@ -6,6 +6,7 @@ export default async function fetchFromAPI<T>(path: string, options: RequestInit
             'Content-Type': 'application/json',
             ...options.headers,
         },
+        next: { revalidate: 0 },
     });
     if(res.status === 204) return;
 
