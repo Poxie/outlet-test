@@ -10,6 +10,11 @@ declare global {
             JWT_SECRET: string;
         }
     }
+    namespace Express {
+        interface Locals {
+            userId: string | undefined;
+        }
+    }
 }
 
 export {};

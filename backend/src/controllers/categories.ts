@@ -1,3 +1,4 @@
+import auth from '@/middlewares/auth';
 import asyncHandler from '@/utils/asyncHandler';
 import { CategoryNotFound } from '@/utils/categories/categoryErrors';
 import CategoryMutations from '@/utils/categories/categoryMutations';
@@ -13,7 +14,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.post('/', asyncHandler(async (req, res, next) => {
+router.post('/', auth, asyncHandler(async (req, res, next) => {
     const data: {
         title: string;
         description: string;
@@ -87,7 +88,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
     res.json(category);
 }))
 
-router.patch('/:id', asyncHandler(async (req, res, next) => {
+router.patch('/:id', auth, asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const data = req.body;
 
@@ -119,7 +120,7 @@ router.patch('/:id', asyncHandler(async (req, res, next) => {
     res.json(category);
 }))
 
-router.delete('/:id', asyncHandler(async (req, res, next) => {
+router.delete('/:id', auth, asyncHandler(async (req, res, next) => {
     const { id } = req.params;
 
     await CategoryMutations.deleteCategory(id);

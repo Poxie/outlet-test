@@ -1,4 +1,5 @@
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import dotenv from 'dotenv';
 import router from './routes';
@@ -15,6 +16,7 @@ app.use(cors({
 app.use(express.json({
     limit: '50mb',
 }));
+app.use(cookieParser());
 
 // Add routes to application
 app.use(router);
