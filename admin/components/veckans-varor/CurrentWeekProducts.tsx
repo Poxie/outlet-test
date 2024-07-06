@@ -7,12 +7,12 @@ import { getCurrentDealDateString } from "@/utils";
 import Section from "../section";
 
 export default function CurrentWeekProducts() {
-    const { data: products, isLoading } = useQuery({
+    const { data: productWeek } = useQuery({
         queryKey: ['weekly-products', 'current'],
         queryFn: getCurrentWeekProducts,
     })
 
-    if(isLoading || !products) return null;
+    if(!productWeek) return null;
 
     return(
         <>
@@ -23,7 +23,7 @@ export default function CurrentWeekProducts() {
                 className="mb-2"
             />
             <Section className="grid grid-cols-8 gap-2">
-                {products.map(product => (
+                {productWeek.products.map(product => (
                     <Image 
                         alt=""
                         width={200}
