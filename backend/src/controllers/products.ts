@@ -1,11 +1,13 @@
 import asyncHandler from '@/utils/asyncHandler';
+import { CategoryNotFound } from '@/utils/categories/categoryErrors';
+import CategoryQueries from '@/utils/categories/categoryQueries';
 import { StatusCodes } from '@/utils/errors/statusCodes';
 import ImageHandler from '@/utils/images/imageHandler';
 import { ProductNotFoundError } from '@/utils/products/productErrors';
 import ProductMutations from '@/utils/products/productMutations';
 import ProductQueries from '@/utils/products/productQueries';
 import ProductUtils from '@/utils/products/productUtils';
-import { createProductSchema } from '@/validation/productShemas';
+import { createProductSchema, deleteProductsSchema } from '@/validation/productShemas';
 import express from 'express';
 
 const router = express.Router();
@@ -26,29 +28,48 @@ router.post('/', asyncHandler(async (req, res) => {
         .strict()
         .parse(data);
 
-    const id = await ProductUtils.generateProductId();
+    // Check if parent category exists
+    const category = await CategoryQueries.getCategoryById(data.parentId);
+    if(!category) throw new CategoryNotFound();
 
-    // Upload product image
-    const imageURL = await ImageHandler.uploadImage(
-        data.image,
-        `categories/${data.parentId}/${id}`,
-    )
+    // Upload images for each product
+    const productsData = await Promise.all(data.images.map(async (image: string) => {
+        const id = await ProductUtils.generateProductId();
 
-    const product = await ProductMutations.createProduct({
-        id,
-        imageURL,
-        parentId: data.parentId,
-    });
+        const imageURL = await ImageHandler.uploadImage(
+            image,
+            `categories/${data.parentId}/${id}`,
+        );
 
-    res.json(product);
+        return { 
+            id, 
+            imageURL,
+            parentId: data.parentId,
+        };
+    }))
+
+    await ProductMutations.createProducts(productsData);
+
+    const products = await ProductQueries.getProductsByParentId(data.parentId);
+
+    res.json(products);
 }))
 
-router.delete('/:productId', asyncHandler(async (req, res) => {
-    const { productId } = req.params;
+router.delete('/', asyncHandler(async (req, res) => {
+    const { productIds } = req.body;
 
-    await ImageHandler.deleteImage(`categories/${productId}`);
+    deleteProductsSchema.parse({ productIds });
 
-    await ProductMutations.deleteProduct(productId);
+    try {
+        await Promise.all(productIds.map(async (productId: string) => {
+            ImageHandler.deleteImage(`categories/${productId}`);
+        }));
+    } catch(error) {
+        // Log error somewhere for later investigation
+        console.error(error);
+    }
+
+    await ProductMutations.deleteProducts(productIds);
 
     res.status(StatusCodes.NO_CONTENT).send();
 }))

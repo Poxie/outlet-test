@@ -4,12 +4,30 @@ import { ProductNotFoundError } from "./productErrors";
 import { Product } from "@prisma/client";
 
 export default class ProductMutations {
+    static async createProducts(data: Product[]) {
+        const products = await client.product.createMany({
+            data,
+        });
+
+        return products;
+    }
+
     static async createProduct(data: Product) {
         const product = await client.product.create({
             data,
         });
 
         return product;
+    }
+
+    static async deleteProducts(ids: string[]) {
+        await client.product.deleteMany({
+            where: {
+                id: {
+                    in: ids,
+                }
+            }
+        });
     }
 
     static async deleteProduct(id: string) {
