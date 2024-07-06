@@ -21,7 +21,7 @@ export const useSidebar = () => {
 
 export const COLLAPSE_SIDEBAR_WIDTH = 1024;
 export default function Sidebar() {
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(false);
 
     useEffect(() => {
         const onResize = () => {
