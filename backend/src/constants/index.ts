@@ -1,0 +1,1 @@
+export const MAX_COOKIE_AGE = 1000 * 60 * 60 * 24 * 30; // 1 month

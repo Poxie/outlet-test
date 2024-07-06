@@ -10,6 +10,7 @@ const app = express();
 // Apply fetch options
 app.use(cors({
     origin: process.env.CLIENT_URL,
+    credentials: true,
 }));
 app.use(express.json({
     limit: '50mb',

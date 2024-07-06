@@ -12,4 +12,13 @@ export default class UserQueries {
 
         return UserUtils.formatUser(user);
     }
+    static async getUserByEmail(email: string) {
+        const user = await client.user.findUnique({
+            where: {
+                email,
+            }
+        });
+
+        return user;
+    }
 }
