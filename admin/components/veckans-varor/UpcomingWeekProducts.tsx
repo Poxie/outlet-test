@@ -4,6 +4,7 @@ import SectionHeader from "../section-header";
 import getUpcomingWeekProducts from "@/api/weekly-products/getUpcomingWeekProducts";
 import ArrowIcon from "@/assets/icons/ArrowIcon";
 import Link from "next/link";
+import Section from "../section";
 
 export default function UpcomingWeekProducts() {
     const { data: weeks } = useQuery({
@@ -19,7 +20,7 @@ export default function UpcomingWeekProducts() {
             title="Upcoming weeks"
             className="mt-8 mb-2"
         />
-        <div className="p-5 grid gap-2 bg-primary rounded-md">
+        <Section className="grid gap-2">
             {weeks.map(week => (
                 <Link 
                     className="p-4 flex justify-between border-[1px] border-tertiary hover:bg-secondary transition-colors rounded-md"
@@ -44,7 +45,7 @@ export default function UpcomingWeekProducts() {
                     </div>
                 </Link>
             ))}
-        </div>
+        </Section>
         </>
     )
 }
