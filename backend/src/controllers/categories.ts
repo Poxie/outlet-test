@@ -49,6 +49,7 @@ router.post('/', auth, asyncHandler(async (req, res, next) => {
 
 router.get('/', asyncHandler(async (req, res, next) => {
     const withProducts = req.query.withProducts === 'true';
+    const withProductCounts = req.query.withProductCounts === 'true';
 
     const categories = await CategoryQueries.getCategories();
     if(withProducts) {
@@ -64,6 +65,20 @@ router.get('/', asyncHandler(async (req, res, next) => {
 
         res.json(categoriesWithProducts);
         return;
+    }
+    if(withProductCounts) {
+        const categoriesWithProductCounts = await Promise.all(
+            categories.map(async category => {
+                const productCount = await CategoryQueries.getProductCount(category.id);
+                return {
+                    ...category,
+                    productCount,
+                }
+            })
+        );
+
+        res.json(categoriesWithProductCounts);
+        return
     }
 
     res.json(categories);

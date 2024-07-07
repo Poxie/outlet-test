@@ -15,4 +15,14 @@ export default class CategoryQueries {
 
         return category;
     }
+
+    static async getProductCount(categoryId: string) {
+        const count = await client.product.count({
+            where: {
+                parentId: categoryId,
+            }
+        });
+
+        return count;
+    }
 }
