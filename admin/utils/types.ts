@@ -12,3 +12,9 @@ export type WeeklyProduct = {
     imageURL: string;
     date: string;
 }
+export type ProductCategory = {
+    id: string;
+    title: string;
+    description: string;
+    productCount: number;
+}

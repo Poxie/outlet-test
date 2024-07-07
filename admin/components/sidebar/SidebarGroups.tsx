@@ -9,7 +9,7 @@ const GROUPS = [
     {
         items: [
             { text: 'Veckans varor', path: '/veckans-varor', icon: <DiscountIcon size={ICON_SIZE} /> },
-            { text: 'Products', path: '/products', icon: <ProductsIcon size={ICON_SIZE} /> },
+            { text: 'Products', path: '/produkter', icon: <ProductsIcon size={ICON_SIZE} /> },
         ]
     },
     {
