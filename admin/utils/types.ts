@@ -19,3 +19,11 @@ export type ProductCategory = {
     bannerURL: string;
     productCount: number;
 }
+type Product = {
+    id: string;
+    parentId: string;
+    imageURL: string;
+}
+export type CategoryWithProducts = ProductCategory & {
+    products: Product[];
+}
