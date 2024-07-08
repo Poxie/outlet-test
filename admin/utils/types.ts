@@ -16,5 +16,6 @@ export type ProductCategory = {
     id: string;
     title: string;
     description: string;
+    bannerURL: string;
     productCount: number;
 }
