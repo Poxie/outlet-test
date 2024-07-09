@@ -10,18 +10,22 @@ export default function UserTableRowMenu({ user, self }: {
     self: User;
 }) {
     const canEdit = self.id === user.id || self.role === 'ADMINISTRATOR';
+    const canRemove = self.role === 'ADMINISTRATOR' && self.id !== user.id;
 
     const firstGroup: MenuGroup = [
         { text: 'View user', icon: <PersonIcon size={16} />, href: `/people/${user.id}` },
         canEdit && { text: 'Edit user', icon: <EditIcon size={16} />, href: `/people/${user.id}` }
     ].filter(item => !!item);
 
+    const secondGroup: MenuGroup = [
+        { text: 'Delete user', type: 'danger', icon: <BinIcon size={16} /> }
+    ]
+
     const menuGroups: MenuGroup[] = [
         firstGroup,
-        [
-            { text: 'Delete user', type: 'danger', icon: <BinIcon size={16} /> }
-        ]
     ]
+
+    if(canRemove) menuGroups.push(secondGroup);
 
     return(
         <div className="flex justify-end">
