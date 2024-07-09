@@ -1,11 +1,13 @@
 import auth from '@/middlewares/auth';
 import asyncHandler from '@/utils/asyncHandler';
 import { UnauthorizedError } from '@/utils/errors/commonErrors';
+import { StatusCodes } from '@/utils/errors/statusCodes';
 import { UserNotFoundError } from '@/utils/errors/userErrors';
 import UserMutations from '@/utils/users/userMutations';
 import UserQueries from '@/utils/users/userQueries';
 import { createUserSchema } from '@/validation/userSchemas';
 import express from 'express';
+import { STATUS_CODES } from 'http';
 
 const router = express.Router();
 
@@ -66,6 +68,24 @@ router.patch('/:id', auth, asyncHandler(async (req, res, next) => {
     const user = await UserMutations.updateUser(id, data);
 
     res.json(user);
+}))
+
+router.delete('/:id', auth, asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+    const { isAdmin } = res.locals;
+
+    // If logged in user is not an admin, they cannot delete a user
+    if(!isAdmin) {
+        throw new UnauthorizedError();
+    }
+    // If the user is trying to delete themselves, throw an error
+    if(id === res.locals.userId) {
+        throw new UnauthorizedError();
+    }
+
+    await UserMutations.deleteUser(id);
+
+    res.status(StatusCodes.NO_CONTENT).send();
 }))
 
 export default router;

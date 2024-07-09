@@ -3,7 +3,7 @@ import client from "@/client";
 import { User } from "@prisma/client";
 import UserUtils from "./userUtils";
 import { PrismaCodes } from '../errors/prismaCodes';
-import { EmailTakenError } from '../errors/userErrors';
+import { EmailTakenError, UserNotFoundError } from '../errors/userErrors';
 import { MutableUserProps, WithOptional } from '../types';
 
 export default class UserMutations {
@@ -48,5 +48,20 @@ export default class UserMutations {
         });
 
         return UserUtils.formatUser(user);
+    }
+
+    static async deleteUser(id: string) {
+        try {
+            await client.user.delete({
+                where: {
+                    id,
+                }
+            })
+        } catch(error: any) {
+            if(error.code === PrismaCodes.RECORD_NOT_FOUND) {
+                throw new UserNotFoundError();
+            }
+            throw error;
+        }
     }
 }
