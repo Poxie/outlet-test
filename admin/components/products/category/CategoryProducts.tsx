@@ -1,17 +1,17 @@
-import Image from "next/image";
-import { useCategory } from "."
 import { TEMP_PREFIX } from "@/utils/constants";
 import { useRef } from "react";
 import CategoryProduct from "./CategoryProduct";
-import { Product } from "@/utils/types";
+import { CategoryWithProducts, Product } from "@/utils/types";
 
-export default function CategoryProducts() {
-    const { category, updateCategory } = useCategory();
-
+export default function CategoryProducts({ category, updateProps }: {
+    category: CategoryWithProducts;
+    updateProps: (changes: Partial<CategoryWithProducts>) => void;
+}) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const removeProduct = (productId: string) => {
-        updateCategory('products', category.products.filter(product => product.id !== productId));
+        const newProducts = category.products.filter(product => product.id !== productId);
+        updateProps({ products: newProducts });
     }
 
     const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +39,9 @@ export default function CategoryProducts() {
 
                 // If we have gone through all files, update the category
                 if(newProducts.length >= files.length) {
-                    updateCategory('products', [...category.products, ...newProducts]);
+                    updateProps({
+                        products: [...category.products, ...newProducts],
+                    })
                 }
             }
 

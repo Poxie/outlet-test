@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { useCategory } from ".";
 import Button from "@/components/button";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { CategoryWithProducts } from "@/utils/types";
 
-export default function CategoryBanner() {
-    const { category, updateCategory } = useCategory();
-
+export default function CategoryBanner({ category, updateProps }: {
+    category: CategoryWithProducts;
+    updateProps: (changes: Partial<CategoryWithProducts>) => void;
+}) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +16,7 @@ export default function CategoryBanner() {
         
         const reader = new FileReader();
         reader.onloadend = () => {
-            updateCategory('bannerURL', reader.result);
+            updateProps({ bannerURL: reader.result as string });
         }
 
         reader.readAsDataURL(file);

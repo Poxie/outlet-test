@@ -1,24 +1,24 @@
 import Input from "@/components/input";
-import { useCategory } from ".";
-import { useState } from "react";
+import { CategoryWithProducts } from "@/utils/types";
 
-export default function CategoryText() {
-    const { category, updateCategory } = useCategory();
-
+export default function CategoryText({ category, updateProps }: {
+    category: CategoryWithProducts;
+    updateProps: (changes: Partial<CategoryWithProducts>) => void;
+}) {
     return(
         <>
         <Input 
             label="Category name"
             placeholder="Category name"
             value={category.title}
-            onChange={text => updateCategory('title', text)}
+            onChange={title => updateProps({ title })}
         />
         <Input 
             containerClassName="mt-3"
             label="Category description"
             placeholder="Category description"
             value={category.description}
-            onChange={text => updateCategory('description', text)}
+            onChange={description => updateProps({ description })}
             textArea
         />
         </>

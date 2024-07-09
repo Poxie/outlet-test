@@ -14,23 +14,8 @@ import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 import useAddCategoryProducts from "@/hooks/categories/useAddCategoryProducts";
 import Feedback from "@/components/feedback";
 import useFeedback from "@/hooks/useFeedback";
+import { TEMP_PREFIX } from "@/utils/constants";
 
-type UpdateCategoryFn = (property: keyof CategoryWithProducts, value: any) => void;
-
-const CategoryContext = React.createContext<null | {
-    category: CategoryWithProducts;
-    updateCategory: UpdateCategoryFn;
-}>(null);
-
-export const useCategory = () => {
-    const context = React.useContext(CategoryContext);
-    if(!context) {
-        throw new Error('useCategory must be used within a CategoryProvider');
-    }
-    return context;
-}
-
-export const TEMP_IMAGE_PREFIX = 'temp_';
 export default function Category({ categoryId }: {
     categoryId: string;
 }) {
@@ -52,7 +37,7 @@ export default function Category({ categoryId }: {
     }, [category]);
     
     // While fetching category, if not already prefetched
-    if(!category ||!currentCategory) {
+    if(!category || !currentCategory) {
         return null
     }
 
@@ -93,7 +78,7 @@ export default function Category({ categoryId }: {
             }
 
             // Check for products to add
-            const productsToAdd = products.filter(product => product.id.startsWith(TEMP_IMAGE_PREFIX));
+            const productsToAdd = products.filter(product => product.id.startsWith(TEMP_PREFIX));
             const productImagestoAdd = productsToAdd.map(product => product.imageURL);
 
             // Pushing add products request
@@ -134,26 +119,26 @@ export default function Category({ categoryId }: {
     const getHasChanges = () => Object.keys(getChanges()).length > 0;
 
     // Update & display has changes notice
-    const updateCategory: UpdateCategoryFn = (property, value) => {
+    const updateProps = (changes: Partial<CategoryWithProducts>) => {
         setCurrentCategory(prev => {
             if(!prev) return prev;
 
-            return {
+            return{
                 ...prev,
-                [property]: value,
+                ...changes,
             }
         })
-        clearFeedback()
+        clearFeedback();
     }
 
     const loading = loadingUpdate || loadingDelete || loadingAdd;
 
     const value = {
         category: currentCategory,
-        updateCategory,
+        updateProps,
     }
     return(
-        <CategoryContext.Provider value={value}>
+        <>
             <PageBanner 
                 steps={[
                     { text: 'Start', href: '/' },
@@ -173,22 +158,25 @@ export default function Category({ categoryId }: {
                     className="mb-2"
                 />
                 <Section>
-                    <CategoryInformation />
+                    <CategoryInformation {...value} />
                 </Section>
                 <SectionHeader
                     title="Products"
                     className="mt-5 mb-2"
                 />
                 <Section>
-                    <CategoryProducts />
+                    <CategoryProducts 
+                        {...value}
+                    />
                 </Section>
+
+                <HasChangesNotice 
+                    onCancel={reset}
+                    onConfirm={handleSubmit}
+                    hasChanges={getHasChanges()}
+                    loading={loading}
+                />
             </main>
-            <HasChangesNotice 
-                onCancel={reset}
-                onConfirm={handleSubmit}
-                hasChanges={getHasChanges()}
-                loading={loading}
-            />
-        </CategoryContext.Provider>
+        </>
     )
 }
