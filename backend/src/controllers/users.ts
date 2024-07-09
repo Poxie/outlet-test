@@ -15,11 +15,14 @@ router.get('/', auth, asyncHandler(async (req, res, next) => {
 }))
 
 router.post('/', auth, asyncHandler(async (req, res, next) => {
-    const { name, email, password } = req.body;
+    const data = createUserSchema.strict().parse(req.body);
+    
+    // If the user is not an admin, they cannot create a user
+    if(!res.locals.isAdmin) {
+        throw new UnauthorizedError();
+    }
 
-    createUserSchema.parse({ name, email, password });
-
-    const user = await UserMutations.createUser({ name, email, password });
+    const user = await UserMutations.createUser(data);
 
     res.json(user);
 }))

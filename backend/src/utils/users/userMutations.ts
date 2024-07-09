@@ -4,9 +4,10 @@ import { User } from "@prisma/client";
 import UserUtils from "./userUtils";
 import { PrismaCodes } from '../errors/prismaCodes';
 import { EmailTakenError } from '../errors/userErrors';
+import { MutableUserProps, WithOptional } from '../types';
 
 export default class UserMutations {
-    static async createUser({ email, name, password }: Pick<User, 'name' | 'email' | 'password'>) {
+    static async createUser({ email, name, password, role }: WithOptional<MutableUserProps, 'role'>) {
         if(!process.env.BCRYPT_SALT_ROUNDS) throw new Error('BCRYPT_SALT_ROUNDS not set');
 
         const id = await UserUtils.generateUserId();
@@ -19,6 +20,7 @@ export default class UserMutations {
                     id,
                     email,
                     name,
+                    role,
                     password: hashedPassword,
                     createdAt: new Date().getTime().toString(),
                 }
