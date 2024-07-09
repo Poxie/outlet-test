@@ -14,7 +14,7 @@ export default function Button({ children, className, disabled, onClick, href, t
         type === 'primary' && 'text-light bg-c-primary hover:bg-c-primary-accent',
         type === 'secondary' && 'text-primary bg-secondary hover:bg-tertiary',
         type === 'transparent' && 'hover:bg-secondary active:bg-tertiary',
-        disabled && 'bg-c-primary-accent cursor-not-allowed',
+        disabled && 'cursor-not-allowed',
         className,
     )
 
