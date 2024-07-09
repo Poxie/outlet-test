@@ -35,12 +35,12 @@ export default function UsersTable() {
             </table>
             {isEmpty && (
                 <span className="block p-8 text-center">
-                    No results matching "{search}"
+                    {`No results matching "${search}"`}
                 </span>
             )}
             {!isEmpty && search && (
                 <span className="block p-4 text-sm border-t-[1px] border-t-tertiary">
-                    Showing {FilteredUsers.length} results for "{search}"
+                    {`Showing {FilteredUsers.length} results for "${search}"`}
                 </span>
             )}
         </div>
