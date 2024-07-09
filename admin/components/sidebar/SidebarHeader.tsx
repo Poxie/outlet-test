@@ -17,7 +17,7 @@ export default function SidebarHeader() {
             {!collapsed && (
                 <Image 
                     src="/logo.png"
-                    width={210}
+                    width={190}
                     height={31}
                     alt="Logo"
                     priority={true}

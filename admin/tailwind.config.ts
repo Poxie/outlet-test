@@ -53,7 +53,7 @@ const config: Config = {
         modal: '600px',
       },
       height: {
-        'sidebar-header': '72px',
+        'sidebar-header': '68px',
       },
       minWidth: {
         menu: '200px',
