@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageBanner from "@/components/page-banner";
 import useGetUserById from "@/hooks/users/useGetUserById";
 import UserInformation from "./UserInformation";
@@ -8,12 +8,17 @@ import Section from "@/components/section";
 import SectionHeader from "@/components/section-header";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import UserAccess from "./UserAccess";
+import useChanges from "@/hooks/useChanges";
+import HasChangesNotice from "@/components/has-changes-notice";
 
-export const UserContext = React.createContext<null | {
+type Context = {
+    updateUserProps: (changes: Partial<UserObject>) => void;
     user: UserObject;
     self: UserObject;
     isSelf: boolean;
-}>(null);
+}
+
+export const UserContext = React.createContext<null | Context>(null);
 
 export const useUser = () => {
     const context = React.useContext(UserContext);
@@ -28,11 +33,40 @@ export default function User({ userId }: {
     const { data: user } = useGetUserById(userId);
     const { data: self } = useCurrentUser();
 
-    if(!user || !self) return null;
+    const [currentUser, setCurrentUser] = useState(user);
+
+    const { changes, hasChanges } = useChanges(currentUser, user);
+    
+    useEffect(() => {
+        if(user) setCurrentUser(user);
+    }, [user]);
+
+    if(!user || !currentUser || !self) return null;
+
+    // Reset to inital state
+    const reset = () => setCurrentUser(user);
+
+    // Function to make a request to the backend to update the user
+    const updateUser = async () => {
+        // Make the request here
+    }
+
+    // Function to update the temporary user object
+    const updateUserProps: Context['updateUserProps'] = (changes) => {
+        setCurrentUser(prev => {
+            if(!prev) return prev;
+
+            return {
+                ...prev,
+                ...changes,
+            }
+        });
+    }
 
     const isSelf = self.id === user.id;
     const value = { 
-        user, 
+        updateUserProps,
+        user: currentUser, 
         self,
         isSelf,
     };
@@ -64,6 +98,13 @@ export default function User({ userId }: {
                 <Section>
                     <UserAccess />
                 </Section>
+                
+                <HasChangesNotice 
+                    hasChanges={hasChanges}
+                    loading={false}
+                    onCancel={reset}
+                    onConfirm={updateUser}
+                />
             </main>
         </UserContext.Provider>
     )

@@ -2,7 +2,7 @@ import Input from "@/components/input"
 import { useUser } from "."
 
 export default function UserInformation() {
-    const { user, self } = useUser();
+    const { user, self, updateUserProps } = useUser();
 
     const canEdit = self.id === user.id || self.role === 'ADMINISTRATOR';
     return(
@@ -10,14 +10,14 @@ export default function UserInformation() {
             <Input 
                 label="Full name"
                 value={user.name}
-                onChange={() => {}}
+                onChange={name => updateUserProps({ name })}
                 containerClassName="flex-1"
                 disabled={!canEdit}
             />
             <Input 
                 label="Email"
                 value={user.email}
-                onChange={() => {}}
+                onChange={email => updateUserProps({ email })}
                 containerClassName="flex-1"
                 disabled={!canEdit}
             />
