@@ -3,9 +3,9 @@ export default function useChanges<T extends Record<string, any>>(previousObject
         return { changes: {}, hasChanges: false };
     }
 
-    const changes = Object.entries(newObject).reduce((acc, [key, value]) => {
+    const changes = Object.entries(previousObject).reduce((acc, [key, value]) => {
         const Key = key as keyof T;
-        if (previousObject[Key] !== value) {
+        if (newObject[Key] !== value) {
             acc[Key] = value;
         }
         return acc;
