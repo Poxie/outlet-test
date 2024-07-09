@@ -1,5 +1,6 @@
 import client from "@/client";
 import UserUtils from "./userUtils";
+import { ADMIN_ROLE } from "./userConstants";
 
 export default class UserQueries {
     static async getUsers() {
@@ -24,5 +25,14 @@ export default class UserQueries {
         });
 
         return user;
+    }
+    static async isAdmin(userId: string) {
+        const user = await client.user.findUnique({
+            where: {
+                id: userId,
+            }
+        });
+
+        return user?.role === ADMIN_ROLE;
     }
 }

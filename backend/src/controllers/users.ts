@@ -1,5 +1,6 @@
 import auth from '@/middlewares/auth';
 import asyncHandler from '@/utils/asyncHandler';
+import { UnauthorizedError } from '@/utils/errors/commonErrors';
 import { UserNotFoundError } from '@/utils/errors/userErrors';
 import UserMutations from '@/utils/users/userMutations';
 import UserQueries from '@/utils/users/userQueries';
@@ -39,12 +40,20 @@ router.get('/:id', auth, asyncHandler(async (req, res, next) => {
 
 router.patch('/:id', auth, asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const data = req.body;
+    const { isAdmin } = res.locals
 
-    createUserSchema
+    const data = createUserSchema
         .strict()
         .partial()
-        .parse(data);
+        .parse(req.body);
+
+    // If updating the role, make sure the user is an admin and not themselves
+    if(
+        data.role && 
+        (!isAdmin || id === res.locals.userId)
+    ) {
+        throw new UnauthorizedError();
+    }
 
     const user = await UserMutations.updateUser(id, data);
 

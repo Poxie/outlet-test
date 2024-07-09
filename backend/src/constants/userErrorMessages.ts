@@ -10,6 +10,7 @@ export const UserErrorMessages = {
     passwordIsRequired: "Password is required",
     minPasswordLength: `Password must be at least ${PASSWORD_MIN_LENGTH} characters long`,
     maxPasswordLength: `Password must be at least ${PASSWORD_MAX_LENGTH} characters long`,
+    invalidRole: "Invalid role",
 
     userNotFound: "User not found",
     emailTaken: "Email is already taken",
