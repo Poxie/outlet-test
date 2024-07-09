@@ -7,6 +7,7 @@ import { User as UserObject } from "@/utils/types";
 import Section from "@/components/section";
 import SectionHeader from "@/components/section-header";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import UserAccess from "./UserAccess";
 
 export const UserContext = React.createContext<null | {
     user: UserObject;
@@ -55,6 +56,13 @@ export default function User({ userId }: {
                 />
                 <Section>
                     <UserInformation />
+                </Section>
+                <SectionHeader 
+                    title="Access"
+                    className="mt-4 mb-2"
+                />
+                <Section>
+                    <UserAccess />
                 </Section>
             </main>
         </UserContext.Provider>

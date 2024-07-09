@@ -47,12 +47,14 @@ const config: Config = {
         main: '1100px',
         sidebar: '300px',
         menu: '200px',
+        dropdown: '220px',
       },
       height: {
         'sidebar-header': '72px',
       },
       minWidth: {
         menu: '200px',
+        dropdown: '220px',
       },
       maxWidth: {
         main: '90%',
