@@ -35,7 +35,7 @@ export default function UsersTable() {
             </table>
             {isEmpty && (
                 <span className="block p-8 text-center">
-                    No results matching the search
+                    No results matching "{search}"
                 </span>
             )}
             {!isEmpty && search && (
