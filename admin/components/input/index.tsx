@@ -1,7 +1,7 @@
 import { HTMLInputTypeAttribute } from "react";
 import { twMerge } from "tailwind-merge";
 
-export default function Input({ onChange, containerClassName, className, placeholder, value, label, textArea, type='text' }: {
+export default function Input({ onChange, containerClassName, className, placeholder, value, label, textArea, disabled, type='text' }: {
     containerClassName?: string;
     className?: string;
     placeholder?: string;
@@ -10,6 +10,7 @@ export default function Input({ onChange, containerClassName, className, placeho
     label?: string
     value?: string;
     textArea?: boolean;
+    disabled?: boolean;
 }) {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         onChange(e.target.value);
@@ -26,6 +27,7 @@ export default function Input({ onChange, containerClassName, className, placeho
         ),
         placeholder,
         value,
+        disabled,
     }
 
     return(
