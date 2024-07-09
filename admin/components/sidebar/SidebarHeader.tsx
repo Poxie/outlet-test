@@ -20,6 +20,7 @@ export default function SidebarHeader() {
                     width={210}
                     height={31}
                     alt="Logo"
+                    priority={true}
                 />
             )}
         </div>
