@@ -97,7 +97,7 @@ export default function Dropdown<T extends string>({ activeItemId, items, onChan
                                 )
                             }
                             return(
-                                <li>
+                                <li key={item.text}>
                                     <button {...props}>
                                         {item.text}
                                     </button>
