@@ -1,7 +1,7 @@
 import PageBanner from "../page-banner";
 import Section from "../section";
 import SectionHeader from "../section-header";
-import CategoryList from "./CategoryList";
+import CategoryTable from "./CategoryTable";
 
 export default function Products() {
     return(
@@ -18,7 +18,7 @@ export default function Products() {
                     title="Active categories"
                 />
                 <Section className="mt-2 p-0">
-                    <CategoryList />
+                    <CategoryTable />
                 </Section>
             </div>
         </main>
