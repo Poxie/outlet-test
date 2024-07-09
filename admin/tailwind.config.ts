@@ -4,6 +4,8 @@ const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./contexts/**/*.{js,ts,jsx,tsx,mdx}",
+    "./modals/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -48,6 +50,7 @@ const config: Config = {
         sidebar: '300px',
         menu: '200px',
         dropdown: '220px',
+        modal: '600px',
       },
       height: {
         'sidebar-header': '72px',
