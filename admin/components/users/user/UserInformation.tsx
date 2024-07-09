@@ -10,6 +10,7 @@ export default function UserInformation() {
             <Input 
                 label="Full name"
                 value={user.name}
+                placeholder="Full name"
                 onChange={name => updateUserProps({ name })}
                 containerClassName="flex-1"
                 disabled={!canEdit}
@@ -17,6 +18,7 @@ export default function UserInformation() {
             <Input 
                 label="Email"
                 value={user.email}
+                placeholder="Email adress"
                 onChange={email => updateUserProps({ email })}
                 containerClassName="flex-1"
                 disabled={!canEdit}
