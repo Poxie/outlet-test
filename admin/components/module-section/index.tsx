@@ -18,7 +18,10 @@ export default function ModuleSection({ children, className, title, defaultExpan
             className,
         )}>
             <button 
-                className="p-4 w-full flex items-center gap-2 font-medium text-left hover:bg-secondary border-b-[1px] border-b-tertiary transition-colors"
+                className={twMerge(
+                    "p-4 w-full flex items-center gap-2 font-medium text-left hover:bg-secondary transition-colors",
+                    expanded && "border-b-[1px] border-b-tertiary",
+                )}
                 onClick={toggleExpanded}
             >
                 <ArrowIcon 
