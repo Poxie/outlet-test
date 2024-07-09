@@ -16,6 +16,8 @@ export default function Products() {
             <div className="p-5">
                 <SectionHeader 
                     title="Active categories"
+                    buttonText="Add category"
+                    buttonHref="/produkter/create"
                 />
                 <Section className="mt-2 p-0">
                     <CategoryTable />

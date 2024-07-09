@@ -1,5 +1,5 @@
 import { PERSONNEL_ROLE } from "./constants";
-import { User } from "./types";
+import { CategoryWithProducts, User } from "./types";
 
 export const getEmptyUserObject: () => User = () => ({
     id: 'temp-id',
@@ -7,4 +7,12 @@ export const getEmptyUserObject: () => User = () => ({
     email: '',
     role: PERSONNEL_ROLE,
     createdAt: new Date().getTime().toString(),
+})
+export const getEmptyCategoryObject: () => CategoryWithProducts = () => ({
+    id: 'temp-id',
+    title: '',
+    description: '',
+    bannerURL: '',
+    productCount: 0,
+    products: [],
 })

@@ -24,6 +24,9 @@ export type ProductCategory = {
     bannerURL: string;
     productCount: number;
 }
+export type MutableCategoryProps = Pick<ProductCategory, 'title' | 'description'> & {
+    banner: string;
+};
 export type Product = {
     id: string;
     parentId: string;

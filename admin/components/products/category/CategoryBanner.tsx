@@ -21,6 +21,8 @@ export default function CategoryBanner({ category, updateProps }: {
 
         reader.readAsDataURL(file);
     }
+
+    const openFileInput = () => fileInputRef.current?.click();
     
     return(
         <div className="md:w-[390px] aspect-video">
@@ -39,20 +41,32 @@ export default function CategoryBanner({ category, updateProps }: {
                     accept=".jpg,.jpeg,.png"
                     ref={fileInputRef}
                 />
-                <Image
-                    className="w-full aspect-video object-cover" 
-                    src={category.bannerURL}
-                    width={400}
-                    height={200}
-                    alt=""
-                />
-                <Button 
-                    type="secondary"
-                    className="py-3 absolute top-2 right-2 text-sm"
-                    onClick={() => fileInputRef.current?.click()}
-                >
-                    Edit banner
-                </Button>
+                {category.bannerURL && (
+                    <>
+                    <Image
+                        className="w-full aspect-video object-cover" 
+                        src={category.bannerURL}
+                        width={400}
+                        height={200}
+                        alt=""
+                    />
+                    <Button 
+                        type="secondary"
+                        className="py-3 absolute top-2 right-2 text-sm"
+                        onClick={openFileInput}
+                    >
+                        Edit banner
+                    </Button>
+                    </>
+                )}
+                {!category.bannerURL && (
+                    <button 
+                        className="w-full aspect-video"
+                        onClick={openFileInput}
+                    >
+                        Add banner
+                    </button>
+                )}
             </div>
         </div>
     )
