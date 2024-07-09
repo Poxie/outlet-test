@@ -20,20 +20,24 @@ export default function CategoryProducts() {
         const files = event.target.files;
         if(!files) return;
 
+        // Create a new product for each file
         const newProducts: Product[] = [];
 
+        // Looping through files to create base64 image URLs
         for(const file of Array.from(files)) {
             const fileReader = new FileReader();
 
             fileReader.onload = async () => {
                 const imageURL = fileReader.result as string;
 
+                // Push temporary product to newProducts
                 newProducts.push({
                     id: `${TEMP_PREFIX}${Math.random()}`,
                     parentId: category.id,
                     imageURL,
                 });
 
+                // If we have gone through all files, update the category
                 if(newProducts.length >= files.length) {
                     updateCategory('products', [...category.products, ...newProducts]);
                 }
