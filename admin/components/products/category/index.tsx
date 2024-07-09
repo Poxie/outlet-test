@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Section from "@/components/section";
 import SectionHeader from "@/components/section-header";
 import CategoryInformation from "./CategoryInformation";
@@ -16,6 +16,7 @@ import Feedback from "@/components/feedback";
 import useFeedback from "@/hooks/useFeedback";
 import { TEMP_PREFIX } from "@/utils/constants";
 import useChanges from "@/hooks/useChanges";
+import useUpdateProps from "@/hooks/useUpdateProps";
 
 export default function Category({ categoryId }: {
     categoryId: string;
@@ -28,15 +29,10 @@ export default function Category({ categoryId }: {
 
     const { data: category } = useGetCategoryById(categoryId);
 
-    const [currentCategory, setCurrentCategory] = useState(category);
+    const { state: currentCategory, updateProps, resetProps } = useUpdateProps(category);
 
     const { changes, hasChanges } = useChanges(currentCategory, category);
     const { feedback, setFeedback, clearFeedback } = useFeedback();
-
-    // Make sure currentCategory is up to date
-    useEffect(() => {
-        setCurrentCategory(category);
-    }, [category]);
     
     // While fetching category, if not already prefetched
     if(!category || !currentCategory) {
@@ -101,25 +97,6 @@ export default function Category({ categoryId }: {
         // Refetch category
         refetchQuery(['category', categoryId]);
     }
-    
-    // Reset category
-    const reset = () => {
-        setCurrentCategory(category);
-        clearFeedback()
-    }
-
-    // Update & display has changes notice
-    const updateProps = (changes: Partial<CategoryWithProducts>) => {
-        setCurrentCategory(prev => {
-            if(!prev) return prev;
-
-            return{
-                ...prev,
-                ...changes,
-            }
-        })
-        clearFeedback();
-    }
 
     const loading = loadingUpdate || loadingDelete || loadingAdd;
 
@@ -161,7 +138,7 @@ export default function Category({ categoryId }: {
                 </Section>
 
                 <HasChangesNotice 
-                    onCancel={reset}
+                    onCancel={resetProps}
                     onConfirm={handleSubmit}
                     hasChanges={hasChanges}
                     loading={loading}
