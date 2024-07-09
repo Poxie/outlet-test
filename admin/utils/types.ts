@@ -19,7 +19,7 @@ export type ProductCategory = {
     bannerURL: string;
     productCount: number;
 }
-type Product = {
+export type Product = {
     id: string;
     parentId: string;
     imageURL: string;
