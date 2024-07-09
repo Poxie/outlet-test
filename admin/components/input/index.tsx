@@ -1,3 +1,4 @@
+import LockIcon from "@/assets/icons/LockIcon";
 import { HTMLInputTypeAttribute } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -40,17 +41,25 @@ export default function Input({ onChange, containerClassName, className, placeho
                     {label}
                 </label>
             )}
-            {!textArea && (
-                <input 
-                    {...props}
-                />
-            )}
-            {textArea && (
-                <textarea
-                    style={{ minHeight: 120 }} 
-                    {...props}
-                />
-            )}
+            <div className="relative">
+                {!textArea && (
+                    <input 
+                        {...props}
+                    />
+                )}
+                {textArea && (
+                    <textarea
+                        style={{ minHeight: 120 }} 
+                        {...props}
+                    />
+                )}
+                {disabled && (
+                    <LockIcon 
+                        size={18}
+                        className="absolute right-4 top-2/4 -translate-y-2/4"
+                    />
+                )}
+            </div>
         </div>
     )
 }
