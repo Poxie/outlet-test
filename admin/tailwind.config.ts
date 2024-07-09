@@ -15,6 +15,8 @@ const config: Config = {
         quaternary: '#DBDBDB',
         'c-primary': '#E73128',
         'c-primary-accent': '#C92E26',
+        danger: '#FF0000',
+        success: '#00FF00',
       },
       textColor: {
         primary: '#0f172a',
@@ -28,6 +30,8 @@ const config: Config = {
         tertiary: '#E7E7E7',
         quaternary: '#DBDBDB',
         'text-primary': '#0f172a',
+        danger: '#FF0000',
+        success: '#00FF00',
       },
       fill: {
         light: '#fff',
