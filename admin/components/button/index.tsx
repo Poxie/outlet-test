@@ -6,13 +6,14 @@ export default function Button({ children, className, disabled, onClick, href, t
     className?: string;
     onClick?: () => void;
     disabled?: boolean;
-    type?: 'primary' | 'secondary';
+    type?: 'primary' | 'secondary' | 'transparent';
     href?: string;
 }) {
     className = twMerge(
         "p-4 transition-colors rounded-md",
         type === 'primary' && 'text-light bg-c-primary hover:bg-c-primary-accent',
         type === 'secondary' && 'text-primary bg-secondary hover:bg-tertiary',
+        type === 'transparent' && 'hover:bg-secondary active:bg-tertiary',
         disabled && 'bg-c-primary-accent cursor-not-allowed',
         className,
     )

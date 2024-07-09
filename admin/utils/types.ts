@@ -1,6 +1,9 @@
+export type UserRole = 'ADMINISTRATOR' | 'PERSONNEL';
 export type User = {
+    id: string;
     name: string;
     email: string;
+    role: UserRole;
 }
 export type WeeklyProductGroup = {
     date: string;
