@@ -12,7 +12,7 @@ export default class UserUtils {
         return id;
     }
 
-    static async formatUser(user: User) {
+    static formatUser(user: User) {
         const { password, ...rest } = user;
         return rest;
     }

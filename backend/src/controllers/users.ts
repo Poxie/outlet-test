@@ -8,6 +8,11 @@ import express from 'express';
 
 const router = express.Router();
 
+router.get('/', auth, asyncHandler(async (req, res, next) => {
+    const users = await UserQueries.getUsers();
+    res.json(users);
+}))
+
 router.post('/', auth, asyncHandler(async (req, res, next) => {
     const { name, email, password } = req.body;
 
