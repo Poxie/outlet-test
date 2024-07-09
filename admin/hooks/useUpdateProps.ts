@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function useUpdateProps<T>(initialState: T, options?: {
     onUpdate?: () => void;
+    onReset?: () => void;
 }) {
     const [state, setState] = useState(initialState);
 
@@ -18,6 +19,7 @@ export default function useUpdateProps<T>(initialState: T, options?: {
     }
     function resetProps() {
         setState(initialState);
+        options?.onReset?.();
     }
 
     return { state, updateProps, resetProps };
