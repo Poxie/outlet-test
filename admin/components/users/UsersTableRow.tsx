@@ -7,6 +7,7 @@ export default function UsersTableRow({ user, self }: {
 }) {
     const userInitials = user.name.split(' ').map(name => name[0]).join('');
     const userRole = user.role.slice(0,1) + user.role.slice(1).toLowerCase();
+    const userAddedAt = new Date(parseInt(user.createdAt)).toLocaleDateString();
     const canEdit = self.role === 'ADMINISTRATOR' || self.id === user.id;
 
     const tdClassName = 'p-4';
@@ -27,6 +28,7 @@ export default function UsersTableRow({ user, self }: {
             </td>
             <td className={tdClassName}>{user.email}</td>
             <td className={tdClassName}>{userRole}</td>
+            <td className={tdClassName}>{userAddedAt}</td>
             <td className={tdClassName}>
                 {canEdit && (
                     <div className="flex justify-end">

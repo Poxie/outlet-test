@@ -4,6 +4,7 @@ import Button from "../button";
 import UsersTableRow from "./UsersTableRow";
 import Input from "../input";
 import { useState } from "react";
+import UsersTableHead from "./UsersTableHead";
 
 export default function UsersTable() {
     const { users } = useUsers();
@@ -21,22 +22,7 @@ export default function UsersTable() {
     return(
         <div>
             <table className="w-full">
-                <thead>
-                    <tr className="text-sm text-left border-b-[1px] border-b-tertiary">
-                        <th className="px-5 py-4">Name</th>
-                        <th className="px-5 py-4">Email</th>
-                        <th className="px-5 py-4">Role</th>
-                        <th className="px-5 py-4">
-                            <div className="flex justify-end">
-                                <Input 
-                                    onChange={setSearch}
-                                    placeholder="Search name or email"
-                                    className="w-[260px] -m-3 px-2.5 py-2 font-medium" 
-                                />
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
+                <UsersTableHead setSearch={setSearch} />
                 <tbody className="divide-y-[1px] divide-secondary">
                     {FilteredUsers.map(user => (
                         <UsersTableRow 
