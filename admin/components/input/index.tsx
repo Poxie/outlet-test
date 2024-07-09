@@ -21,7 +21,7 @@ export default function Input({ onChange, containerClassName, className, placeho
         id: inputId,
         onChange: handleChange,
         className: twMerge(
-            "p-4 w-full border-[1px] border-tertiary rounded",
+            "p-4 w-full block border-[1px] border-tertiary rounded",
             className,
         ),
         placeholder,
