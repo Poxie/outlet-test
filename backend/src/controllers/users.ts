@@ -43,12 +43,17 @@ router.get('/:id', auth, asyncHandler(async (req, res, next) => {
 
 router.patch('/:id', auth, asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const { isAdmin } = res.locals
+    const { isAdmin, userId } = res.locals
 
     const data = createUserSchema
         .strict()
         .partial()
         .parse(req.body);
+
+    // If the user is updating someone else, make sure they are an admin
+    if(!isAdmin && id !== res.locals.userId) {
+        throw new UnauthorizedError();
+    }
 
     // If updating the role, make sure the user is an admin and not themselves
     if(
