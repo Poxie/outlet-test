@@ -58,6 +58,7 @@ const config: Config = {
       minWidth: {
         menu: '200px',
         dropdown: '220px',
+        sidebar: '300px',
       },
       maxWidth: {
         main: '90%',
