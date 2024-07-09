@@ -4,11 +4,19 @@ import EditIcon from "@/assets/icons/EditIcon";
 import BinIcon from "@/assets/icons/BinIcon";
 import { User } from "@/utils/types";
 import MenuIcon from "@/assets/icons/MenuIcon";
+import { useModal } from "@/contexts/modal";
+import DeleteUserModal from "@/modals/delete-user";
 
 export default function UserTableRowMenu({ user, self }: {
     user: User;
     self: User;
 }) {
+    const { setModal } = useModal();
+
+    const openDeleteModal = () => {
+        setModal(<DeleteUserModal user={user} />)
+    }
+
     const canEdit = self.id === user.id || self.role === 'ADMINISTRATOR';
     const canRemove = self.role === 'ADMINISTRATOR' && self.id !== user.id;
 
@@ -18,7 +26,7 @@ export default function UserTableRowMenu({ user, self }: {
     ].filter(item => !!item);
 
     const secondGroup: MenuGroup = [
-        { text: 'Delete user', type: 'danger', icon: <BinIcon size={16} /> }
+        { text: 'Delete user', type: 'danger', icon: <BinIcon size={16} />, onClick: openDeleteModal },
     ]
 
     const menuGroups: MenuGroup[] = [
