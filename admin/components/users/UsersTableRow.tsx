@@ -9,7 +9,7 @@ export default function UsersTableRow({ user, self }: {
     const userRole = user.role.slice(0,1) + user.role.slice(1).toLowerCase();
     const canEdit = self.role === 'ADMINISTRATOR' || self.id === user.id;
 
-    const tdClassName = 'px-4 py-2.5';
+    const tdClassName = 'p-4';
     return (
         <tr className="divide-y-[1px] divide-secondary">
             <td className={tdClassName}>
@@ -32,7 +32,7 @@ export default function UsersTableRow({ user, self }: {
                     <div className="flex justify-end">
                         <Button 
                             type="transparent"
-                            className="py-2.5 px-3"
+                            className="-my-2.5 -mx-1 py-2.5 px-3 text-sm"
                             href={`/people/${user.id}`}
                         >
                             Edit user
