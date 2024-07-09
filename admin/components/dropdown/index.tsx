@@ -6,15 +6,15 @@ import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import useClickOutside from "@/hooks/useClickOutside";
 
-export type DropdownItem = {
-    id: string;
+export type DropdownItem<T = string> = {
+    id: T;
     text: string;
     href?: string;
 }
-export default function Dropdown({ activeItemId, items, onChange, className, label, disabled, disabledIcon }: {
+export default function Dropdown<T extends string>({ activeItemId, items, onChange, className, label, disabled, disabledIcon }: {
     activeItemId: string;
-    items: DropdownItem[];
-    onChange?: (id: string) => void;
+    items: DropdownItem<T>[];
+    onChange?: (id: T) => void;
     className?: string;
     label?: string;
     disabled?: boolean;
@@ -25,7 +25,7 @@ export default function Dropdown({ activeItemId, items, onChange, className, lab
     const ref = useRef<HTMLDivElement>(null);
     useClickOutside(ref, () => setIsOpen(false));
 
-    const handleClick = (id: string) => {
+    const handleClick = (id: T) => {
         if(onChange) onChange(id);
         setIsOpen(false);
     }
