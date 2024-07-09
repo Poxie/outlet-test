@@ -13,7 +13,7 @@ export default async function MainLayout({ children }: {
     if(!user) return null;
 
     return(
-        <div className="min-h-screen flex">
+        <div className="min-h-screen flex items-start">
             <Sidebar />
             <div className="flex-1">
                 {children}

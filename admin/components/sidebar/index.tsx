@@ -47,8 +47,9 @@ export default function Sidebar() {
     return(
         <SidebarContext.Provider value={value}>
             <div className={twMerge(
-                "bg-primary border-r-[1px] border-r-tertiary",
-                !collapsed && "absolute w-full h-full md:w-sidebar md:h-[unset] md:static",
+                "z-50 h-screen top-0 bg-primary border-r-[1px] border-r-tertiary",
+                !collapsed && "fixed w-full md:w-sidebar md:sticky",
+                collapsed && 'sticky',
             )}>
                 <SidebarHeader />
                 <div className="p-5">
