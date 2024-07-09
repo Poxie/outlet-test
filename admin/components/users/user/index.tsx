@@ -10,6 +10,8 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import UserAccess from "./UserAccess";
 import useChanges from "@/hooks/useChanges";
 import HasChangesNotice from "@/components/has-changes-notice";
+import useUpdateUser from "@/hooks/users/useUpdateUser";
+import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 
 type Context = {
     updateUserProps: (changes: Partial<UserObject>) => void;
@@ -30,6 +32,10 @@ export const useUser = () => {
 export default function User({ userId }: {
     userId: string;
 }) {
+    const refetchQuery = useRefetchQuery();
+
+    const { mutateAsync, isPending } = useUpdateUser(userId);
+
     const { data: user } = useGetUserById(userId);
     const { data: self } = useCurrentUser();
 
@@ -48,7 +54,14 @@ export default function User({ userId }: {
 
     // Function to make a request to the backend to update the user
     const updateUser = async () => {
-        // Make the request here
+        try {
+            await mutateAsync({ changes });
+
+            // Refetch the user data
+            refetchQuery(['user', userId]);
+        } catch(error) {
+            console.error(error);
+        }
     }
 
     // Function to update the temporary user object
@@ -101,7 +114,7 @@ export default function User({ userId }: {
                 
                 <HasChangesNotice 
                     hasChanges={hasChanges}
-                    loading={false}
+                    loading={isPending}
                     onCancel={reset}
                     onConfirm={updateUser}
                 />
