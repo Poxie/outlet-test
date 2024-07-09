@@ -1,9 +1,5 @@
+import { FeedbackProps } from "@/hooks/useFeedback";
 import { twMerge } from "tailwind-merge";
-
-export type FeedbackProps = {
-    type: 'danger' | 'success';
-    message: string;
-}
 
 export default function Feedback({ type, message, className }: FeedbackProps & {
     className?: string;
