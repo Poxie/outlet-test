@@ -22,14 +22,14 @@ export default function CategoryBanner() {
     }
     
     return(
-        <div className="w-[390px] aspect-video">
+        <div className="md:w-[390px] aspect-video">
             <label 
                 className="block mb-1 font-medium"
                 htmlFor="banner"
             >
                 Category banner
             </label>
-            <div className="relative">
+            <div className="relative border-[1px] border-tertiary rounded-md overflow-hidden">
                 <input 
                     id="banner"
                     type="file"
@@ -39,7 +39,7 @@ export default function CategoryBanner() {
                     ref={fileInputRef}
                 />
                 <Image
-                    className="w-full aspect-video object-cover rounded-md" 
+                    className="w-full aspect-video object-cover" 
                     src={category.bannerURL}
                     width={400}
                     height={200}

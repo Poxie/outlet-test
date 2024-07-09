@@ -61,7 +61,16 @@ export default function Category({ categoryId }: {
 
         // Update category information, if any changes
         if(Object.keys(rest).length > 0) {
-            await updateCategoryAPI({ changes: rest });
+            // Update bannerURL key to banner, as backend expects
+            const propsToUpdateObj = Object.entries(rest).map(([key, value]) => {
+                if(key === 'bannerURL') {
+                    return ['banner', value];
+                }
+                return [key, value];
+            })
+            const changes = Object.fromEntries(propsToUpdateObj) as Partial<ProductCategory>;
+
+            await updateCategoryAPI({ changes });
         }
 
         // Update products, if any changes
