@@ -8,6 +8,9 @@ import { CategoryWithProducts, ProductCategory } from "@/utils/types";
 import PageBanner from "@/components/page-banner";
 import HasChangesNotice from "@/components/has-changes-notice";
 import CategoryProducts from "./CategoryProducts";
+import useUpdateCategory from "@/hooks/categories/useUpdateCategory";
+import useDeleteCategoryProducts from "@/hooks/categories/useDeleteCategoryProducts";
+import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 
 type UpdateCategoryFn = (property: keyof CategoryWithProducts, value: any) => void;
 
@@ -28,9 +31,15 @@ export const TEMP_IMAGE_PREFIX = 'temp_';
 export default function Category({ categoryId }: {
     categoryId: string;
 }) {
+    const refetchQuery = useRefetchQuery();
+
+    const { mutateAsync: updateCategoryAPI } = useUpdateCategory(categoryId);
+    const { mutateAsync: deleteProductsAPI } = useDeleteCategoryProducts(categoryId);
+
     const { data: category } = useGetCategoryById(categoryId);
 
     const [currentCategory, setCurrentCategory] = useState(category);
+    const [loading, setLoading] = useState(false);
 
     // Make sure currentCategory is up to date
     useEffect(() => {
@@ -43,8 +52,34 @@ export default function Category({ categoryId }: {
     }
 
     // Submitting updates
-    const handleSubmit = () => {
-        console.log('Submit');
+    const handleSubmit = async () => {
+        const changes = getChanges();
+        
+        // Separate products from category information
+        const { products, ...rest } = changes;
+
+        setLoading(true);
+
+        // Update category information, if any changes
+        if(Object.keys(rest).length > 0) {
+            await updateCategoryAPI({ changes: rest });
+        }
+
+        // Update products, if any changes
+        if(products) {
+            const previousProductIds = category.products.map(product => product.id);
+            const newProductIds = products.map(product => product.id);
+            const productIdsToRemove = previousProductIds.filter(id => !newProductIds.includes(id));
+
+            // Remove products
+            if(productIdsToRemove.length > 0) {
+                await deleteProductsAPI({ productIds: productIdsToRemove });
+            }
+        }
+
+        // Refetch category
+        refetchQuery(['category', categoryId]);
+        setLoading(false);
     }
     
     // Reset category
@@ -58,7 +93,7 @@ export default function Category({ categoryId }: {
             return category[key as keyof CategoryWithProducts] !== value;
         });
 
-        return Object.fromEntries(changes);
+        return Object.fromEntries(changes) as Partial<CategoryWithProducts>;
     }
     const getHasChanges = () => Object.keys(getChanges()).length > 0;
 
@@ -107,7 +142,7 @@ export default function Category({ categoryId }: {
                 onCancel={reset}
                 onConfirm={handleSubmit}
                 hasChanges={getHasChanges()}
-                loading={false}
+                loading={loading}
             />
         </CategoryContext.Provider>
     )
