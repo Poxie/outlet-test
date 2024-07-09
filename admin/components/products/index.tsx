@@ -5,13 +5,14 @@ import CategoryList from "./CategoryList";
 
 export default function Products() {
     return(
+        <>
+        <PageBanner 
+            steps={[
+                { text: 'Start', href: '/' },
+                { text: 'Products', href: '/produkter' },
+            ]}
+        />
         <main>
-            <PageBanner 
-                steps={[
-                    { text: 'Start', href: '/' },
-                    { text: 'Products', href: '/produkter' },
-                ]}
-            />
             <div className="p-5">
                 <SectionHeader 
                     title="Active categories"
@@ -21,5 +22,6 @@ export default function Products() {
                 </Section>
             </div>
         </main>
+        </>
     )
 }

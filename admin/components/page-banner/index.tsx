@@ -8,7 +8,7 @@ export default function PageBanner({ steps }: {
     }[];
 }) {
     return(
-        <div className="h-sidebar-header p-5 z-50 sticky top-0 flex items-center gap-1 bg-primary border-b-[1px] border-b-tertiary">
+        <header className="h-sidebar-header p-5 z-50 sticky top-0 flex items-center gap-1 bg-primary border-b-[1px] border-b-tertiary">
             {steps.map((step, index) => (
                 <React.Fragment key={step.text}>
                     {index !== 0 && (
@@ -23,6 +23,6 @@ export default function PageBanner({ steps }: {
                     </Link>
                 </React.Fragment>
             ))}
-        </div>
+        </header>
     )
 }

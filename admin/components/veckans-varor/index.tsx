@@ -14,13 +14,14 @@ export default function VeckansVaror() {
     if(!allWeeks) return null;
 
     return(
+        <>
+        <PageBanner 
+            steps={[
+                { text: 'Start', href: '/' },
+                { text: 'Veckans varor', href: '/veckans-varor' },
+            ]}
+        />
         <main>
-            <PageBanner 
-                steps={[
-                    { text: 'Start', href: '/' },
-                    { text: 'Veckans varor', href: '/veckans-varor' },
-                ]}
-            />
             <div className="p-5">
                 <CurrentWeekProducts 
                     week={allWeeks[0]}
@@ -30,5 +31,6 @@ export default function VeckansVaror() {
                 />
             </div>
         </main>
+        </>
     )
 }

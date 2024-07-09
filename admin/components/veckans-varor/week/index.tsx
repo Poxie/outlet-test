@@ -34,14 +34,15 @@ export default function WeeksProducts({ date }: {
         href: `/veckans-varor/${week.date}`,
     }));
     return(
+        <>
+        <PageBanner 
+            steps={[
+                { text: 'Start', href: '/' },
+                { text: 'Veckans varor', href: '/veckans-varor' },
+                { text: getWeekText(productWeek), href: `/veckans-varor/${productWeek.date}` },
+            ]}
+        />
         <main>
-            <PageBanner 
-                steps={[
-                    { text: 'Start', href: '/' },
-                    { text: 'Veckans varor', href: '/veckans-varor' },
-                    { text: getWeekText(productWeek), href: `/veckans-varor/${productWeek.date}` },
-                ]}
-            />
             <div className="p-5">
                 <div className="mb-2 flex items-center justify-between">
                     <SectionHeader 
@@ -60,5 +61,6 @@ export default function WeeksProducts({ date }: {
                 </Section>
             </div>
         </main>
+        </>
     )
 }
