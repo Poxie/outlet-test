@@ -29,6 +29,7 @@ export default function Input({ onChange, containerClassName, className, placeho
         placeholder,
         value,
         disabled,
+        type,
     }
 
     return(
