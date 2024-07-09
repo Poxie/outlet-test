@@ -1,3 +1,4 @@
+import { twMerge } from "tailwind-merge";
 import { useSidebar } from ".";
 import SidebarGroupItem from "./SidebarGroupItem";
 import { SidebarItem } from "./SidebarGroups";
@@ -9,7 +10,10 @@ export default function SidebarGroup({ title, items }: {
     const { collapsed } = useSidebar();
 
     return(
-        <div className="mb-6 first:-mt-2.5">
+        <div className={twMerge(
+            "mb-3 first:-mt-2.5",
+            collapsed && 'pt-3 first:pt-0',
+        )}>
             {title && !collapsed && (
                 <span className="text-sm text-muted font-semibold">
                     {title}

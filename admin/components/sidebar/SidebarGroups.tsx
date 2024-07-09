@@ -3,6 +3,8 @@ import SidebarGroup from "./SidebarGroup";
 import DiscountIcon from "@/assets/icons/DiscountIcon";
 import PeopleIcon from "@/assets/icons/PeopleIcon";
 import StoresIcon from "@/assets/icons/StoresIcon";
+import { useSidebar } from ".";
+import { twMerge } from "tailwind-merge";
 
 const ICON_SIZE = 24;
 const GROUPS = [
@@ -25,8 +27,12 @@ export type SidebarGroup = typeof GROUPS[number];
 export type SidebarItem = typeof GROUPS[number]['items'][number];
 
 export default function SidebarGroups() {
+    const { collapsed } = useSidebar();
+
     return(
-        <nav>
+        <nav className={twMerge(
+            collapsed && "divide-y-[1px] divide-tertiary"
+        )}>
             {GROUPS.map((group, key) => (
                 <SidebarGroup 
                     title={group.title}
