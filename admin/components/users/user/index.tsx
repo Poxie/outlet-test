@@ -35,6 +35,7 @@ export default function User({ userId }: {
     
     const { feedback, setFeedback, clearFeedback } = useFeedback();
 
+    // State for user information
     const { 
         state: currentUser, 
         updateProps: updateUserProps, 
@@ -44,6 +45,7 @@ export default function User({ userId }: {
         onReset: clearFeedback, 
     });
 
+    // State for passwords
     const { 
         state: passwords, 
         updateProps: updatePasswordProps, 
@@ -53,8 +55,15 @@ export default function User({ userId }: {
         onReset: clearFeedback,
     });
 
-    const { changes: infoChanges, hasChanges: hasInfoChanges } = useChanges(currentUser, user);
-    const { changes: passwordChanges, hasChanges: hasPasswordChanges } = useChanges(passwords, DEFAULT_PASSWORDS);
+    // Detect changes in user info and passwords
+    const { 
+        changes: infoChanges, 
+        hasChanges: hasInfoChanges 
+    } = useChanges(currentUser, user);
+    const { 
+        changes: passwordChanges, 
+        hasChanges: hasPasswordChanges 
+    } = useChanges(passwords, DEFAULT_PASSWORDS);
 
     if(!user || !currentUser || !self) return null;
 
