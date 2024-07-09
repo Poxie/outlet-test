@@ -46,11 +46,11 @@ export default function ModalProvider({ children }: {
                 <AnimatePresence>
                     {modal && (
                         <motion.div
-                            initial={{ opacity: 0, scale: .8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: .8 }}
+                            initial={{ opacity: 0, scale: .8, translateY: '-50%', translateX: '-50%' }}
+                            animate={{ opacity: 1, scale: 1, translateY: '-50%', translateX: '-50%' }}
+                            exit={{ opacity: 0, scale: .8, translateY: '-50%', translateX: '-50%' }}
                             transition={{ bounce: false, duration: .2 }}
-                            className="pointer-events-auto"
+                            className="w-modal max-w-full pointer-events-auto absolute top-2/4 left-2/4"
                         >
                             <Modal>
                                 {modal}
