@@ -1,11 +1,11 @@
-import fetchFromAPI from "@/api/fetchFromAPI";
+import getCurrentUser from "@/api/users/getCurrentUser";
 import Sidebar from "@/components/sidebar";
 import { cookies } from "next/headers";
 
 export default async function MainLayout({ children }: {
     children: React.ReactNode;
 }) {
-    const user = await fetchFromAPI('/users/me', {
+    const user = await getCurrentUser({
         headers: {
             Cookie: cookies().toString(),
         }
