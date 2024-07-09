@@ -156,16 +156,15 @@ export default function User({ userId }: {
                         {...value}
                     />
                     {canEditPassword && (
-                        <ModuleSection 
-                            title="Update password"
-                            className="mt-4"
-                        >
-                            <UserPassword 
-                                password={passwords.password}
-                                repeatPassword={passwords.repeatPassword}
-                                updatePasswords={updatePasswords}
-                            />
-                        </ModuleSection>
+                        <div className="mt-4 pt-4 border-t-[1px] border-secondary">
+                            <ModuleSection title="Update password">
+                                <UserPassword 
+                                    password={passwords.password}
+                                    repeatPassword={passwords.repeatPassword}
+                                    updatePasswords={updatePasswords}
+                                />
+                            </ModuleSection>
+                        </div>
                     )}
                 </Section>
                 <SectionHeader 
