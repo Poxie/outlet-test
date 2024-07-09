@@ -12,7 +12,8 @@ import useUpdateCategory from "@/hooks/categories/useUpdateCategory";
 import useDeleteCategoryProducts from "@/hooks/categories/useDeleteCategoryProducts";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 import useAddCategoryProducts from "@/hooks/categories/useAddCategoryProducts";
-import Feedback, { FeedbackProps } from "@/components/feedback";
+import Feedback from "@/components/feedback";
+import useFeedback from "@/hooks/useFeedback";
 
 type UpdateCategoryFn = (property: keyof CategoryWithProducts, value: any) => void;
 
@@ -42,7 +43,8 @@ export default function Category({ categoryId }: {
     const { data: category } = useGetCategoryById(categoryId);
 
     const [currentCategory, setCurrentCategory] = useState(category);
-    const [feedback, setFeedback] = useState<null | FeedbackProps>(null);
+
+    const { feedback, setFeedback, clearFeedback } = useFeedback();
 
     // Make sure currentCategory is up to date
     useEffect(() => {
@@ -118,7 +120,7 @@ export default function Category({ categoryId }: {
     // Reset category
     const reset = () => {
         setCurrentCategory(category);
-        setFeedback(null);
+        clearFeedback()
     }
 
     // Function to get category changes
@@ -141,7 +143,7 @@ export default function Category({ categoryId }: {
                 [property]: value,
             }
         })
-        setFeedback(null);
+        clearFeedback()
     }
 
     const loading = loadingUpdate || loadingDelete || loadingAdd;
