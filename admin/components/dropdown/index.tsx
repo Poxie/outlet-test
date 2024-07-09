@@ -86,7 +86,7 @@ export default function Dropdown<T extends string>({ activeItemId, items, onChan
 
                             if(item.href) {
                                 return(
-                                    <li>
+                                    <li key={item.text}>
                                         <Link
                                             {...props}
                                             href={item.href}
