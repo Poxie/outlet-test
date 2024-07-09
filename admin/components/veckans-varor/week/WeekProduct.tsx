@@ -11,7 +11,7 @@ export default function WeekProduct({ onRemove, product: { id, imageURL } }: {
             <button 
                 onClick={() => onRemove(id)}
                 className="p-1 absolute top-2 right-2 bg-primary text-c-primary shadow-lg rounded"
-                aria-lable="Remove product"
+                aria-label="Remove product"
             >
                 <BinIcon size={20} />
             </button>
