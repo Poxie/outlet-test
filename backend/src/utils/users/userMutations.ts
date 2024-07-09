@@ -20,9 +20,10 @@ export default class UserMutations {
                     email,
                     name,
                     password: hashedPassword,
+                    createdAt: new Date().getTime().toString(),
                 }
             })
-            return user;
+            return UserUtils.formatUser(user);
         } catch(error: any) {
             if(error.code === PrismaCodes.RECORD_EXISTS) {
                 throw new EmailTakenError();
