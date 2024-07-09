@@ -12,6 +12,8 @@ import useChanges from "@/hooks/useChanges";
 import HasChangesNotice from "@/components/has-changes-notice";
 import useUpdateUser from "@/hooks/users/useUpdateUser";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
+import useFeedback from "@/hooks/useFeedback";
+import Feedback from "@/components/feedback";
 
 type Context = {
     updateUserProps: (changes: Partial<UserObject>) => void;
@@ -42,6 +44,7 @@ export default function User({ userId }: {
     const [currentUser, setCurrentUser] = useState(user);
 
     const { changes, hasChanges } = useChanges(currentUser, user);
+    const { feedback, setFeedback, clearFeedback } = useFeedback();
     
     useEffect(() => {
         if(user) setCurrentUser(user);
@@ -50,7 +53,10 @@ export default function User({ userId }: {
     if(!user || !currentUser || !self) return null;
 
     // Reset to inital state
-    const reset = () => setCurrentUser(user);
+    const reset = () => {
+        setCurrentUser(user);
+        clearFeedback();
+    }
 
     // Function to make a request to the backend to update the user
     const updateUser = async () => {
@@ -59,8 +65,11 @@ export default function User({ userId }: {
 
             // Refetch the user data
             refetchQuery(['user', userId]);
-        } catch(error) {
-            console.error(error);
+        } catch(error: any) {
+            setFeedback({
+                message: error.message,
+                type: 'danger',
+            })
         }
     }
 
@@ -74,6 +83,7 @@ export default function User({ userId }: {
                 ...changes,
             }
         });
+        clearFeedback();
     }
 
     const isSelf = self.id === user.id;
@@ -93,6 +103,12 @@ export default function User({ userId }: {
                 ]}
             />
             <main className="p-5">
+                {feedback && (
+                    <Feedback 
+                        {...feedback}
+                        className="mb-5"
+                    />
+                )}
                 <SectionHeader 
                     title={isSelf ? (
                         'Your profile'
