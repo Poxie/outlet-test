@@ -14,10 +14,17 @@ import useUpdateUser from "@/hooks/users/useUpdateUser";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 import useFeedback from "@/hooks/useFeedback";
 import Feedback from "@/components/feedback";
+import { ADMIN_ROLE } from "@/utils/constants";
+import UserPassword from "./UserPassword";
+import { getUserWithPassword } from "@/utils";
 
+type UserWithPassword = UserObject & { 
+    password: string;
+    repeatPassword: string; 
+};
 type Context = {
-    updateUserProps: (changes: Partial<UserObject>) => void;
-    user: UserObject;
+    updateUserProps: (changes: Partial<UserWithPassword>) => void;
+    user: UserWithPassword;
     self: UserObject;
     isSelf: boolean;
 }
@@ -38,17 +45,18 @@ export default function User({ userId }: {
 
     const { mutateAsync, isPending } = useUpdateUser(userId);
 
-    const { data: user } = useGetUserById(userId);
+    const { data: userWithoutPassword } = useGetUserById(userId);
     const { data: self } = useCurrentUser();
 
+    const user = getUserWithPassword(userWithoutPassword);
     const [currentUser, setCurrentUser] = useState(user);
 
     const { changes, hasChanges } = useChanges(currentUser, user);
     const { feedback, setFeedback, clearFeedback } = useFeedback();
     
     useEffect(() => {
-        if(user) setCurrentUser(user);
-    }, [user]);
+        if(userWithoutPassword) setCurrentUser(getUserWithPassword(userWithoutPassword));
+    }, [userWithoutPassword]);
 
     if(!user || !currentUser || !self) return null;
 
@@ -60,11 +68,27 @@ export default function User({ userId }: {
 
     // Function to make a request to the backend to update the user
     const updateUser = async () => {
+        // If passwords are provided, make sure they match
+        if(
+            (changes.password || changes.repeatPassword) &&
+            changes.password !== changes.repeatPassword
+        ) {
+            setFeedback({
+                message: 'Passwords do not match',
+                type: 'danger',
+            });
+            return;
+        }
+
+        // Strip unwanted properties
+        const { repeatPassword, ...userChanges } = changes;
+
         try {
-            await mutateAsync({ changes });
+            const newUser = await mutateAsync({ changes: userChanges });
 
             // Refetch the user data
             refetchQuery(['user', userId]);
+            setCurrentUser(getUserWithPassword(newUser));
         } catch(error: any) {
             setFeedback({
                 message: error.message,
@@ -87,6 +111,8 @@ export default function User({ userId }: {
     }
 
     const isSelf = self.id === user.id;
+    const canEditPassword = isSelf || self.role === ADMIN_ROLE;
+
     const value = { 
         updateUserProps,
         user: currentUser, 
@@ -119,6 +145,9 @@ export default function User({ userId }: {
                 />
                 <Section>
                     <UserInformation />
+                    {canEditPassword && (
+                        <UserPassword className="mt-4 pt-4 border-t-[1px] border-t-secondary" />
+                    )}
                 </Section>
                 <SectionHeader 
                     title="Access"
