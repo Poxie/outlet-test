@@ -14,9 +14,10 @@ export default function UsersTableHead({ setSearch }: {
                 <th className={thClassName}>
                     <div className="flex justify-end">
                         <Input 
-                        onChange={setSearch}
-                        placeholder="Search name or email"
-                        className="w-[260px] -m-3 px-2.5 py-2 font-medium" 
+                            onChange={setSearch}
+                            placeholder="Search name or email"
+                            containerClassName="w-[260px] -m-2"
+                            className="px-2.5 py-2 font-medium" 
                         />
                     </div>
                 </th>
