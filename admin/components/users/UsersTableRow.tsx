@@ -1,29 +1,13 @@
 import { User } from "@/utils/types"
-import Button from "../button";
-import Menu, { MenuGroup } from "../menu";
-import MenuIcon from "@/assets/icons/MenuIcon";
-import EditIcon from "@/assets/icons/EditIcon";
-import BinIcon from "@/assets/icons/BinIcon";
-import PersonIcon from "@/assets/icons/PersonIcon";
+import UserTableRowMenu from "./UserTableRowMenu";
 
 export default function UsersTableRow({ user, self }: {
     user: User;
     self: User;
 }) {
-    const menuGroups: MenuGroup[] = [
-        [
-            { text: 'View user', icon: <PersonIcon size={16} />, href: `/people/${user.id}` },
-            { text: 'Edit user', icon: <EditIcon size={16} />, href: `/people/${user.id}` },
-        ],
-        [
-            { text: 'Delete user', type: 'danger', icon: <BinIcon size={16} /> }
-        ]
-    ]
-
     const userInitials = user.name.split(' ').map(name => name[0]).join('');
     const userRole = user.role.slice(0,1) + user.role.slice(1).toLowerCase();
     const userAddedAt = new Date(parseInt(user.createdAt)).toLocaleDateString();
-    const canEdit = self.role === 'ADMINISTRATOR' || self.id === user.id;
 
     const tdClassName = 'p-4';
     return (
@@ -45,16 +29,10 @@ export default function UsersTableRow({ user, self }: {
             <td className={tdClassName}>{userRole}</td>
             <td className={tdClassName}>{userAddedAt}</td>
             <td className={tdClassName}>
-                {canEdit && (
-                    <div className="flex justify-end">
-                        <Menu 
-                            groups={menuGroups}
-                            className="w-8 aspect-square flex items-center justify-center"
-                        >
-                            <MenuIcon className="w-1" />
-                        </Menu>
-                    </div>
-                )}
+                <UserTableRowMenu 
+                    user={user}
+                    self={self}
+                />
             </td>
         </tr>
     )

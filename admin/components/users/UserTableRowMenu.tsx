@@ -1,0 +1,36 @@
+import PersonIcon from "@/assets/icons/PersonIcon";
+import Menu, { MenuGroup } from "../menu";
+import EditIcon from "@/assets/icons/EditIcon";
+import BinIcon from "@/assets/icons/BinIcon";
+import { User } from "@/utils/types";
+import MenuIcon from "@/assets/icons/MenuIcon";
+
+export default function UserTableRowMenu({ user, self }: {
+    user: User;
+    self: User;
+}) {
+    const canEdit = self.id === user.id || self.role === 'ADMINISTRATOR';
+
+    const firstGroup: MenuGroup = [
+        { text: 'View user', icon: <PersonIcon size={16} />, href: `/people/${user.id}` },
+        canEdit && { text: 'Edit user', icon: <EditIcon size={16} />, href: `/people/${user.id}` }
+    ].filter(item => !!item);
+
+    const menuGroups: MenuGroup[] = [
+        firstGroup,
+        [
+            { text: 'Delete user', type: 'danger', icon: <BinIcon size={16} /> }
+        ]
+    ]
+
+    return(
+        <div className="flex justify-end">
+            <Menu 
+                groups={menuGroups}
+                className="w-8 aspect-square flex items-center justify-center"
+            >
+                <MenuIcon className="w-1" />
+            </Menu>
+        </div>
+    )
+}
