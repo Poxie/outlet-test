@@ -17,6 +17,7 @@ import Feedback from "@/components/feedback";
 import { ADMIN_ROLE } from "@/utils/constants";
 import UserPassword from "./UserPassword";
 import ModuleSection from "@/components/module-section";
+import useUpdateProps from "@/hooks/useUpdateProps";
 
 const DEFAULT_PASSWORDS = {
     password: '',
@@ -31,26 +32,36 @@ export default function User({ userId }: {
 
     const { data: user } = useGetUserById(userId);
     const { data: self } = useCurrentUser();
+    
+    const { feedback, setFeedback, clearFeedback } = useFeedback();
 
-    const [currentUser, setCurrentUser] = useState(user);
-    const [passwords, setPasswords] = useState(DEFAULT_PASSWORDS)
+    const { 
+        state: currentUser, 
+        updateProps: updateUserProps, 
+        resetProps: resetInfo,
+    } = useUpdateProps(user, { 
+        onUpdate: clearFeedback,
+        onReset: clearFeedback, 
+    });
+
+    const { 
+        state: passwords, 
+        updateProps: updatePasswordProps, 
+        resetProps: resetPasswords,
+    } = useUpdateProps(DEFAULT_PASSWORDS, { 
+        onUpdate: clearFeedback,
+        onReset: clearFeedback,
+    });
 
     const { changes: infoChanges, hasChanges: hasInfoChanges } = useChanges(currentUser, user);
     const { changes: passwordChanges, hasChanges: hasPasswordChanges } = useChanges(passwords, DEFAULT_PASSWORDS);
 
-    const { feedback, setFeedback, clearFeedback } = useFeedback();
-    
-    useEffect(() => {
-        if(user) setCurrentUser(user);
-    }, [user]);
-
     if(!user || !currentUser || !self) return null;
 
-    // Reset to inital state
-    const reset = () => {
-        setPasswords(DEFAULT_PASSWORDS);
-        setCurrentUser(user);
-        clearFeedback();
+    // Resetting info and passwords
+    const handleReset = () => {
+        resetInfo();
+        resetPasswords();
     }
 
     // Function to make a request to the backend to update the user
@@ -82,8 +93,7 @@ export default function User({ userId }: {
 
             // Refetch the user data
             refetchQuery(['user', userId]);
-            setCurrentUser(newUser);
-            setPasswords(DEFAULT_PASSWORDS);
+            resetPasswords();
         } catch(error: any) {
             setFeedback({
                 message: error.message,
@@ -92,37 +102,13 @@ export default function User({ userId }: {
         }
     }
 
-    // Function to update the temporary user object
-    const updateProps = (changes: Partial<UserObject>) => {
-        setCurrentUser(prev => {
-            if(!prev) return prev;
-
-            return {
-                ...prev,
-                ...changes,
-            }
-        });
-        clearFeedback();
-    }
-
-    // Function to update the temporary passwords
-    const updatePasswords = (changes: Partial<{
-        password: string;
-        repeatPassword: string;
-    }>) => {
-        setPasswords(prev => ({
-            ...prev,
-            ...changes,
-        }))
-    }
-
     const isSelf = self.id === user.id;
     const canEditPassword = isSelf || self.role === ADMIN_ROLE;
 
     const hasChanges = hasInfoChanges || hasPasswordChanges;
 
     const value = { 
-        updateProps,
+        updateProps: updateUserProps,
         user: currentUser, 
         self,
         isSelf,
@@ -161,7 +147,7 @@ export default function User({ userId }: {
                                 <UserPassword 
                                     password={passwords.password}
                                     repeatPassword={passwords.repeatPassword}
-                                    updatePasswords={updatePasswords}
+                                    updatePasswords={updatePasswordProps}
                                 />
                             </ModuleSection>
                         </div>
@@ -180,7 +166,7 @@ export default function User({ userId }: {
                 <HasChangesNotice 
                     hasChanges={hasChanges}
                     loading={isPending}
-                    onCancel={reset}
+                    onCancel={handleReset}
                     onConfirm={updateUser}
                 />
             </main>
