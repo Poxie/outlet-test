@@ -7,6 +7,7 @@ import useGetCategoryById from "@/hooks/categories/useGetCategoryById";
 import { CategoryWithProducts, ProductCategory } from "@/utils/types";
 import PageBanner from "@/components/page-banner";
 import HasChangesNotice from "@/components/has-changes-notice";
+import CategoryProducts from "./CategoryProducts";
 
 type UpdateCategoryFn = (property: keyof CategoryWithProducts, value: any) => void;
 
@@ -23,6 +24,7 @@ export const useCategory = () => {
     return context;
 }
 
+export const TEMP_IMAGE_PREFIX = 'temp_';
 export default function Category({ categoryId }: {
     categoryId: string;
 }) {
@@ -92,6 +94,13 @@ export default function Category({ categoryId }: {
                 />
                 <Section>
                     <CategoryInformation />
+                </Section>
+                <SectionHeader
+                    title="Products"
+                    className="mt-5 mb-2"
+                />
+                <Section>
+                    <CategoryProducts />
                 </Section>
             </main>
             <HasChangesNotice 
