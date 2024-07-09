@@ -53,6 +53,7 @@ export default function Menu({ children, groups, className }: {
                         initial={{ scale: .95, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: .95, opacity: 0 }}
+                        className="relative z-40"
                     >
                         <MenuGroups 
                             groups={groups}
