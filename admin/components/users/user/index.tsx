@@ -63,6 +63,7 @@ export default function User({ userId }: {
 
     // Reset to inital state
     const reset = () => {
+        setPasswords(DEFAULT_PASSWORDS);
         setCurrentUser(user);
         clearFeedback();
     }
