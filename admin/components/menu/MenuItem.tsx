@@ -17,7 +17,6 @@ export default function MenuItem({ item, setOpen }: {
             item.type === 'danger' && 'text-danger hover:text-light hover:bg-danger/80 active:bg-danger/80',
         ),
         onClick: handleClick,
-        key: item.text,
     }
     const itemTextContainer = (
         <>
@@ -33,13 +32,17 @@ export default function MenuItem({ item, setOpen }: {
             <Link
                 {...props}
                 href={item.href}
+                key={item.text}
             >
                 {itemTextContainer}
             </Link>
         )
     }
     return(
-        <button {...props}>
+        <button 
+            {...props}
+            key={item.text}
+        >
             {itemTextContainer}
         </button>
     )
