@@ -1,12 +1,15 @@
 import Input from "@/components/input";
 import { twMerge } from "tailwind-merge";
-import { useUser } from ".";
 
-export default function UserPassword({ className }: {
+export default function UserPassword({ className, password, repeatPassword, updatePasswords }: {
     className?: string;
+    password: string;
+    repeatPassword: string;
+    updatePasswords: (args: Partial<{
+        password: string;
+        repeatPassword: string;
+    }>) => void;
 }) {
-    const { user, updateUserProps } = useUser();
-    
     return(
         <div className={twMerge(
             "flex gap-4",
@@ -16,16 +19,16 @@ export default function UserPassword({ className }: {
                 label="Password"
                 type="password"
                 placeholder="Password"
-                value={user.password}
-                onChange={password => updateUserProps({ password })}
+                value={password}
+                onChange={password => updatePasswords({ password })}
                 containerClassName="flex-1"
             />
             <Input 
                 label="Repeat password"
                 type="password"
                 placeholder="Repeat password"
-                value={user.repeatPassword}
-                onChange={repeatPassword => updateUserProps({ repeatPassword })}
+                value={repeatPassword}
+                onChange={repeatPassword => updatePasswords({ repeatPassword })}
                 containerClassName="flex-1"
             />
         </div>

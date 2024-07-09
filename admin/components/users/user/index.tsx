@@ -16,15 +16,10 @@ import useFeedback from "@/hooks/useFeedback";
 import Feedback from "@/components/feedback";
 import { ADMIN_ROLE } from "@/utils/constants";
 import UserPassword from "./UserPassword";
-import { getUserWithPassword } from "@/utils";
 
-type UserWithPassword = UserObject & { 
-    password: string;
-    repeatPassword: string; 
-};
 type Context = {
-    updateUserProps: (changes: Partial<UserWithPassword>) => void;
-    user: UserWithPassword;
+    updateUserProps: (changes: Partial<UserObject>) => void;
+    user: UserObject;
     self: UserObject;
     isSelf: boolean;
 }
@@ -38,6 +33,10 @@ export const useUser = () => {
     return context;
 }
 
+const DEFAULT_PASSWORDS = {
+    password: '',
+    repeatPassword: '',
+}
 export default function User({ userId }: {
     userId: string;
 }) {
@@ -45,18 +44,20 @@ export default function User({ userId }: {
 
     const { mutateAsync, isPending } = useUpdateUser(userId);
 
-    const { data: userWithoutPassword } = useGetUserById(userId);
+    const { data: user } = useGetUserById(userId);
     const { data: self } = useCurrentUser();
 
-    const user = getUserWithPassword(userWithoutPassword);
     const [currentUser, setCurrentUser] = useState(user);
+    const [passwords, setPasswords] = useState(DEFAULT_PASSWORDS)
 
-    const { changes, hasChanges } = useChanges(currentUser, user);
+    const { changes: infoChanges, hasChanges: hasInfoChanges } = useChanges(currentUser, user);
+    const { changes: passwordChanges, hasChanges: hasPasswordChanges } = useChanges(passwords, DEFAULT_PASSWORDS);
+
     const { feedback, setFeedback, clearFeedback } = useFeedback();
     
     useEffect(() => {
-        if(userWithoutPassword) setCurrentUser(getUserWithPassword(userWithoutPassword));
-    }, [userWithoutPassword]);
+        if(user) setCurrentUser(user);
+    }, [user]);
 
     if(!user || !currentUser || !self) return null;
 
@@ -68,27 +69,35 @@ export default function User({ userId }: {
 
     // Function to make a request to the backend to update the user
     const updateUser = async () => {
-        // If passwords are provided, make sure they match
+        const changes: Partial<UserObject & {
+            password: string;
+        }> = {
+            ...infoChanges,
+        }
+        
+        // If password changes, make sure they match
         if(
-            (changes.password || changes.repeatPassword) &&
-            changes.password !== changes.repeatPassword
+            (passwordChanges.password || passwordChanges.repeatPassword) &&
+            passwordChanges.password !== passwordChanges.repeatPassword
         ) {
             setFeedback({
                 message: 'Passwords do not match',
                 type: 'danger',
-            });
+            })
             return;
         }
-
-        // Strip unwanted properties
-        const { repeatPassword, ...userChanges } = changes;
+        // If there are password changes, and they match, add password to changes object
+        if(passwordChanges.password) {
+            changes.password = passwordChanges.password;
+        }
 
         try {
-            const newUser = await mutateAsync({ changes: userChanges });
+            const newUser = await mutateAsync({ changes });
 
             // Refetch the user data
             refetchQuery(['user', userId]);
-            setCurrentUser(getUserWithPassword(newUser));
+            setCurrentUser(newUser);
+            setPasswords(DEFAULT_PASSWORDS);
         } catch(error: any) {
             setFeedback({
                 message: error.message,
@@ -110,8 +119,21 @@ export default function User({ userId }: {
         clearFeedback();
     }
 
+    // Function to update the temporary passwords
+    const updatePasswords = (changes: Partial<{
+        password: string;
+        repeatPassword: string;
+    }>) => {
+        setPasswords(prev => ({
+            ...prev,
+            ...changes,
+        }))
+    }
+
     const isSelf = self.id === user.id;
     const canEditPassword = isSelf || self.role === ADMIN_ROLE;
+
+    const hasChanges = hasInfoChanges || hasPasswordChanges;
 
     const value = { 
         updateUserProps,
@@ -146,7 +168,12 @@ export default function User({ userId }: {
                 <Section>
                     <UserInformation />
                     {canEditPassword && (
-                        <UserPassword className="mt-4 pt-4 border-t-[1px] border-t-secondary" />
+                        <UserPassword 
+                            className="mt-4 pt-4 border-t-[1px] border-t-secondary"
+                            password={passwords.password}
+                            repeatPassword={passwords.repeatPassword}
+                            updatePasswords={updatePasswords}
+                        />
                     )}
                 </Section>
                 <SectionHeader 
