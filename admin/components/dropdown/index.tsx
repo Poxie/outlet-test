@@ -4,6 +4,7 @@ import ArrowIcon from "@/assets/icons/ArrowIcon";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import useClickOutside from "@/hooks/useClickOutside";
 
 export type DropdownItem = {
     id: string;
@@ -22,18 +23,7 @@ export default function Dropdown({ activeItemId, items, onChange, className, lab
     const [isOpen, setIsOpen] = useState(false);
 
     const ref = useRef<HTMLDivElement>(null);
-
-    // Close the dropdown on click outside
-    useEffect(() => {
-        const handleClick = (event: MouseEvent) => {
-            if(ref.current && !ref.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        }
-        document.addEventListener('click', handleClick);
-
-        return () => document.removeEventListener('click', handleClick);
-    }, []);
+    useClickOutside(ref, () => setIsOpen(false));
 
     const handleClick = (id: string) => {
         if(onChange) onChange(id);
