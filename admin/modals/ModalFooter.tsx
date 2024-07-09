@@ -17,7 +17,7 @@ export default function ModalFooter({
     const { closeModal } = useModal();
 
     return(
-        <div className="p-4 flex justify-end items-center gap-2 bg-secondary">
+        <div className="p-4 flex justify-end items-center gap-2 bg-secondary rounded-b-md">
             <Button 
                 className="p-3 text-sm hover:bg-tertiary active:bg-quaternary"
                 type="transparent"
