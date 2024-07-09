@@ -3,6 +3,7 @@ import { useCategory } from "."
 import { TEMP_PREFIX } from "@/utils/constants";
 import { useRef } from "react";
 import CategoryProduct from "./CategoryProduct";
+import { Product } from "@/utils/types";
 
 export default function CategoryProducts() {
     const { category, updateCategory } = useCategory();
@@ -19,19 +20,26 @@ export default function CategoryProducts() {
         const files = event.target.files;
         if(!files) return;
 
-        const newProducts = [];
+        const newProducts: Product[] = [];
 
         for(const file of Array.from(files)) {
-            const imageURL = URL.createObjectURL(file);
-            newProducts.push({
-                id: `${TEMP_PREFIX}${Math.random()}`,
-                parentId: category.id,
-                imageURL,
-            });
+            const fileReader = new FileReader();
 
-            if(newProducts.length >= files.length) {
-                updateCategory('products', [...category.products, ...newProducts]);
+            fileReader.onload = async () => {
+                const imageURL = fileReader.result as string;
+
+                newProducts.push({
+                    id: `${TEMP_PREFIX}${Math.random()}`,
+                    parentId: category.id,
+                    imageURL,
+                });
+
+                if(newProducts.length >= files.length) {
+                    updateCategory('products', [...category.products, ...newProducts]);
+                }
             }
+
+            fileReader.readAsDataURL(file);
         }
 
         fileInputRef.current.value = '';

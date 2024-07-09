@@ -11,6 +11,7 @@ import CategoryProducts from "./CategoryProducts";
 import useUpdateCategory from "@/hooks/categories/useUpdateCategory";
 import useDeleteCategoryProducts from "@/hooks/categories/useDeleteCategoryProducts";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
+import useAddCategoryProducts from "@/hooks/categories/useAddCategoryProducts";
 
 type UpdateCategoryFn = (property: keyof CategoryWithProducts, value: any) => void;
 
@@ -33,13 +34,13 @@ export default function Category({ categoryId }: {
 }) {
     const refetchQuery = useRefetchQuery();
 
-    const { mutateAsync: updateCategoryAPI } = useUpdateCategory(categoryId);
-    const { mutateAsync: deleteProductsAPI } = useDeleteCategoryProducts(categoryId);
+    const { mutateAsync: updateCategoryAPI, isPending: loadingUpdate } = useUpdateCategory(categoryId);
+    const { mutateAsync: deleteProductsAPI, isPending: loadingDelete } = useDeleteCategoryProducts(categoryId);
+    const { mutateAsync: addProductsAPI, isPending, isPending: loadingAdd } = useAddCategoryProducts(categoryId);
 
     const { data: category } = useGetCategoryById(categoryId);
 
     const [currentCategory, setCurrentCategory] = useState(category);
-    const [loading, setLoading] = useState(false);
 
     // Make sure currentCategory is up to date
     useEffect(() => {
@@ -58,8 +59,6 @@ export default function Category({ categoryId }: {
         // Separate products from category information
         const { products, ...rest } = changes;
 
-        setLoading(true);
-
         // Update category information, if any changes
         if(Object.keys(rest).length > 0) {
             await updateCategoryAPI({ changes: rest });
@@ -67,6 +66,7 @@ export default function Category({ categoryId }: {
 
         // Update products, if any changes
         if(products) {
+            // Check for products to remove
             const previousProductIds = category.products.map(product => product.id);
             const newProductIds = products.map(product => product.id);
             const productIdsToRemove = previousProductIds.filter(id => !newProductIds.includes(id));
@@ -75,11 +75,19 @@ export default function Category({ categoryId }: {
             if(productIdsToRemove.length > 0) {
                 await deleteProductsAPI({ productIds: productIdsToRemove });
             }
+
+            // Check for products to add
+            const productsToAdd = products.filter(product => product.id.startsWith(TEMP_IMAGE_PREFIX));
+            const productImagestoAdd = productsToAdd.map(product => product.imageURL);
+
+            // Add products
+            if(productsToAdd.length > 0) {
+                await addProductsAPI({ images: productImagestoAdd });
+            }
         }
 
         // Refetch category
         refetchQuery(['category', categoryId]);
-        setLoading(false);
     }
     
     // Reset category
@@ -108,6 +116,8 @@ export default function Category({ categoryId }: {
             }
         })
     }
+
+    const loading = loadingUpdate || loadingDelete || loadingAdd;
 
     const value = {
         category: currentCategory,
