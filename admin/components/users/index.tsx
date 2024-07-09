@@ -38,6 +38,8 @@ export default function Users() {
                 <SectionHeader 
                     title="All people"
                     className="mb-2"
+                    buttonText="Add new person"
+                    buttonHref="/people/create"
                 />
                 <Section className="p-0">
                     <UsersTable />

@@ -6,6 +6,7 @@ export type User = {
     role: UserRole;
     createdAt: string;
 }
+export type MutableUserProps = Pick<User, 'name' | 'email' | 'role'>;
 export type WeeklyProductGroup = {
     date: string;
     week: number;
