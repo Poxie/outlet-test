@@ -15,6 +15,7 @@ import useAddCategoryProducts from "@/hooks/categories/useAddCategoryProducts";
 import Feedback from "@/components/feedback";
 import useFeedback from "@/hooks/useFeedback";
 import { TEMP_PREFIX } from "@/utils/constants";
+import useChanges from "@/hooks/useChanges";
 
 export default function Category({ categoryId }: {
     categoryId: string;
@@ -29,6 +30,7 @@ export default function Category({ categoryId }: {
 
     const [currentCategory, setCurrentCategory] = useState(category);
 
+    const { changes, hasChanges } = useChanges(currentCategory, category);
     const { feedback, setFeedback, clearFeedback } = useFeedback();
 
     // Make sure currentCategory is up to date
@@ -42,9 +44,7 @@ export default function Category({ categoryId }: {
     }
 
     // Submitting updates
-    const handleSubmit = async () => {
-        const changes = getChanges();
-        
+    const handleSubmit = async () => {        
         // Separate products from category information
         const { products, ...rest } = changes;
 
@@ -108,16 +108,6 @@ export default function Category({ categoryId }: {
         clearFeedback()
     }
 
-    // Function to get category changes
-    const getChanges = () => {
-        const changes = Object.entries(currentCategory).filter(([key, value]) => {
-            return category[key as keyof CategoryWithProducts] !== value;
-        });
-
-        return Object.fromEntries(changes) as Partial<CategoryWithProducts>;
-    }
-    const getHasChanges = () => Object.keys(getChanges()).length > 0;
-
     // Update & display has changes notice
     const updateProps = (changes: Partial<CategoryWithProducts>) => {
         setCurrentCategory(prev => {
@@ -173,7 +163,7 @@ export default function Category({ categoryId }: {
                 <HasChangesNotice 
                     onCancel={reset}
                     onConfirm={handleSubmit}
-                    hasChanges={getHasChanges()}
+                    hasChanges={hasChanges}
                     loading={loading}
                 />
             </main>
