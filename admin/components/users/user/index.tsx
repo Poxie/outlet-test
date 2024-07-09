@@ -17,22 +17,6 @@ import Feedback from "@/components/feedback";
 import { ADMIN_ROLE } from "@/utils/constants";
 import UserPassword from "./UserPassword";
 
-type Context = {
-    updateUserProps: (changes: Partial<UserObject>) => void;
-    user: UserObject;
-    self: UserObject;
-    isSelf: boolean;
-}
-
-export const UserContext = React.createContext<null | Context>(null);
-
-export const useUser = () => {
-    const context = React.useContext(UserContext);
-    if(!context) throw new Error('useUser must be used within a UserProvider');
-
-    return context;
-}
-
 const DEFAULT_PASSWORDS = {
     password: '',
     repeatPassword: '',
@@ -108,7 +92,7 @@ export default function User({ userId }: {
     }
 
     // Function to update the temporary user object
-    const updateUserProps: Context['updateUserProps'] = (changes) => {
+    const updateProps = (changes: Partial<UserObject>) => {
         setCurrentUser(prev => {
             if(!prev) return prev;
 
@@ -137,13 +121,13 @@ export default function User({ userId }: {
     const hasChanges = hasInfoChanges || hasPasswordChanges;
 
     const value = { 
-        updateUserProps,
+        updateProps,
         user: currentUser, 
         self,
         isSelf,
     };
     return(
-        <UserContext.Provider value={value}>
+        <>
             <PageBanner 
                 steps={[
                     { text: 'Start', href: '/' },
@@ -167,7 +151,9 @@ export default function User({ userId }: {
                     className="mb-2"
                 />
                 <Section>
-                    <UserInformation />
+                    <UserInformation 
+                        {...value}
+                    />
                     {canEditPassword && (
                         <UserPassword 
                             className="mt-4 pt-4 border-t-[1px] border-t-secondary"
@@ -182,7 +168,9 @@ export default function User({ userId }: {
                     className="mt-4 mb-2"
                 />
                 <Section>
-                    <UserAccess />
+                    <UserAccess 
+                        {...value}
+                    />
                 </Section>
                 
                 <HasChangesNotice 
@@ -192,6 +180,6 @@ export default function User({ userId }: {
                     onConfirm={updateUser}
                 />
             </main>
-        </UserContext.Provider>
+        </>
     )
 }

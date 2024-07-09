@@ -1,13 +1,14 @@
 import Dropdown, { DropdownItem } from "@/components/dropdown";
-import { useUser } from ".";
 import { ADMIN_ROLE, PERSONNEL_ROLE } from "@/utils/constants";
 import { twMerge } from "tailwind-merge";
 import LockIcon from "@/assets/icons/LockIcon";
-import { UserRole } from "@/utils/types";
+import { User, UserRole } from "@/utils/types";
 
-export default function UserAccess() {
-    const { user, self, updateUserProps } = useUser();
-
+export default function UserAccess({ user, self, updateProps }: {
+    user: User;
+    self: User;
+    updateProps: (changes: Partial<User>) => void;
+}) {
     const canEditRole = self.role === ADMIN_ROLE && user.id !== self.id;
 
     const accessDropdownItems: DropdownItem<UserRole>[] = [
@@ -26,7 +27,7 @@ export default function UserAccess() {
                 )}
                 disabled={!canEditRole}
                 disabledIcon={<LockIcon size={18} />}
-                onChange={role => updateUserProps({ role })}
+                onChange={role => updateProps({ role })}
             />
         </div>
     )
