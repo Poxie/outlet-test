@@ -1,6 +1,6 @@
 export default function useChanges<T extends Record<string, any>>(previousObject: T | undefined, newObject: T | undefined) {
     if(!previousObject || !newObject) {
-        return { changes: {}, hasChanges: false };
+        return { changes: {} as Partial<T>, hasChanges: false };
     }
 
     const changes = Object.entries(previousObject).reduce((acc, [key, value]) => {
