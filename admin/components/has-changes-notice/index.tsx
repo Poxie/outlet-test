@@ -25,6 +25,7 @@ export default function HasChangesNotice({ onCancel, onConfirm, hasChanges, load
                                 className="p-3 text-sm hover:bg-secondary active:bg-tertiary transition-colors rounded-md"
                                 disabled={loading}
                                 onClick={onCancel}
+                                type="button"
                             >
                                 Cancel
                             </button>

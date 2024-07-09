@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-export default function Button({ children, className, disabled, onClick, href, type='primary' }: {
+export default function Button({ children, className, disabled, onClick, href, buttonType='button', type='primary' }: {
     children: React.ReactNode;
     className?: string;
     onClick?: () => void;
     disabled?: boolean;
     type?: 'primary' | 'secondary' | 'transparent';
+    buttonType?: 'button' | 'submit';
     href?: string;
 }) {
     className = twMerge(
@@ -36,7 +37,10 @@ export default function Button({ children, className, disabled, onClick, href, t
     }
 
     return(
-        <button {...props}>
+        <button
+            type={buttonType} 
+            {...props}
+        >
             {children}
         </button>
     )
