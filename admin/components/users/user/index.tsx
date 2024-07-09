@@ -16,6 +16,7 @@ import useFeedback from "@/hooks/useFeedback";
 import Feedback from "@/components/feedback";
 import { ADMIN_ROLE } from "@/utils/constants";
 import UserPassword from "./UserPassword";
+import ModuleSection from "@/components/module-section";
 
 const DEFAULT_PASSWORDS = {
     password: '',
@@ -155,12 +156,16 @@ export default function User({ userId }: {
                         {...value}
                     />
                     {canEditPassword && (
-                        <UserPassword 
-                            className="mt-4 pt-4 border-t-[1px] border-t-secondary"
-                            password={passwords.password}
-                            repeatPassword={passwords.repeatPassword}
-                            updatePasswords={updatePasswords}
-                        />
+                        <ModuleSection 
+                            title="Update password"
+                            className="mt-4"
+                        >
+                            <UserPassword 
+                                password={passwords.password}
+                                repeatPassword={passwords.repeatPassword}
+                                updatePasswords={updatePasswords}
+                            />
+                        </ModuleSection>
                     )}
                 </Section>
                 <SectionHeader 
