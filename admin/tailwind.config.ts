@@ -23,6 +23,8 @@ const config: Config = {
         muted: '#475569',
         light: '#fff',
         'c-primary': '#E73128',
+        danger: '#FF0000',
+        success: '#00FF00',
       },
       borderColor: {
         primary: '#fff',
@@ -44,9 +46,13 @@ const config: Config = {
       width: {
         main: '1100px',
         sidebar: '300px',
+        menu: '200px',
       },
       height: {
         'sidebar-header': '72px',
+      },
+      minWidth: {
+        menu: '200px',
       },
       maxWidth: {
         main: '90%',
