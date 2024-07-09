@@ -6,6 +6,8 @@ import { User } from "@/utils/types";
 import useGetUsers from "@/hooks/users/useGetUsers";
 import UsersTable from "./UsersTable";
 import SectionHeader from "../section-header";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import { ADMIN_ROLE } from "@/utils/constants";
 
 const UsersContext = React.createContext<null | {
     users: User[];
@@ -20,8 +22,11 @@ export const useUsers = () => {
 
 export default function Users() {
     const { data: users } = useGetUsers();
+    const { data: self } = useCurrentUser();
 
     if(!users) return null;
+
+    const isAdmin = self?.role === ADMIN_ROLE;
 
     const value = {
         users,
@@ -38,8 +43,8 @@ export default function Users() {
                 <SectionHeader 
                     title="All people"
                     className="mb-2"
-                    buttonText="Add new person"
-                    buttonHref="/people/create"
+                    buttonText={isAdmin ? "Add new person" : undefined}
+                    buttonHref={isAdmin ? "/people/create" : undefined}
                 />
                 <Section className="p-0">
                     <UsersTable />
