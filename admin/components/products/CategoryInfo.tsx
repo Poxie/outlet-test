@@ -7,7 +7,7 @@ export default function CategoryInfo({ category }: {
     return(
         <div className="flex gap-3">
             <Image 
-                className="object-cover aspect-video rounded-md"
+                className="w-auto h-auto object-cover aspect-video rounded-md"
                 src={category.bannerURL}
                 width={98}
                 height={63}
