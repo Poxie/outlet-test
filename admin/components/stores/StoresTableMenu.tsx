@@ -7,13 +7,14 @@ import EditIcon from "@/assets/icons/EditIcon";
 import BinIcon from "@/assets/icons/BinIcon";
 import { useModal } from "@/contexts/modal";
 import DeleteStoreModal from "@/modals/delete-store";
+import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
 
 export default function StoresTableMenu({ store }: { 
     store: Store; 
 }) {
     const { setModal } = useModal();
 
-    const { data: currentUser } = useCurrentUser();
+    const isAdmin = useSelfIsAdmin();
 
     const openDeleteModal = () => setModal(<DeleteStoreModal store={store} />);
 
@@ -22,7 +23,7 @@ export default function StoresTableMenu({ store }: {
     ];
     const secondGroup: MenuGroup = [];
 
-    if(currentUser?.role === ADMIN_ROLE) {
+    if(isAdmin) {
         firstGroup.push({
             text: 'Edit store',
             icon: <EditIcon size={16} />,
