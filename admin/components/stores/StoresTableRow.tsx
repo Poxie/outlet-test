@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 export default function StoresTableRow({ store }: {
     store: Store;
 }) {
-    const tdClassName = 'px-4 py-3';
+    const tdClassName = 'p-4';
     return(
         <tr>
             <td className={twMerge(

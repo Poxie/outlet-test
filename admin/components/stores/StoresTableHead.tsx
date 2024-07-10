@@ -4,7 +4,7 @@ export default function StoresTableHead() {
     const thClassName = 'px-4 py-3';
     return(
         <thead>
-            <tr className="text-nowrap text-left border-b-[1px] border-b-tertiary">
+            <tr className="text-sm text-nowrap text-left border-b-[1px] border-b-tertiary">
                 <th className={thClassName}>
                     Store
                 </th>

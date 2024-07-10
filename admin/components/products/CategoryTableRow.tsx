@@ -6,7 +6,7 @@ import { getReadableDate } from "@/utils";
 export default function CategoryTableRow({ category }: {
     category: ProductCategory;
 }) {
-    const tdClassName = 'p-5';
+    const tdClassName = 'p-4';
     return(
         <tr>
             <td className={tdClassName}>

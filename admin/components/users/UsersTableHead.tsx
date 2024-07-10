@@ -3,7 +3,7 @@ import Input from "../input";
 export default function UsersTableHead({ setSearch }: {
     setSearch: (text: string) => void;
 }) {
-    const thClassName = "p-4";
+    const thClassName = 'px-4 py-3';
     return (
         <thead>
             <tr className="text-sm text-left border-b-[1px] border-b-tertiary">
