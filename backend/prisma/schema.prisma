@@ -46,3 +46,12 @@ model WeeklyProduct {
   imageURL String
   date     String
 }
+
+model Store {
+  id          String @id
+  name        String
+  adress      String
+  email       String
+  phoneNumber String
+  createdAt   String
+}
