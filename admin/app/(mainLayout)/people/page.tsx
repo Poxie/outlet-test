@@ -1,18 +1,12 @@
 import getUsers from "@/api/users/getUsers";
 import Users from "@/components/users";
+import prefetchQuery from "@/utils/prefetchQuery";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
-import { cookies } from "next/headers";
 
 export default async function PeoplePage() {
-    const queryClient = new QueryClient();
-
-    await queryClient.prefetchQuery({
+    const queryClient = await prefetchQuery({
         queryKey: ['users'],
-        queryFn: () => getUsers({
-            headers: {
-                Cookie: cookies().toString(),
-            }
-        })
+        queryFunction: getUsers,
     })
 
     return(

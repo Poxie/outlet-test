@@ -1,20 +1,15 @@
 import getCategoryById from "@/api/categories/getCategoryById";
 import Category from "@/components/products/category"
+import prefetchQueryWithArgument from "@/utils/prefetchQueryWithArgument";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
-import { cookies } from "next/headers";
 
 export default async function CategoryPage({ params: { categoryId } }: {
     params: { categoryId: string }
 }) {
-    const queryClient = new QueryClient();
-
-    await queryClient.prefetchQuery({
+    const queryClient = await prefetchQueryWithArgument({
         queryKey: ['category', categoryId],
-        queryFn: () => getCategoryById(categoryId, {
-            headers: {
-                Cookie: cookies().toString(),
-            }
-        })
+        queryFunction: getCategoryById,
+        argument: categoryId,
     })
 
     return(
