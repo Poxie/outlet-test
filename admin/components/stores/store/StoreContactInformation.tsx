@@ -7,9 +7,9 @@ export default function StoreContactInformation({ store, updateProps }: {
     updateProps: (changes: Partial<Store>) => void;
 }) {
     const isAdmin = useSelfIsAdmin();
-    
+
     return(
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-col md:flex-row">
             <Input 
                 label="Email"
                 placeholder="Email address"
