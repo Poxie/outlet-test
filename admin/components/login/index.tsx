@@ -75,6 +75,7 @@ export default function Login() {
                 <Button 
                     className="w-full"
                     disabled={loading}
+                    buttonType="submit"
                 >
                     {loading ? 'Signing in...' : 'Sign in'}
                 </Button>
