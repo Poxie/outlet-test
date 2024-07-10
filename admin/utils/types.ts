@@ -36,3 +36,12 @@ export type Product = {
 export type CategoryWithProducts = ProductCategory & {
     products: Product[];
 }
+
+export type Store = {
+    id: string;
+    name: string;
+    address: string;
+    phoneNumber: string;
+    email: string;
+    createdAt: string;
+}
