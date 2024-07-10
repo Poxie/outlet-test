@@ -14,6 +14,11 @@ router.get('/', asyncHandler(async (req, res) => {
     res.send(stores);
 }));
 
+router.get('/:id', asyncHandler(async (req, res) => {
+    const store = await StoreQueries.getStoreById(req.params.id);
+    res.send(store);
+}))
+
 router.post('/', auth, requiresAdmin, asyncHandler(async (req, res) => {
     const data = createStoreSchema
         .strict()
