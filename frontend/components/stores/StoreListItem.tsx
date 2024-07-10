@@ -76,12 +76,12 @@ export default function StoreListItem({ store, reverse }: {
                             </a>
                         </div>
                         <a
-                            className="-m-2 p-2 hover:bg-secondary transition-colors rounded-md text-c-primary"
+                            className="-m-2 p-2 hover:bg-secondary active:bg-tertiary transition-colors rounded-md text-c-primary"
                             href={store.instagramURL}
                             target="_blank"
                             aria-label={`Följ ${store.name} på Instagram`}
                         >
-                            <InstagramIcon size={24} />
+                            <InstagramIcon size={28} />
                         </a>
                     </div>
                 </div>
