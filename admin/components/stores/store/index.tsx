@@ -13,6 +13,7 @@ import useUpdateStore from "@/hooks/stores/useUpdateStore";
 import useFeedback from "@/hooks/useFeedback";
 import Feedback from "@/components/feedback";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
+import StoreOpeningHours from "./StoreOpeningHours";
 
 export default function Store({ storeId }: {
     storeId: string;
@@ -68,6 +69,16 @@ export default function Store({ storeId }: {
             />
             <Section>
                 <StoreDetails 
+                    store={currentStore}
+                    updateProps={updateProps}
+                />
+            </Section>
+            <SectionHeader 
+                title="Store opening hours"
+                className="mt-5 mb-2"
+            />
+            <Section>
+                <StoreOpeningHours 
                     store={currentStore}
                     updateProps={updateProps}
                 />

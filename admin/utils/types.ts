@@ -45,6 +45,9 @@ export type Store = {
     email: string;
     createdAt: string;
     instagramURL: string;
+    weekdayOpenHours: string;
+    saturdayOpenHours: string;
+    sundayOpenHours: string;
 }
 export type MutableStoreProps = Pick<Store, 'name' | 'address' | 'phoneNumber' | 'email'>;
 export type CreateStoreProps = MutableStoreProps & {

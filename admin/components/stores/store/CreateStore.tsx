@@ -13,6 +13,7 @@ import useFeedback from "@/hooks/useFeedback";
 import useCreateStore from "@/hooks/stores/useCreateStore";
 import { useRouter } from "next/navigation";
 import Feedback from "@/components/feedback";
+import StoreOpeningHours from "./StoreOpeningHours";
 
 const INITIAL_STORE = getEmptyStoreObject();
 export default function CreateStore() {
@@ -70,6 +71,16 @@ export default function CreateStore() {
             />
             <Section>
                 <StoreDetails 
+                    store={currentStore}
+                    updateProps={updateProps}
+                />
+            </Section>
+            <SectionHeader 
+                title="Store opening hours"
+                className="mt-5 mb-2"
+            />
+            <Section>
+                <StoreOpeningHours 
                     store={currentStore}
                     updateProps={updateProps}
                 />
