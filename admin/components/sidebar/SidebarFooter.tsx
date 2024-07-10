@@ -1,7 +1,10 @@
 import useCurrentUser from "@/hooks/useCurrentUser"
 import Link from "next/link";
+import { useSidebar } from ".";
 
 export default function SidebarFooter() {
+    const { collapsed } = useSidebar();
+
     const { data: user } = useCurrentUser();
 
     if(!user) return null;
@@ -21,16 +24,20 @@ export default function SidebarFooter() {
                 <span className="w-8 aspect-square flex items-center justify-center uppercase rounded-full text-xs font-semibold bg-secondary border-[1px] border-quaternary">
                     {initials}
                 </span>
-                <span className="text-sm">
-                    {user.name}
-                </span>
+                {!collapsed && (
+                    <span className="text-sm">
+                        {user.name}
+                    </span>
+                )}
             </Link>
-            <button 
-                className="text-xs text-danger hover:underline"
-                onClick={signOut}
-            >
-                Sign out
-            </button>
+            {!collapsed && (
+                <button 
+                    className="text-xs text-danger hover:underline"
+                    onClick={signOut}
+                >
+                    Sign out
+                </button>
+            )}
         </div>
     )
 }
