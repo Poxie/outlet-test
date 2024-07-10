@@ -1,4 +1,3 @@
-import getCurrentUser from "@/api/users/getCurrentUser";
 import getUserById from "@/api/users/getUserById";
 import User from "@/components/users/user";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
@@ -9,7 +8,7 @@ export default async function PersonPage({ params: { userId } }: {
 }) {
     const queryClient = new QueryClient();
 
-    const userRequest = queryClient.prefetchQuery({
+    await queryClient.prefetchQuery({
         queryKey: ["user", userId],
         queryFn: () => getUserById(userId, {
             headers: {
@@ -17,16 +16,6 @@ export default async function PersonPage({ params: { userId } }: {
             }
         })
     })
-    const selfRequest = queryClient.prefetchQuery({
-        queryKey: ['current-user'],
-        queryFn: () => getCurrentUser({
-            headers: {
-                Cookie: cookies().toString(),
-            },
-        }),
-    })
-
-    await Promise.all([userRequest, selfRequest]);
 
     return(
         <HydrationBoundary state={dehydrate(queryClient)}>

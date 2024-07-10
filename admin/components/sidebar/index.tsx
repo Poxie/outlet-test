@@ -4,6 +4,7 @@ import SidebarGroups from "./SidebarGroups";
 import { createContext, useContext, useEffect, useState } from "react";
 import SidebarHeader from "./SidebarHeader";
 import { twMerge } from "tailwind-merge";
+import SidebarFooter from "./SidebarFooter";
 
 const SidebarContext = createContext<null | {
     collapsed: boolean;
@@ -47,14 +48,15 @@ export default function Sidebar() {
     return(
         <SidebarContext.Provider value={value}>
             <div className={twMerge(
-                "z-50 h-screen top-0 bg-primary border-r-[1px] border-r-tertiary",
+                "flex flex-col z-50 h-screen top-0 bg-primary border-r-[1px] border-r-tertiary",
                 !collapsed && "fixed sm:min-w-sidebar w-full md:w-sidebar md:sticky",
                 collapsed && 'sticky',
             )}>
                 <SidebarHeader />
-                <div className="p-5">
+                <div className="p-5 flex-1">
                     <SidebarGroups />
                 </div>
+                <SidebarFooter />
             </div>
         </SidebarContext.Provider>
     )
