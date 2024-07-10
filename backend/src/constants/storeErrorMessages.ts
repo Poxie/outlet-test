@@ -29,4 +29,8 @@ export const StoreErrorMessages = {
 
     storeInstagramURLRequired: 'Store instagram URL is required',
     storeInvalidInstagramURL: 'Invalid instagram URL',
+
+    weekdayOpenHoursRequired: 'Weekday open hours are required',
+    saturdayOpenHoursRequired: 'Saturday open hours are required',
+    sundayOpenHoursRequired: 'Sunday open hours are required',
 }

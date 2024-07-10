@@ -48,11 +48,14 @@ model WeeklyProduct {
 }
 
 model Store {
-  id           String @id
-  name         String
-  address      String
-  email        String
-  phoneNumber  String
-  createdAt    String
-  instagramURL String
+  id                String @id
+  name              String
+  address           String
+  email             String
+  phoneNumber       String
+  createdAt         String
+  instagramURL      String
+  weekdayOpenHours  String
+  saturdayOpenHours String
+  sundayOpenHours   String
 }

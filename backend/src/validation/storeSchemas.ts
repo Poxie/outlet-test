@@ -9,7 +9,8 @@ const {
     storeAddressRequired, storeAddressLength,
     storeEmailRequired, storeEmailInvalid, storeEmailLength,
     storePhoneNumberRequired, storePhoneNumberLength,
-    storeInstagramURLRequired, storeInvalidInstagramURL
+    storeInstagramURLRequired, storeInvalidInstagramURL,
+    weekdayOpenHoursRequired, saturdayOpenHoursRequired, sundayOpenHoursRequired,
 } = StoreErrorMessages;
 
 export const createStoreSchema = z.object({
@@ -52,5 +53,20 @@ export const createStoreSchema = z.object({
         message: storeInstagramURLRequired,
     }).regex(INSTAGRAM_REGEX, {
         message: storeInvalidInstagramURL,
-    })
+    }),
+    weekdayOpenHours: z.string({
+        message: weekdayOpenHoursRequired,
+    }).min(1, {
+        message: weekdayOpenHoursRequired,
+    }),
+    saturdayOpenHours: z.string({
+        message: saturdayOpenHoursRequired,
+    }).min(1, {
+        message: saturdayOpenHoursRequired,
+    }),
+    sundayOpenHours: z.string({
+        message: sundayOpenHoursRequired,
+    }).min(1, {
+        message: sundayOpenHoursRequired,
+    }),
 })
