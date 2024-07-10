@@ -5,6 +5,7 @@ import auth from '@/middlewares/auth';
 import requiresAdmin from '@/middlewares/requiresAdmin';
 import StoreMutations from '@/utils/stores/storeMutations';
 import { createStoreSchema } from '@/validation/storeSchemas';
+import { StatusCodes } from '@/utils/errors/statusCodes';
 
 const router = express.Router();
 
@@ -39,6 +40,11 @@ router.patch('/:id', auth, requiresAdmin, asyncHandler(async (req, res) => {
     const store = await StoreMutations.updateStore(req.params.id, data);
 
     res.send(store);
+}))
+
+router.delete('/:id', auth, requiresAdmin, asyncHandler(async (req, res) => {
+    await StoreMutations.deleteStore(req.params.id);
+    res.status(StatusCodes.NO_CONTENT).send();
 }))
 
 export default router;

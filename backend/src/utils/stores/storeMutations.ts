@@ -39,4 +39,19 @@ export default class StoreMutations {
             throw error;
         }
     }
+
+    static async deleteStore(id: string) {
+        try {
+            await client.store.delete({
+                where: {
+                    id,
+                },
+            });
+        } catch(error: any) {
+            if(error.code === PrismaCodes.RECORD_NOT_FOUND) {
+                throw new BadRequestError(StoreErrorMessages.storeNotFound(id));
+            }
+            throw error;
+        }
+    }
 }
