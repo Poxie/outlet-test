@@ -21,7 +21,7 @@ export default function UpcomingWeekProducts({ weeks }: {
                     href={`/veckans-varor/${week.date}`}
                     key={week.date}
                 >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center sm:gap-2 flex-col sm:flex-row">
                         <span className="font-medium">
                             Week
                             {' '}
