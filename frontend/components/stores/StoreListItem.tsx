@@ -38,36 +38,52 @@ export default function StoreListItem({ store, reverse }: {
                         </pre>
                     </a>
                 </div>
-                <div className="p-5 flex items-end justify-between">
+                <div className="p-5 grid gap-4">
                     <div className="flex flex-col">
                         <StoreListSectionHeader>
-                            Kontakt
+                            Öppettider
                         </StoreListSectionHeader>
                         <span>
-                            Tel:
-                            {' '}
+                            Vardag {store.weekdayOpenHours}
+                        </span>
+                        <span>
+                            Lördag {store.saturdayOpenHours}
+                        </span>
+                        <span>
+                            Söndag {store.sundayOpenHours}
+                        </span>
+                    </div>
+                    <div className="flex items-end justify-between">
+                        <div className="flex flex-col">
+                            <StoreListSectionHeader>
+                                Kontakt
+                            </StoreListSectionHeader>
+                            <span>
+                                Tel:
+                                {' '}
+                                <a 
+                                    href={`Tel: ${store.phoneNumber}`}
+                                    className="hover-underline"
+                                >
+                                    {store.phoneNumber}
+                                </a>
+                            </span>
                             <a 
-                                href={`Tel: ${store.phoneNumber}`}
+                                href={`mailto:${store.email}`}
                                 className="hover-underline"
                             >
-                                {store.phoneNumber}
+                                Maila {store.name}
                             </a>
-                        </span>
-                        <a 
-                            href={`mailto:${store.email}`}
-                            className="hover-underline"
+                        </div>
+                        <a
+                            className="-m-2 p-2 hover:bg-secondary transition-colors rounded-md text-c-primary"
+                            href={store.instagramURL}
+                            target="_blank"
+                            aria-label={`Följ ${store.name} på Instagram`}
                         >
-                            Maila {store.name}
+                            <InstagramIcon size={24} />
                         </a>
                     </div>
-                    <a
-                        className="-m-2 p-2 hover:bg-secondary transition-colors rounded-md text-c-primary"
-                        href={store.instagramURL}
-                        target="_blank"
-                        aria-label={`Följ ${store.name} på Instagram`}
-                    >
-                        <InstagramIcon size={24} />
-                    </a>
                 </div>
             </div>
             <div className="flex-1">

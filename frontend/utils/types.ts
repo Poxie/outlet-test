@@ -23,4 +23,7 @@ export type Store = {
     phoneNumber: string;
     createdAt: string;
     instagramURL: string;
+    weekdayOpenHours: string;
+    saturdayOpenHours: string;
+    sundayOpenHours: string;
 }
