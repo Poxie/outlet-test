@@ -50,7 +50,7 @@ model WeeklyProduct {
 model Store {
   id          String @id
   name        String
-  adress      String
+  address      String
   email       String
   phoneNumber String
   createdAt   String
