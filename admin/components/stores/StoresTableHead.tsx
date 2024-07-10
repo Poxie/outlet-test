@@ -1,4 +1,5 @@
 import { twMerge } from "tailwind-merge";
+import TableCreateButton from "../table-create-button";
 
 export default function StoresTableHead() {
     const thClassName = 'px-4 py-3';
@@ -20,7 +21,14 @@ export default function StoresTableHead() {
                 <th className={thClassName}>
                     Phone number
                 </th>
-                <th></th>
+                <th className="flex justify-end">
+                    <TableCreateButton
+                        className={thClassName}
+                        href="/stores/create"
+                    >
+                        Add store
+                    </TableCreateButton>
+                </th>
             </tr>
         </thead>
     )
