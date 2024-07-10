@@ -1,0 +1,67 @@
+import { Store } from "@/utils/types";
+import StoreListSectionHeader from "./StoreListSectionHeader";
+import { getStoreMapLocation, getStoreIframeSrc, getStoreMapImage } from "@/utils/storeUtils";
+import StoreListItemImage from "./StoreListItemImage";
+import { twMerge } from "tailwind-merge";
+
+export default function StoreListItem({ store, reverse }: {
+    store: Store;
+    reverse: boolean;
+}) {
+    const directions = getStoreMapLocation(store);
+    const iframeSrc = getStoreIframeSrc(store);
+    const storeImageSrc = getStoreMapImage(store);
+
+    return(
+        <div className={twMerge(
+            "md:flex border-[1px] border-tertiary rounded-md overflow-hidden flex-row",
+            reverse && "flex-row-reverse",
+        )}>
+            <div className="flex-1">
+                <div className="p-5 border-b-[1px] border-tertiary">
+                    <h2 className="text-2xl text-c-primary font-medium">
+                        {store.name}
+                    </h2>
+                    <a
+                        className="hover:underline hover:text-c-primary"
+                        href={directions}
+                        target="_blank"
+                    >
+                        <pre 
+                            className="mt-1 font-[inherit] text-wrap"
+                        >
+                            {store.address}
+                        </pre>
+                    </a>
+                </div>
+                <div className="p-5 flex flex-col items-start">
+                    <StoreListSectionHeader>
+                        Kontakt
+                    </StoreListSectionHeader>
+                    <span>
+                        Tel:
+                        {' '}
+                        <a 
+                            href={`Tel: ${store.phoneNumber}`}
+                            className="hover-underline"
+                        >
+                            {store.phoneNumber}
+                        </a>
+                    </span>
+                    <a 
+                        href={`mailto:${store.email}`}
+                        className="hover-underline"
+                    >
+                        Maila {store.name}
+                    </a>
+                </div>
+            </div>
+            <div className="flex-1">
+                <StoreListItemImage 
+                    imageSrc={storeImageSrc}
+                    iframeSrc={iframeSrc}
+                />
+            </div>
+        </div>
+    )
+}

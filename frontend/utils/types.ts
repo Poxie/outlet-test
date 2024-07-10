@@ -15,3 +15,11 @@ export type WeeklyProduct = {
     imageURL: string;
     date: string;
 }
+export type Store = {
+    id: string;
+    name: string;
+    address: string;
+    email: string;
+    phoneNumber: string;
+    createdAt: string;
+}
