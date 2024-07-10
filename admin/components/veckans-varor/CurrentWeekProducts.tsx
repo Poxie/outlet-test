@@ -14,7 +14,7 @@ export default function CurrentWeekProducts({ week }: {
                 buttonHref={`/veckans-varor/${week.date}`}
                 className="mb-2"
             />
-            <Section className="grid sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-2">
+            <Section className="grid sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-2">
                 {week.products.map(product => (
                     <Image 
                         alt=""
