@@ -1,6 +1,9 @@
+import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
 import TableCreateButton from "../table-create-button";
 
 export default function UsersTableHead() {
+    const isAdmin = useSelfIsAdmin();
+
     const thClassName = 'px-4 py-3';
     return (
         <thead>
@@ -10,12 +13,14 @@ export default function UsersTableHead() {
                 <th className={thClassName}>Role</th>
                 <th className={thClassName}>Added at</th>
                 <th className="flex justify-end">
-                    <TableCreateButton
-                        className={thClassName}
-                        href="/people/create"
-                    >
-                        Add person
-                    </TableCreateButton>
+                    {isAdmin && (
+                        <TableCreateButton
+                            className={thClassName}
+                            href="/people/create"
+                        >
+                            Add person
+                        </TableCreateButton>
+                    )}
                 </th>
             </tr>
         </thead>

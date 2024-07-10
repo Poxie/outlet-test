@@ -1,7 +1,10 @@
 import { twMerge } from "tailwind-merge";
 import TableCreateButton from "../table-create-button";
+import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
 
 export default function StoresTableHead() {
+    const isAdmin = useSelfIsAdmin();
+
     const thClassName = 'px-4 py-3';
     return(
         <thead>
@@ -22,12 +25,14 @@ export default function StoresTableHead() {
                     Phone number
                 </th>
                 <th className="flex justify-end">
-                    <TableCreateButton
-                        className={thClassName}
-                        href="/stores/create"
-                    >
-                        Add store
-                    </TableCreateButton>
+                    {isAdmin && (
+                        <TableCreateButton
+                            className={thClassName}
+                            href="/stores/create"
+                        >
+                            Add store
+                        </TableCreateButton>
+                    )}
                 </th>
             </tr>
         </thead>
