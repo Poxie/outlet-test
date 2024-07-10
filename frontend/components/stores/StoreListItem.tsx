@@ -22,7 +22,7 @@ export default function StoreListItem({ store, reverse }: {
             )}
         >
             <div className="flex-1">
-                <div className="p-5 border-b-[1px] border-tertiary">
+                <div className="p-5 flex flex-col items-start border-b-[1px] border-tertiary">
                     <h2 className="text-2xl text-c-primary font-medium">
                         {store.name}
                     </h2>
@@ -54,7 +54,7 @@ export default function StoreListItem({ store, reverse }: {
                         </span>
                     </div>
                     <div className="flex items-end justify-between">
-                        <div className="flex flex-col">
+                        <div className="flex flex-col items-start">
                             <StoreListSectionHeader>
                                 Kontakt
                             </StoreListSectionHeader>
