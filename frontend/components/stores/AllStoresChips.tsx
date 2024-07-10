@@ -1,5 +1,6 @@
 import getStores from "@/api/stores/getStores"
 import { twMerge } from "tailwind-merge";
+import StoreChip from "./StoreChip";
 
 export default async function AllStoresChips({ className }: {
     className?: string;
@@ -16,11 +17,7 @@ export default async function AllStoresChips({ className }: {
                     className="flex-[calc((100%/var(--items-per-row))-(var(--items-per-row)-1)*var(--item-gap))]"
                     key={store.id}
                 >
-                    <button
-                        className="p-3 w-full text-sm bg-secondary border-[1px] border-tertiary hover:bg-tertiary transition-colors rounded-md"
-                    >
-                        {store.name}
-                    </button>
+                    <StoreChip store={store} />
                 </li>
             ))}
         </ul>

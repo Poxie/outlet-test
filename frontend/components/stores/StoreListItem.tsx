@@ -13,10 +13,13 @@ export default function StoreListItem({ store, reverse }: {
     const storeImageSrc = getStoreMapImage(store);
 
     return(
-        <div className={twMerge(
-            "md:flex border-[1px] border-tertiary rounded-md overflow-hidden flex-row",
-            reverse && "flex-row-reverse",
-        )}>
+        <div 
+            data-store-id={store.id}
+            className={twMerge(
+                "md:flex border-[1px] border-tertiary rounded-md overflow-hidden flex-row",
+                reverse && "flex-row-reverse",
+            )}
+        >
             <div className="flex-1">
                 <div className="p-5 border-b-[1px] border-tertiary">
                     <h2 className="text-2xl text-c-primary font-medium">
