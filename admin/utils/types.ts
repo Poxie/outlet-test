@@ -45,3 +45,4 @@ export type Store = {
     email: string;
     createdAt: string;
 }
+export type MutableStoreProps = Pick<Store, 'name' | 'address' | 'phoneNumber' | 'email'>;
