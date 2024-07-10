@@ -1,0 +1,13 @@
+export const STORE_NUMBER_MIN_LENGTH = 1;
+export const STORE_NUMBER_MAX_LENGTH = 10;
+
+export const STORE_NAME_MIN_LENGTH = 1;
+export const STORE_NAME_MAX_LENGTH = 255;
+
+export const STORE_ADDRESS_MIN_LENGTH = 1;
+export const STORE_ADDRESS_MAX_LENGTH = 255;
+
+export const STORE_EMAIL_MAX_LENGTH = 255;
+
+export const STORE_PHONE_NUMBER_MIN_LENGTH = 8;
+export const STORE_PHONE_NUMBER_MAX_LENGTH = 15;

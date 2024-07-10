@@ -7,3 +7,9 @@ export class UnauthorizedError extends CustomError {
         super(message || CommonErrorMessages.UNAUTHORIZED, StatusCodes.UNAUTHORIZED);
     }
 }
+
+export class BadRequestError extends CustomError {
+    constructor(message?: string) {
+        super(message || CommonErrorMessages.BAD_REQUEST, StatusCodes.BAD_REQUEST);
+    }
+}
