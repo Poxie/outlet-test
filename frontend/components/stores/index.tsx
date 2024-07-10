@@ -4,7 +4,7 @@ import StoreList from "./StoreList";
 
 export default async function Stores() {
     return(
-        <main className="p-section w-stores max-w-main mx-auto">
+        <main className="main-width p-section">
             <h1 className="mb-8 text-4xl text-center">
                 Våra varuhus
             </h1>
