@@ -23,6 +23,7 @@ export type ProductCategory = {
     description: string;
     bannerURL: string;
     productCount: number;
+    createdAt: string;
 }
 export type MutableCategoryProps = Pick<ProductCategory, 'title' | 'description'> & {
     banner: string;

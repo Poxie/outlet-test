@@ -1,6 +1,7 @@
 import { PERSONNEL_ROLE } from "./constants";
 import { CategoryWithProducts, User } from "./types";
 
+// Fucntions to get dummy objects
 export const getEmptyUserObject: () => User = () => ({
     id: 'temp-id',
     name: '',
@@ -15,4 +16,14 @@ export const getEmptyCategoryObject: () => CategoryWithProducts = () => ({
     bannerURL: '',
     productCount: 0,
     products: [],
+    createdAt: new Date().getTime().toString(),
 })
+
+// Get readable string from date
+export function getReadableDate(date: string) {
+    return new Date(parseInt(date)).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+}

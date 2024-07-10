@@ -1,5 +1,6 @@
 import { User } from "@/utils/types"
 import UserTableRowMenu from "./UserTableRowMenu";
+import { getReadableDate } from "@/utils";
 
 export default function UsersTableRow({ user, self }: {
     user: User;
@@ -7,7 +8,7 @@ export default function UsersTableRow({ user, self }: {
 }) {
     const userInitials = user.name.split(' ').map(name => name[0]).join('');
     const userRole = user.role.slice(0,1) + user.role.slice(1).toLowerCase();
-    const userAddedAt = new Date(parseInt(user.createdAt)).toLocaleDateString();
+    const userAddedAt = getReadableDate(user.createdAt);
 
     const tdClassName = 'p-4';
     return (
