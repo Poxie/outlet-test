@@ -53,7 +53,9 @@ export default function Menu({ children, groups, className }: {
                         initial={{ scale: .95, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: .95, opacity: 0 }}
-                        className="relative z-40"
+                        // Temporary hard-coded solution to prevent menu from mess with overflow container
+                        // Move into a context instead
+                        className="fixed z-40 right-8"
                     >
                         <MenuGroups 
                             groups={groups}
