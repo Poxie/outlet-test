@@ -46,3 +46,6 @@ export type Store = {
     createdAt: string;
 }
 export type MutableStoreProps = Pick<Store, 'name' | 'address' | 'phoneNumber' | 'email'>;
+export type CreateStoreProps = MutableStoreProps & {
+    storeNumber: string;
+}

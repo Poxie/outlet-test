@@ -11,7 +11,8 @@ export default function StoreDetails({ store, updateProps }: {
     return(
         <>
         <Input 
-            label="Store name"
+            label="Name"
+            placeholder="Store name"
             value={store.name}
             onChange={name => updateProps({ name })}
             disabled={!isAdmin}
@@ -19,6 +20,7 @@ export default function StoreDetails({ store, updateProps }: {
         <Input 
             containerClassName="mt-3"
             label="Address"
+            placeholder="Store address"
             value={store.address}
             onChange={address => updateProps({ address })}
             textArea

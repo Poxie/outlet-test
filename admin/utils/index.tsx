@@ -1,5 +1,5 @@
 import { PERSONNEL_ROLE } from "./constants";
-import { CategoryWithProducts, User } from "./types";
+import { CategoryWithProducts, Store, User } from "./types";
 
 // Fucntions to get dummy objects
 export const getEmptyUserObject: () => User = () => ({
@@ -16,6 +16,14 @@ export const getEmptyCategoryObject: () => CategoryWithProducts = () => ({
     bannerURL: '',
     productCount: 0,
     products: [],
+    createdAt: new Date().getTime().toString(),
+})
+export const getEmptyStoreObject: () => Store = () => ({
+    id: '',
+    name: '',
+    address: '',
+    email: '',
+    phoneNumber: '',
     createdAt: new Date().getTime().toString(),
 })
 
