@@ -1,15 +1,13 @@
 import Input from "@/components/input";
-import useCurrentUser from "@/hooks/useCurrentUser";
-import { ADMIN_ROLE } from "@/utils/constants";
+import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
 import { Store } from "@/utils/types";
 
 export default function StoreContactInformation({ store, updateProps }: {
     store: Store;
     updateProps: (changes: Partial<Store>) => void;
 }) {
-    const { data: currentUser } = useCurrentUser();
-
-    const isAdmin = currentUser?.role === ADMIN_ROLE;
+    const isAdmin = useSelfIsAdmin();
+    
     return(
         <div className="flex gap-3">
             <Input 
