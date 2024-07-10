@@ -1,8 +1,6 @@
-import Input from "../input";
+import TableCreateButton from "../table-create-button";
 
-export default function UsersTableHead({ setSearch }: {
-    setSearch: (text: string) => void;
-}) {
+export default function UsersTableHead() {
     const thClassName = 'px-4 py-3';
     return (
         <thead>
@@ -11,15 +9,13 @@ export default function UsersTableHead({ setSearch }: {
                 <th className={thClassName}>Email</th>
                 <th className={thClassName}>Role</th>
                 <th className={thClassName}>Added at</th>
-                <th className={thClassName}>
-                    <div className="flex justify-end">
-                        <Input 
-                            onChange={setSearch}
-                            placeholder="Search name or email"
-                            containerClassName="w-[260px] -m-2"
-                            className="px-2.5 py-2 font-medium" 
-                        />
-                    </div>
+                <th className="flex justify-end">
+                    <TableCreateButton
+                        className={thClassName}
+                        href="/people/create"
+                    >
+                        Add person
+                    </TableCreateButton>
                 </th>
             </tr>
         </thead>
