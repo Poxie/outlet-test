@@ -1,4 +1,6 @@
 import { twMerge } from "tailwind-merge";
+import Button from "../button";
+import ArrowIcon from "@/assets/icons/ArrowIcon";
 
 export default function CategoryTableHead() {
     const thClassName = 'px-4 py-3';
@@ -13,7 +15,19 @@ export default function CategoryTableHead() {
                 </th>
                 <th className={thClassName}>Assigned products</th>
                 <th className={thClassName}>Created at</th>
-                <th className={thClassName}></th>
+                <th className="flex justify-end">
+                    <Button 
+                        href="/produkter/create"
+                        type="transparent"
+                        className={twMerge(
+                            thClassName,
+                            "flex items-center gap-1 font-medium rounded-none",
+                        )}
+                    >
+                        Add category
+                        <ArrowIcon className="mt-0.5" size={18} />
+                    </Button>
+                </th>
             </tr>
         </thead>
     )
