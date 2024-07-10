@@ -5,11 +5,17 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { ADMIN_ROLE } from "@/utils/constants";
 import EditIcon from "@/assets/icons/EditIcon";
 import BinIcon from "@/assets/icons/BinIcon";
+import { useModal } from "@/contexts/modal";
+import DeleteStoreModal from "@/modals/delete-store";
 
 export default function StoresTableMenu({ store }: { 
     store: Store; 
 }) {
+    const { setModal } = useModal();
+
     const { data: currentUser } = useCurrentUser();
+
+    const openDeleteModal = () => setModal(<DeleteStoreModal store={store} />);
 
     const firstGroup: MenuGroup = [
         { text: 'View store', icon: <ViewIcon size={16} />, href: `/stores/${store.id}` },
@@ -26,6 +32,7 @@ export default function StoresTableMenu({ store }: {
             text: 'Delete store',
             icon: <BinIcon size={16} />,
             type: 'danger',
+            onClick: openDeleteModal,
         })
     }
 
