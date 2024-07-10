@@ -14,35 +14,37 @@ export default function UsersTable() {
 
     if(!self) return null;
 
-    const FilteredUsers = users.filter(user => (
+    const filteredUsers = users.filter(user => (
         user.name.toLowerCase().includes(search.toLowerCase()) ||
         user.email.toLowerCase().includes(search.toLowerCase())
     ))
-    const isEmpty = FilteredUsers.length === 0;
+    const isEmpty = filteredUsers.length === 0;
     return(
-        <div>
-            <table className="w-full">
-                <UsersTableHead setSearch={setSearch} />
-                <tbody className="divide-y-[1px] divide-secondary">
-                    {FilteredUsers.map(user => (
-                        <UsersTableRow 
-                            user={user}
-                            self={self}
-                            key={user.id}
-                        />
-                    ))}
-                </tbody>
-            </table>
-            {isEmpty && (
-                <span className="block p-8 text-center">
-                    {`No results matching "${search}"`}
-                </span>
-            )}
-            {!isEmpty && search && (
-                <span className="block p-4 text-sm border-t-[1px] border-t-tertiary">
-                    {`Showing {FilteredUsers.length} results for "${search}"`}
-                </span>
-            )}
+        <div className="grid">
+            <div className="overflow-x-auto">
+                <table className="w-full whitespace-nowrap">
+                    <UsersTableHead setSearch={setSearch} />
+                    <tbody className="divide-y-[1px] divide-secondary">
+                        {filteredUsers.map(user => (
+                            <UsersTableRow 
+                                user={user}
+                                self={self}
+                                key={user.id}
+                            />
+                        ))}
+                    </tbody>
+                </table>
+                {isEmpty && (
+                    <span className="block p-8 text-center">
+                        {`No results matching "${search}"`}
+                    </span>
+                )}
+                {!isEmpty && search && (
+                    <span className="block p-4 text-sm border-t-[1px] border-t-tertiary">
+                        {`Showing ${filteredUsers.length} results for "${search}"`}
+                    </span>
+                )}
+            </div>
         </div>
     )
 }

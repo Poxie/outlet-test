@@ -13,16 +13,20 @@ export default function CategoryTable() {
     if(!categories) return null
 
     return(
-        <table className="w-full">
-            <CategoryTableHead />
-            <tbody className="divide-y-[1px] divide-secondary">
-                {categories.map(category => (
-                    <CategoryTableRow 
-                        category={category}
-                        key={category.id}
-                    />
-                ))}
-            </tbody>
-        </table>
+        <div className="grid">
+            <div className="overflow-x-auto">
+                <table className="w-full">
+                    <CategoryTableHead />
+                    <tbody className="divide-y-[1px] divide-secondary">
+                        {categories.map(category => (
+                            <CategoryTableRow 
+                                category={category}
+                                key={category.id}
+                            />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     )
 }
