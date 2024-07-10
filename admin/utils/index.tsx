@@ -24,6 +24,10 @@ export const getEmptyStoreObject: () => Store = () => ({
     address: '',
     email: '',
     phoneNumber: '',
+    instagramURL: '',
+    weekdayOpenHours: '',
+    saturdayOpenHours: '',
+    sundayOpenHours: '',
     createdAt: new Date().getTime().toString(),
 })
 
