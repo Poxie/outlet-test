@@ -1,4 +1,5 @@
 import BinIcon from "@/assets/icons/BinIcon";
+import RemoveItemButton from "@/components/remove-item-button";
 import { WeeklyProduct } from "@/utils/types";
 import Image from "next/image";
 
@@ -8,13 +9,10 @@ export default function WeekProduct({ onRemove, product: { id, imageURL } }: {
 }) {
     return(
         <div className="w-full relative">
-            <button 
+            <RemoveItemButton 
                 onClick={() => onRemove(id)}
-                className="p-1 absolute top-2 right-2 bg-primary text-c-primary shadow-lg rounded"
-                aria-label="Remove product"
-            >
-                <BinIcon size={20} />
-            </button>
+                ariaLabel="Remove product"
+            />
             <Image 
                 className="w-full h-full object-cover"
                 src={imageURL}
