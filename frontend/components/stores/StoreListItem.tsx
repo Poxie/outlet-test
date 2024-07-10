@@ -3,6 +3,7 @@ import StoreListSectionHeader from "./StoreListSectionHeader";
 import { getStoreMapLocation, getStoreIframeSrc, getStoreMapImage } from "@/utils/storeUtils";
 import StoreListItemImage from "./StoreListItemImage";
 import { twMerge } from "tailwind-merge";
+import InstagramIcon from "@/assets/icons/InstagramIcon";
 
 export default function StoreListItem({ store, reverse }: {
     store: Store;
@@ -37,25 +38,35 @@ export default function StoreListItem({ store, reverse }: {
                         </pre>
                     </a>
                 </div>
-                <div className="p-5 flex flex-col items-start">
-                    <StoreListSectionHeader>
-                        Kontakt
-                    </StoreListSectionHeader>
-                    <span>
-                        Tel:
-                        {' '}
+                <div className="p-5 flex items-end justify-between">
+                    <div className="flex flex-col">
+                        <StoreListSectionHeader>
+                            Kontakt
+                        </StoreListSectionHeader>
+                        <span>
+                            Tel:
+                            {' '}
+                            <a 
+                                href={`Tel: ${store.phoneNumber}`}
+                                className="hover-underline"
+                            >
+                                {store.phoneNumber}
+                            </a>
+                        </span>
                         <a 
-                            href={`Tel: ${store.phoneNumber}`}
+                            href={`mailto:${store.email}`}
                             className="hover-underline"
                         >
-                            {store.phoneNumber}
+                            Maila {store.name}
                         </a>
-                    </span>
-                    <a 
-                        href={`mailto:${store.email}`}
-                        className="hover-underline"
+                    </div>
+                    <a
+                        className="-m-2 p-2 hover:bg-secondary transition-colors rounded-md text-c-primary"
+                        href={store.instagramURL}
+                        target="_blank"
+                        aria-label={`Följ ${store.name} på Instagram`}
                     >
-                        Maila {store.name}
+                        <InstagramIcon size={24} />
                     </a>
                 </div>
             </div>

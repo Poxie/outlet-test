@@ -22,4 +22,5 @@ export type Store = {
     email: string;
     phoneNumber: string;
     createdAt: string;
+    instagramURL: string;
 }
