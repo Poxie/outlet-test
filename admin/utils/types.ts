@@ -44,6 +44,7 @@ export type Store = {
     phoneNumber: string;
     email: string;
     createdAt: string;
+    instagramURL: string;
 }
 export type MutableStoreProps = Pick<Store, 'name' | 'address' | 'phoneNumber' | 'email'>;
 export type CreateStoreProps = MutableStoreProps & {

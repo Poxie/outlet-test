@@ -26,6 +26,14 @@ export default function StoreContactInformation({ store, updateProps }: {
                 containerClassName="flex-1"
                 disabled={!isAdmin}
             />
+            <Input 
+                label="Instagram"
+                placeholder="Instagram URL"
+                value={store.instagramURL}
+                onChange={instagramURL => updateProps({ instagramURL })}
+                containerClassName="flex-1"
+                disabled={!isAdmin}
+            />
         </div>
     )
 }
