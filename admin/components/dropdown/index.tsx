@@ -35,7 +35,7 @@ export default function Dropdown<T extends string>({ activeItemId, items, onChan
     const labelId = label?.toLowerCase().replaceAll(' ', '-');
     const activeItem = items.find(item => item.id === activeItemId) || items[0];
     return(
-        <div className="relative" ref={ref}>
+        <div className="relative z-10" ref={ref}>
             {label && (
                 <label 
                     htmlFor={labelId}
