@@ -37,12 +37,7 @@ export default function UserTableRowMenu({ user, self }: {
 
     return(
         <div className="flex justify-end">
-            <Menu 
-                groups={menuGroups}
-                className="w-8 aspect-square flex items-center justify-center"
-            >
-                <MenuIcon className="w-1" />
-            </Menu>
+            <Menu groups={menuGroups} />
         </div>
     )
 }

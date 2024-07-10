@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import MenuGroups from "./MenuGroups";
 import { twMerge } from "tailwind-merge";
 import useClickOutside from "@/hooks/useClickOutside";
+import MenuIcon from "@/assets/icons/MenuIcon";
 
 /**
  * Recommended icon size: 16px
@@ -19,8 +20,7 @@ export type MenuItem = {
 */
 export type MenuGroup = MenuItem[];
 
-export default function Menu({ children, groups, className }: {
-    children: React.ReactNode;
+export default function Menu({ groups, className }: {
     groups: MenuGroup[];
     className?: string;
 }) {
@@ -39,12 +39,12 @@ export default function Menu({ children, groups, className }: {
             <button
                 onClick={toggleOpen}
                 className={twMerge(
-                    "hover:bg-secondary active:bg-tertiary transition-colors rounded-md",
+                    "w-8 aspect-square flex items-center justify-center hover:bg-secondary active:bg-tertiary transition-colors rounded-md",
                     open && 'bg-secondary',
                     className,
                 )}
             >
-                {children}
+                <MenuIcon className="w-1" />
             </button>
 
             <AnimatePresence>

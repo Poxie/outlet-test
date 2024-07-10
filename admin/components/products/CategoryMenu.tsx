@@ -27,11 +27,6 @@ export default function CategoryMenu({ category }: {
     ]
 
     return(
-        <Menu
-            groups={menuGroups}
-            className="-m-1 p-1 w-9 aspect-square flex items-center justify-center"
-        >
-            <MenuIcon className="w-1" />
-        </Menu>
+        <Menu groups={menuGroups} />
     )
 }
