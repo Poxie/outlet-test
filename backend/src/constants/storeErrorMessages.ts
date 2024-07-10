@@ -25,4 +25,5 @@ export const StoreErrorMessages = {
     storePhoneNumberLength: `Store phone number must be between ${STORE_PHONE_NUMBER_MIN_LENGTH} and ${STORE_PHONE_NUMBER_MAX_LENGTH} characters`,
 
     storeNumberExists: (storeNumber: string) => `Store number ${storeNumber} already exists`,
+    storeNotFound: (storeNumber: string) => `Store number ${storeNumber} not found`,
 }

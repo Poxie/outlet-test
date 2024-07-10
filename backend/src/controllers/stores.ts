@@ -25,7 +25,19 @@ router.post('/', auth, requiresAdmin, asyncHandler(async (req, res) => {
     };
 
     const store = await StoreMutations.createStore(storeData);
-    
+
+    res.send(store);
+}))
+
+router.patch('/:id', auth, requiresAdmin, asyncHandler(async (req, res) => {
+    const data = createStoreSchema
+        .strict()
+        .partial()
+        .omit({ storeNumber: true })
+        .parse(req.body);
+
+    const store = await StoreMutations.updateStore(req.params.id, data);
+
     res.send(store);
 }))
 
