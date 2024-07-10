@@ -1,0 +1,1 @@
+export const INSTAGRAM_REGEX = /(?:(?:http|https):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am|twitter\.com)\/([A-Za-z0-9-_\.]+)/im;

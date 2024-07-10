@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { StoreErrorMessages } from "@/constants/storeErrorMessages";
 import { STORE_ADDRESS_MAX_LENGTH, STORE_ADDRESS_MIN_LENGTH, STORE_EMAIL_MAX_LENGTH, STORE_NAME_MAX_LENGTH, STORE_NAME_MIN_LENGTH, STORE_NUMBER_MAX_LENGTH, STORE_NUMBER_MIN_LENGTH, STORE_PHONE_NUMBER_MAX_LENGTH, STORE_PHONE_NUMBER_MIN_LENGTH } from "@/utils/stores/storeConstants";
+import { INSTAGRAM_REGEX } from "@/utils/regex";
 
 const {
     storeNumberRequired, storeNumberLength,
@@ -8,6 +9,7 @@ const {
     storeAddressRequired, storeAddressLength,
     storeEmailRequired, storeEmailInvalid, storeEmailLength,
     storePhoneNumberRequired, storePhoneNumberLength,
+    storeInstagramURLRequired, storeInvalidInstagramURL
 } = StoreErrorMessages;
 
 export const createStoreSchema = z.object({
@@ -46,4 +48,9 @@ export const createStoreSchema = z.object({
     }).max(STORE_PHONE_NUMBER_MAX_LENGTH, {
         message: storePhoneNumberLength,
     }),
+    instagramURL: z.string({
+        message: storeInstagramURLRequired,
+    }).regex(INSTAGRAM_REGEX, {
+        message: storeInvalidInstagramURL,
+    })
 })

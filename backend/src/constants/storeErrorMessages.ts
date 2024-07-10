@@ -26,4 +26,7 @@ export const StoreErrorMessages = {
 
     storeNumberExists: (storeNumber: string) => `Store number ${storeNumber} already exists`,
     storeNotFound: (storeNumber: string) => `Store number ${storeNumber} not found`,
+
+    storeInstagramURLRequired: 'Store instagram URL is required',
+    storeInvalidInstagramURL: 'Invalid instagram URL',
 }
