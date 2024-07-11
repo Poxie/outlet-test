@@ -7,12 +7,12 @@ import SicklaNotice from "../sickla-notice";
 import getCurrentWeeksProducts from "@/api/weekly-products/getCurrentWeeksProducts";
 
 export default function VeckansVaror() {
-    const { data: products } = useQuery({
+    const { data: productWeek } = useQuery({
         queryKey: ['weeklyProducts'],
         queryFn: getCurrentWeeksProducts,
     })
 
-    if(!products) return null;
+    if(!productWeek) return null;
 
     return(
         <main>
@@ -29,7 +29,7 @@ export default function VeckansVaror() {
                 />
                 <ProductList 
                     className="mt-4"
-                    products={products}
+                    products={productWeek.products}
                 />
             </div>
             <SicklaNotice />

@@ -5,14 +5,14 @@ import { useQuery } from "@tanstack/react-query"
 import getCurrentWeeksProducts from "@/api/weekly-products/getCurrentWeeksProducts"
 
 export default function HomeWeeklyProductList() {
-    const { data: products } = useQuery({
+    const { data: productWeek } = useQuery({
         queryKey: ['weeklyProducts'],
         queryFn: getCurrentWeeksProducts,
     })
 
-    if(!products) return null;
+    if(!productWeek) return null;
 
-    const imageComponents = products.map(product => (
+    const imageComponents = productWeek.products.map(product => (
         <HomeWeeklyProduct 
             imagePath={product.imageURL}
             key={product.id}

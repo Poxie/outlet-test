@@ -10,6 +10,11 @@ export type Product = {
     parentId: string;
     imageURL: string;
 }
+export type WeeklyGroup = {
+    date: string;
+    week: number;
+    products: WeeklyProduct[];
+}
 export type WeeklyProduct = {
     id: number;
     imageURL: string;
