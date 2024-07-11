@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-export default function StoreListItemImage({ imageSrc, iframeSrc }: {
+export default function StoreImage({ imageSrc, iframeSrc }: {
     imageSrc: string;
     iframeSrc: string;
 }) {
