@@ -15,7 +15,7 @@ export default function Products() {
     if(!categories) return null;
 
     return(
-        <main>
+        <main className="flex flex-col flex-1">
             <PageBanner 
                 className="main-width"
                 steps={[
@@ -23,7 +23,7 @@ export default function Products() {
                     { text: 'Produkter', path: '/produkter' },
                 ]}
             />
-            <div className="main-width pt-4 pb-8">
+            <div className="main-width pt-4 pb-8 flex-1">
                 {categories.map(({ id, title, products }) => (
                     <ProductRow 
                         title={title}
