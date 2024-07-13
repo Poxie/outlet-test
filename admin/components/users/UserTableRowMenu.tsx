@@ -3,9 +3,9 @@ import Menu, { MenuGroup } from "../menu";
 import EditIcon from "@/assets/icons/EditIcon";
 import BinIcon from "@/assets/icons/BinIcon";
 import { User } from "@/utils/types";
-import MenuIcon from "@/assets/icons/MenuIcon";
 import { useModal } from "@/contexts/modal";
 import DeleteUserModal from "@/modals/delete-user";
+import EditUser from "@/modals/user-profile/edit-user";
 
 export default function UserTableRowMenu({ user, self }: {
     user: User;
@@ -16,13 +16,16 @@ export default function UserTableRowMenu({ user, self }: {
     const openDeleteModal = () => {
         setModal(<DeleteUserModal user={user} />)
     }
+    const openEditModal = () => {
+        setModal(<EditUser userId={user.id} />);
+    }
 
     const canEdit = self.id === user.id || self.role === 'ADMINISTRATOR';
     const canRemove = self.role === 'ADMINISTRATOR' && self.id !== user.id;
 
     const firstGroup: MenuGroup = [
-        { text: 'View user', icon: <PersonIcon size={16} />, href: `/people/${user.id}` },
-        canEdit && { text: 'Edit user', icon: <EditIcon size={16} />, href: `/people/${user.id}` }
+        { text: 'View user', icon: <PersonIcon size={16} />, onClick: openEditModal },
+        canEdit && { text: 'Edit user', icon: <EditIcon size={16} />, onClick: openEditModal }
     ].filter(item => !!item);
 
     const secondGroup: MenuGroup = [

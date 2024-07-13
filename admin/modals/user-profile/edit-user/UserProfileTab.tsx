@@ -1,0 +1,84 @@
+import { User } from "@/utils/types";
+import useChanges from "@/hooks/useChanges";
+import useUpdateProps from "@/hooks/useUpdateProps";
+import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import useUpdateUser from "@/hooks/users/useUpdateUser";
+import useFeedback from "@/hooks/useFeedback";
+import Feedback from "@/components/feedback";
+import UserInformation from "../UserInformation";
+import ModalSectionHeader from "@/modals/ModalSectionHeader";
+import UserPermission from "../UserPermission";
+import ModalFooter from "@/modals/ModalFooter";
+
+export default function UserProfileTab({ user }: {
+    user: User;
+}) {
+    const { mutateAsync } = useUpdateUser(user.id);
+
+    const { data: self } = useCurrentUser();
+    const isAdmin = useSelfIsAdmin();
+    const canEdit = self?.id === user.id || isAdmin;
+
+    const { feedback, setFeedback, clearFeedback } = useFeedback();
+
+    const { state: currentUser, updateProps } = useUpdateProps(user, {
+        onUpdate: clearFeedback,
+    });
+
+    const { changes, hasChanges } = useChanges(currentUser, user);
+
+    const updateUser = async () => {
+        if(!hasChanges) {
+            setFeedback({
+                message: 'No changes have been made',
+                type: 'danger',
+            })
+            return;
+        }
+
+        try {
+            await mutateAsync(changes);
+            setFeedback({
+                message: 'User has been updated',
+                type: 'success',
+            })
+        } catch(error: any) {
+            setFeedback({
+                message: error.message,
+                type: 'danger',
+            })
+        }
+    }
+
+    return(
+        <>
+        {feedback && (
+            <Feedback 
+                {...feedback}
+                className="m-4 mb-0"
+            />
+        )}
+
+        <UserInformation 
+            user={currentUser}
+            updateProps={updateProps}
+            canEdit={canEdit}
+        />
+        <ModalSectionHeader>
+            User permission
+        </ModalSectionHeader>
+        <UserPermission 
+            user={currentUser}
+            updateProps={updateProps}
+        />
+
+        {canEdit && (
+            <ModalFooter 
+                onConfirm={updateUser}
+                confirmText="Save changes"
+            />
+        )}
+        </>
+    )
+}
