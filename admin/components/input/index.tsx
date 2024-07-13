@@ -50,7 +50,7 @@ export default function Input({ onChange, containerClassName, className, placeho
                 )}
                 {textArea && (
                     <textarea
-                        style={{ minHeight: 120 }} 
+                        style={{ minHeight: 100 }} 
                         {...props}
                     />
                 )}

@@ -1,9 +1,15 @@
 import { twMerge } from "tailwind-merge";
 import TableCreateButton from "../table-create-button";
 import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
+import { useModal } from "@/contexts/modal";
+import CreateStoreModal from "@/modals/store/create-store";
 
 export default function StoresTableHead() {
+    const { setModal } = useModal();
+
     const isAdmin = useSelfIsAdmin();
+
+    const openCreateModal = () => setModal(<CreateStoreModal />);
 
     const thClassName = 'px-4 py-3';
     return(
@@ -28,7 +34,7 @@ export default function StoresTableHead() {
                     {isAdmin && (
                         <TableCreateButton
                             className={thClassName}
-                            href="/stores/create"
+                            onClick={openCreateModal}
                         >
                             Add store
                         </TableCreateButton>
