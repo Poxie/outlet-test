@@ -1,6 +1,7 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ModalProvider from "./modal";
+import FeedbackProvider from "./feedback";
 
 export default function Providers({ children }: {
     children: React.ReactNode;
@@ -9,9 +10,11 @@ export default function Providers({ children }: {
 
     return(
         <QueryClientProvider client={queryClient}>
-            <ModalProvider>
-                {children}
-            </ModalProvider>
+            <FeedbackProvider>
+                <ModalProvider>
+                    {children}
+                </ModalProvider>
+            </FeedbackProvider>
         </QueryClientProvider>
     )
 }

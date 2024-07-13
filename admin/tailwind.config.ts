@@ -18,7 +18,7 @@ const config: Config = {
         'c-primary': '#E73128',
         'c-primary-accent': '#C92E26',
         danger: '#FF0000',
-        success: '#00FF00',
+        success: '#009900',
       },
       textColor: {
         primary: '#0f172a',
@@ -26,7 +26,7 @@ const config: Config = {
         light: '#fff',
         'c-primary': '#E73128',
         danger: '#FF0000',
-        success: '#00FF00',
+        success: '#009900',
       },
       borderColor: {
         primary: '#fff',
@@ -35,7 +35,7 @@ const config: Config = {
         quaternary: '#C9C9C9',
         'text-primary': '#0f172a',
         danger: '#FF0000',
-        success: '#00FF00',
+        success: '#009900',
       },
       fill: {
         light: '#fff',
@@ -66,6 +66,15 @@ const config: Config = {
       padding: {
         section: '4rem 0',
       },
+      animation: {
+        'feedback-progress': 'feedback-progress linear',
+      },
+      keyframes: {
+        'feedback-progress': {
+          '0%': { width: '100%' },
+          '100%': { width: '0%' },
+        },
+      }
     },
   },
   plugins: [],
