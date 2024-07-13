@@ -13,13 +13,13 @@ const OPENING_HOURS = 'OPENING_HOURS';
 
 type StoreTab = typeof DETAILS | typeof CONTACT | typeof OPENING_HOURS;
 
-const tabComponents = {
+const TAB_COMPONENTS = {
     [DETAILS]: StoreDetailsTab,
     [CONTACT]: StoreContactTab,
     [OPENING_HOURS]: StoreOpeningHoursTab,
 } as const;
 
-const storeTabs: {
+const STORE_TABS: {
     id: StoreTab;
     text: string;
 }[] = [
@@ -39,7 +39,7 @@ export default function EditStoreModal({ storeId }: {
 
     if(!store) return null;
 
-    const ActiveComponent = tabComponents[selectedTab];
+    const ActiveComponent = TAB_COMPONENTS[selectedTab];
     
     return(
         <>
@@ -47,7 +47,7 @@ export default function EditStoreModal({ storeId }: {
             title={store.name}
         />
         <SelectableTabs 
-            tabs={storeTabs}
+            tabs={STORE_TABS}
             activeTab={selectedTab}
             onChange={setSelectedTab}
             className="px-4"
