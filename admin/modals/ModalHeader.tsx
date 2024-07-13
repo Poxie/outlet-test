@@ -1,14 +1,19 @@
 import CloseIcon from "@/assets/icons/CloseIcon";
 import { useModal } from "@/contexts/modal";
+import { twMerge } from "tailwind-merge";
 
-export default function ModalHeader({ title, description }: {
+export default function ModalHeader({ title, description, className }: {
     title: string;
-    description: string;
+    description?: string;
+    className?: string;
 }) {
     const { closeModal } = useModal();
 
     return(
-        <div className="p-4 grid gap-1">
+        <div className={twMerge(
+            "p-4 grid gap-1 border-b-[1px] border-b-tertiary rounded-t-md",
+            className,
+        )}>
             <div className="flex items-center justify-between">
                 <span className="text-xl font-semibold">
                     {title}
@@ -22,9 +27,11 @@ export default function ModalHeader({ title, description }: {
                     <CloseIcon size={24} />
                 </button>
             </div>
-            <span>
-                {description}
-            </span>
+            {description && (
+                <span>
+                    {description}
+                </span>
+            )}
         </div>
     )
 }
