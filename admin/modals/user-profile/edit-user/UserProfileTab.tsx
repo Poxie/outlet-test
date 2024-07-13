@@ -10,10 +10,13 @@ import UserInformation from "../UserInformation";
 import ModalSectionHeader from "@/modals/ModalSectionHeader";
 import UserPermission from "../UserPermission";
 import ModalFooter from "@/modals/ModalFooter";
+import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 
 export default function UserProfileTab({ user }: {
     user: User;
 }) {
+    const refetchQuery = useRefetchQuery();
+
     const { mutateAsync } = useUpdateUser(user.id);
 
     const { data: self } = useCurrentUser();
@@ -39,10 +42,16 @@ export default function UserProfileTab({ user }: {
 
         try {
             await mutateAsync(changes);
+
             setFeedback({
                 message: 'User has been updated',
                 type: 'success',
             })
+            refetchQuery(['user', user.id]);
+            refetchQuery(['users']);
+            if(user.id === self?.id) {
+                refetchQuery(['current-user']);
+            }
         } catch(error: any) {
             setFeedback({
                 message: error.message,
