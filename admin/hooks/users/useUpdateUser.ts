@@ -5,8 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 export default function useUpdateUser(id: string) {
     return useMutation({
         mutationKey: ['update-user', id],
-        mutationFn: ({ changes }: {
-            changes: Partial<User>;
-        }) => updateUser(id, changes),
+        mutationFn: (changes: Partial<User & {
+            password: string;
+        }>) => updateUser(id, changes)
     })
 }
