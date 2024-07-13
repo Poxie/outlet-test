@@ -7,7 +7,7 @@ export default function Feedback({ type, message, className }: FeedbackProps & {
     return(
         <span
             className={twMerge(
-                "p-4 block border-[1px] rounded-md",
+                "p-3 block border-[1px] rounded-md",
                 type === 'danger' && ' bg-danger/20 border-danger',
                 type === 'success' && 'bg-success/20 border-success',
                 className,
