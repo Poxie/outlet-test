@@ -3,8 +3,9 @@ import StoreOpeningHours from "../StoreOpeningHours";
 import useUpdateStore from "@/hooks/stores/useUpdateStore";
 import ModalFooter from "@/modals/ModalFooter";
 
-export default function StoreOpeningHoursTab({ store }: {
+export default function StoreOpeningHoursTab({ store, isAdmin }: {
     store: Store;
+    isAdmin: boolean;
 }) {
     const { currentStore, updateProps, updateStore, isPending } = useUpdateStore(store);
 
@@ -16,11 +17,13 @@ export default function StoreOpeningHoursTab({ store }: {
                 className="p-4"
             />
 
-            <ModalFooter 
-                confirmText="Save changes"
-                confirmLoadingText="Saving changes..."
-                loading={isPending}
-            />
+            {isAdmin && (
+                <ModalFooter 
+                    confirmText="Save changes"
+                    confirmLoadingText="Saving changes..."
+                    loading={isPending}
+                />
+            )}
         </form>
     )
 }

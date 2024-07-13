@@ -3,8 +3,9 @@ import StoreDetails from "../StoreDetails";
 import useUpdateStore from "@/hooks/stores/useUpdateStore";
 import ModalFooter from "@/modals/ModalFooter";
 
-export default function StoreDetailsTab({ store }: {
+export default function StoreDetailsTab({ store, isAdmin }: {
     store: Store;
+    isAdmin: boolean;
 }) {
     const { currentStore, updateProps, updateStore, isPending } = useUpdateStore(store);
 
@@ -17,11 +18,13 @@ export default function StoreDetailsTab({ store }: {
                 withStoreNumber
             />
 
-            <ModalFooter 
-                confirmText="Save changes"
-                confirmLoadingText="Saving changes..."
-                loading={isPending}
-            />
+            {isAdmin && (
+                <ModalFooter 
+                    confirmText="Save changes"
+                    confirmLoadingText="Saving changes..."
+                    loading={isPending}
+                />
+            )}
         </form>
     )
 }
