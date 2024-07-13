@@ -8,7 +8,7 @@ export default function ModalFooter({
 }: {
     closeOnCancel?: boolean;
     onCancel?: () => void;
-    onConfirm: () => void;
+    onConfirm?: () => void;
     confirmText?: string;
     cancelText?: string;
     confirmLoadingText?: string;
@@ -35,6 +35,7 @@ export default function ModalFooter({
                 onClick={onConfirm}
                 disabled={loading}
                 className="p-3 font-medium text-sm"
+                buttonType="submit"
             >
                 {!loading ? confirmText : confirmLoadingText}
             </Button>

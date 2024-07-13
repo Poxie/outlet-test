@@ -34,7 +34,9 @@ export default function CreateUserModal() {
         onUpdate: clearFeedback,
     });
 
-    const createUser = async () => {
+    const createUser = async (e: React.FormEvent) => {
+        e.preventDefault();
+
         if(passwords.password !== passwords.repeatPassword) {
             setFeedback({
                 message: 'Passwords do not match',
@@ -68,43 +70,44 @@ export default function CreateUserModal() {
             title="Add user"
         />
 
-        {feedback && (
-            <Feedback 
-                {...feedback}
-                className="m-4 mb-0"
+        <form onSubmit={createUser}>
+            {feedback && (
+                <Feedback 
+                    {...feedback}
+                    className="m-4 mb-0"
+                />
+            )}
+
+            <UserInformation 
+                updateProps={updateInfo}
+                user={userInfo}
+                canEdit
             />
-        )}
 
-        <UserInformation 
-            updateProps={updateInfo}
-            user={userInfo}
-            canEdit
-        />
+            <ModalSectionHeader>
+                Permissions
+            </ModalSectionHeader>
 
-        <ModalSectionHeader>
-            Permissions
-        </ModalSectionHeader>
+            <UserPermission 
+                updateProps={updateInfo}
+                user={userInfo}
+            />
 
-        <UserPermission 
-            updateProps={updateInfo}
-            user={userInfo}
-        />
+            <ModalSectionHeader>
+                Password
+            </ModalSectionHeader>
 
-        <ModalSectionHeader>
-            Password
-        </ModalSectionHeader>
+            <UserPassword 
+                updatePasswords={updatePasswords}
+                passwords={passwords}
+            />
 
-        <UserPassword 
-            updatePasswords={updatePasswords}
-            passwords={passwords}
-        />
-
-        <ModalFooter 
-            onConfirm={createUser}
-            confirmText="Add user"
-            confirmLoadingText="Adding user..."
-            loading={isPending}
-        />
+            <ModalFooter 
+                confirmText="Add user"
+                confirmLoadingText="Adding user..."
+                loading={isPending}
+            />
+        </form>
         </>
     )
 }

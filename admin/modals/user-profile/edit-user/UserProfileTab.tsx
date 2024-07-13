@@ -17,7 +17,7 @@ export default function UserProfileTab({ user }: {
 }) {
     const refetchQuery = useRefetchQuery();
 
-    const { mutateAsync } = useUpdateUser(user.id);
+    const { mutateAsync, isPending } = useUpdateUser(user.id);
 
     const { data: self } = useCurrentUser();
     const isAdmin = useSelfIsAdmin();
@@ -31,7 +31,9 @@ export default function UserProfileTab({ user }: {
 
     const { changes, hasChanges } = useChanges(currentUser, user);
 
-    const updateUser = async () => {
+    const updateUser = async (e: React.FormEvent) => {
+        e.preventDefault();
+
         if(!hasChanges) {
             setFeedback({
                 message: 'No changes have been made',
@@ -61,33 +63,34 @@ export default function UserProfileTab({ user }: {
     }
 
     return(
-        <>
-        {feedback && (
-            <Feedback 
-                {...feedback}
-                className="m-4 mb-0"
-            />
-        )}
+        <form onSubmit={updateUser}>
+            {feedback && (
+                <Feedback 
+                    {...feedback}
+                    className="m-4 mb-0"
+                />
+            )}
 
-        <UserInformation 
-            user={currentUser}
-            updateProps={updateProps}
-            canEdit={canEdit}
-        />
-        <ModalSectionHeader>
-            User permission
-        </ModalSectionHeader>
-        <UserPermission 
-            user={currentUser}
-            updateProps={updateProps}
-        />
-
-        {canEdit && (
-            <ModalFooter 
-                onConfirm={updateUser}
-                confirmText="Save changes"
+            <UserInformation 
+                user={currentUser}
+                updateProps={updateProps}
+                canEdit={canEdit}
             />
-        )}
-        </>
+            <ModalSectionHeader>
+                User permission
+            </ModalSectionHeader>
+            <UserPermission 
+                user={currentUser}
+                updateProps={updateProps}
+            />
+
+            {canEdit && (
+                <ModalFooter 
+                    confirmText="Save changes"
+                    confirmLoadingText="Saving changes..."
+                    loading={isPending}
+                />
+            )}
+        </form>
     )
 }

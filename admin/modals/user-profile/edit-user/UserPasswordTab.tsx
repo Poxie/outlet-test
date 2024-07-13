@@ -26,7 +26,9 @@ export default function UpdatePasswordTab({ userId }: {
 
     const { hasChanges } = useChanges(passwords, DEFAULT_PASSWORDS);
 
-    const updatePassword = async () => {
+    const updatePassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+
         if(!hasChanges) {
             setFeedback({
                 message: 'No changes have been made',
@@ -59,25 +61,24 @@ export default function UpdatePasswordTab({ userId }: {
     }
 
     return(
-        <>
-        {feedback && (
-            <Feedback 
-                {...feedback}
-                className="m-4 mb-0"
+        <form onSubmit={updatePassword}>
+            {feedback && (
+                <Feedback 
+                    {...feedback}
+                    className="m-4 mb-0"
+                />
+            )}
+
+            <UserPassword 
+                passwords={passwords} 
+                updatePasswords={updatePasswords} 
             />
-        )}
 
-        <UserPassword 
-            passwords={passwords} 
-            updatePasswords={updatePasswords} 
-        />
-
-        <ModalFooter 
-            onConfirm={updatePassword}
-            confirmText="Update password"
-            confirmLoadingText="Updating password..."
-            loading={isPending}
-        />
-        </>
+            <ModalFooter 
+                confirmText="Update password"
+                confirmLoadingText="Updating password..."
+                loading={isPending}
+            />
+        </form>
     )
 }
