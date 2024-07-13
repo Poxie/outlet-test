@@ -1,11 +1,26 @@
 import { CategoryWithProducts } from "@/utils/types";
+import CategoryProducts from "../CategoryProducts";
+import useUpdateCategory from "@/hooks/categories/useUpdateCategory";
+import ModalFooter from "@/modals/ModalFooter";
 
 export default function CategoryProductsTab({ category }: {
     category: CategoryWithProducts;
 }) {
-    return(
-        <div>
+    const { currentCategory, updateProps, updateCategory, isPending } = useUpdateCategory(category);
 
-        </div>
+    return(
+        <form onSubmit={updateCategory}>
+            <CategoryProducts 
+                category={currentCategory}
+                updateProps={updateProps}
+                className="p-4"
+            />
+
+            <ModalFooter 
+                confirmText="Save products"
+                confirmLoadingText="Saving products..."
+                loading={isPending}
+            />
+        </form>
     )
 }

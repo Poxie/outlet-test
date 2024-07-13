@@ -1,5 +1,5 @@
-import { PERSONNEL_ROLE } from "./constants";
-import { CategoryWithProducts, Store, User } from "./types";
+import { PERSONNEL_ROLE, TEMP_PREFIX } from "./constants";
+import { CategoryWithProducts, Product, Store, User } from "./types";
 
 // Fucntions to get dummy objects
 export const getEmptyUserObject: () => User = () => ({
@@ -29,6 +29,12 @@ export const getEmptyStoreObject: () => Store = () => ({
     saturdayOpenHours: '',
     sundayOpenHours: '',
     createdAt: new Date().getTime().toString(),
+})
+export const getEmptyProductObject: (props?: Partial<Product>) => Product = (props = {}) => ({
+    id: `${TEMP_PREFIX}${Math.random()}`,
+    parentId: '',
+    imageURL: '',
+    ...props,
 })
 
 // Get readable string from date
