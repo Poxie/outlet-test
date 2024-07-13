@@ -2,14 +2,16 @@ import ArrowIcon from "@/assets/icons/ArrowIcon";
 import Button from "../button";
 import { twMerge } from "tailwind-merge";
 
-export default function TableCreateButton({ className, children, href }: {
+export default function TableCreateButton({ className, children, href, onClick }: {
     className?: string;
     children: React.ReactNode;
-    href: string;
+    href?: string;
+    onClick?: () => void;
 }) {
     return(
         <Button 
             href={href}
+            onClick={onClick}
             type="transparent"
             className={twMerge(
                 className,

@@ -5,10 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 export default function useCreateUser() {
     return useMutation({
         mutationKey: ['create-user'],
-        mutationFn: ({ user }: {
-            user: MutableUserProps & {
-                password: string;
-            };
+        mutationFn: (user:  MutableUserProps & {
+            password: string;
         }) => createUser(user)
     })
 }

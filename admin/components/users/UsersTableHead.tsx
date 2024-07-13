@@ -1,8 +1,14 @@
 import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
 import TableCreateButton from "../table-create-button";
+import { useModal } from "@/contexts/modal";
+import CreateUserModal from "@/modals/user-profile/create-user";
 
 export default function UsersTableHead() {
+    const { setModal } = useModal();
+
     const isAdmin = useSelfIsAdmin();
+
+    const openCreateModal = () => setModal(<CreateUserModal />);
 
     const thClassName = 'px-4 py-3';
     return (
@@ -16,7 +22,7 @@ export default function UsersTableHead() {
                     {isAdmin && (
                         <TableCreateButton
                             className={thClassName}
-                            href="/people/create"
+                            onClick={openCreateModal}
                         >
                             Add person
                         </TableCreateButton>
