@@ -2,8 +2,14 @@ import { twMerge } from "tailwind-merge";
 import Button from "../button";
 import ArrowIcon from "@/assets/icons/ArrowIcon";
 import TableCreateButton from "../table-create-button";
+import { useModal } from "@/contexts/modal";
+import CreateCategoryModal from "@/modals/category/create-category";
 
 export default function CategoryTableHead() {
+    const { setModal } = useModal();
+
+    const openCreateModal = () => setModal(<CreateCategoryModal />);
+
     const thClassName = 'px-4 py-3';
     return(
         <thead className="text-left text-nowrap">
@@ -18,7 +24,7 @@ export default function CategoryTableHead() {
                 <th className={thClassName}>Created at</th>
                 <th className="flex justify-end">
                     <TableCreateButton 
-                        href="/produkter/create"
+                        onClick={openCreateModal}
                         className={thClassName}
                     >
                         Add category
