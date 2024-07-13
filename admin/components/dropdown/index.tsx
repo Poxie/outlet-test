@@ -39,7 +39,7 @@ export default function Dropdown<T extends string>({ activeItemId, items, onChan
             {label && (
                 <label 
                     htmlFor={labelId}
-                    className="mb-1 block font-medium"
+                    className="mb-1 block font-medium text-sm"
                 >
                     {label}
                 </label>

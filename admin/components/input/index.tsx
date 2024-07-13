@@ -23,7 +23,7 @@ export default function Input({ onChange, containerClassName, className, placeho
         id: inputId,
         onChange: handleChange,
         className: twMerge(
-            "p-4 w-full block border-[1px] border-tertiary rounded",
+            "p-3 w-full block border-[1px] border-tertiary rounded",
             className,
         ),
         placeholder,
@@ -37,7 +37,7 @@ export default function Input({ onChange, containerClassName, className, placeho
             {label && (
                 <label 
                     htmlFor={inputId}
-                    className="mb-1 block font-medium"
+                    className="mb-1 block font-medium text-sm"
                 >
                     {label}
                 </label>
