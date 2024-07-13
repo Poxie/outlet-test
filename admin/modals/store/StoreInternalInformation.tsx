@@ -1,10 +1,11 @@
 import Input from "@/components/input";
 import { Store } from "@/utils/types";
 
-export default function StoreInternalInformation({ storeNumber, updateProps, canEditStoreNumber }: {
+export default function StoreInternalInformation({ className, storeNumber, updateProps, canEditStoreNumber }: {
     storeNumber: string;
     canEditStoreNumber: boolean;
     updateProps: (changes: Partial<Store>) => void;
+    className?: string;
 }) {
     return(
         <Input 
@@ -13,6 +14,7 @@ export default function StoreInternalInformation({ storeNumber, updateProps, can
             value={storeNumber}
             onChange={storeNumber => updateProps({ id: storeNumber })}
             disabled={!canEditStoreNumber}
+            containerClassName={className}
         />
     )
 }
