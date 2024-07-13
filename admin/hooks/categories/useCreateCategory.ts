@@ -3,14 +3,11 @@ import useUpdateProps from "../useUpdateProps";
 import useMutateCreateCategory from "./useMutateCreateCategory";
 import useChanges from "../useChanges";
 import useRefetchQuery from "../react-query/useRefetchQuery";
-import { useModal } from "@/contexts/modal";
 
 const DEFAULT_CATEGORY = getEmptyCategoryObject();
 
 export default function useCreateCategory() {
     const refetchQuery = useRefetchQuery();
-
-    const { setModal } = useModal();
 
     const { mutateAsync, isPending } = useMutateCreateCategory();
 
@@ -33,9 +30,11 @@ export default function useCreateCategory() {
         }
 
         try {
-            await mutateAsync(categoryData);
+            const newCategory = await mutateAsync(categoryData);
 
             refetchQuery(['categories']);
+
+            return newCategory;
         } catch(error: any) {
             console.error(error);
         }
