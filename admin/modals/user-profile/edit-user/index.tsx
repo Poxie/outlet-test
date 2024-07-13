@@ -13,7 +13,7 @@ const USER_TABS = [
 ];
 type Tab = typeof USER_TABS[number]['id'];
 
-export default function EditUser({ userId }: {
+export default function EditUserModal({ userId }: {
     userId: string;
 }) {
     const { data: user } = useGetUserById(userId);
