@@ -12,7 +12,7 @@ export default function StoreOpeningHours({ store, updateProps, className }: {
 
     return(
         <div className={twMerge(
-            "flex flex-col gap-3",
+            "grid gap-3",
             className,
         )}>
             <Input 

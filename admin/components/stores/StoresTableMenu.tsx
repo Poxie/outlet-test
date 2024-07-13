@@ -8,6 +8,7 @@ import BinIcon from "@/assets/icons/BinIcon";
 import { useModal } from "@/contexts/modal";
 import DeleteStoreModal from "@/modals/delete-store";
 import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
+import EditStoreModal from "@/modals/store/edit-store";
 
 export default function StoresTableMenu({ store }: { 
     store: Store; 
@@ -16,10 +17,11 @@ export default function StoresTableMenu({ store }: {
 
     const isAdmin = useSelfIsAdmin();
 
+    const openEditModal = () => setModal(<EditStoreModal storeId={store.id} />);
     const openDeleteModal = () => setModal(<DeleteStoreModal store={store} />);
 
     const firstGroup: MenuGroup = [
-        { text: 'View store', icon: <ViewIcon size={16} />, href: `/stores/${store.id}` },
+        { text: 'View store', icon: <ViewIcon size={16} />, onClick: openEditModal },
     ];
     const secondGroup: MenuGroup = [];
 
@@ -27,7 +29,7 @@ export default function StoresTableMenu({ store }: {
         firstGroup.push({
             text: 'Edit store',
             icon: <EditIcon size={16} />,
-            href: `/stores/${store.id}`,
+            onClick: openEditModal,
         })
         secondGroup.push({
             text: 'Delete store',

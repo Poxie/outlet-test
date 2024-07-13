@@ -1,12 +1,39 @@
-import updateStore from "@/api/stores/updateStore";
-import { MutableStoreProps } from "@/utils/types";
-import { useMutation } from "@tanstack/react-query";
+import { Store } from "@/utils/types";
+import useUpdateProps from "../useUpdateProps";
+import useChanges from "../useChanges";
+import useRefetchQuery from "../react-query/useRefetchQuery";
+import useMutateUpdateStore from "./useMutateUpdateStore";
 
-export default function useUpdateStore(id: string) {
-    return useMutation({
-        mutationKey: ['store', id],
-        mutationFn: ({ changes }: {
-            changes: Partial<MutableStoreProps>
-        }) => updateStore(id, changes)
-    })
+export default function useUpdateStore(initialStore: Store) {
+    const refetchQuery = useRefetchQuery();
+
+    const { mutateAsync, isPending } = useMutateUpdateStore(initialStore.id);
+    
+    const { state: currentStore, updateProps } = useUpdateProps(initialStore);
+
+    const { changes, hasChanges } = useChanges(currentStore, initialStore);
+
+    const updateStore = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if(!hasChanges) {
+            return;
+        }
+
+        try {
+            await mutateAsync(changes);
+
+            refetchQuery(['stores']);
+            refetchQuery(['store', initialStore.id]);
+        } catch(error: any) {
+            console.error(error);
+        }
+    }
+
+    return {
+        currentStore,
+        updateProps,
+        updateStore,
+        isPending,
+    };
 }
