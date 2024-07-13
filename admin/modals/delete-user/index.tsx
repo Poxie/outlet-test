@@ -1,9 +1,9 @@
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 import ConfirmModal from "../confirm";
 import { useModal } from "@/contexts/modal";
-import useDeleteUser from "@/hooks/users/useDeleteUser";
 import { User } from "@/utils/types";
 import { useState } from "react";
+import useMutateDeleteUser from "@/hooks/users/useMutateDeleteUser";
 
 export default function DeleteUserModal({ user }: {
     user: User;
@@ -12,7 +12,7 @@ export default function DeleteUserModal({ user }: {
 
     const { closeModal } = useModal();
 
-    const { mutateAsync } = useDeleteUser(user.id);
+    const { mutateAsync } = useMutateDeleteUser(user.id);
 
     const [loading, setLoading] = useState(false);
 

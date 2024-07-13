@@ -1,8 +1,8 @@
 import { Store } from "@/utils/types";
 import ConfirmModal from "../confirm";
-import useDeleteStore from "@/hooks/stores/useDeleteStore";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 import { useModal } from "@/contexts/modal";
+import useMutateDeleteStore from "@/hooks/stores/useMutateDeleteStore";
 
 export default function DeleteStoreModal({ store }: {
     store: Store;
@@ -11,7 +11,7 @@ export default function DeleteStoreModal({ store }: {
 
     const { closeModal } = useModal();
 
-    const { mutateAsync, isPending } = useDeleteStore(store.id);
+    const { mutateAsync, isPending } = useMutateDeleteStore(store.id);
 
     const deleteStore = async () => {
         await mutateAsync();

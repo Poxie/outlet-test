@@ -1,15 +1,15 @@
 import { ProductCategory } from "@/utils/types";
 import ConfirmModal from "../confirm";
-import useDeleteCategory from "@/hooks/categories/useDeleteCategory";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 import { useModal } from "@/contexts/modal";
+import useMutateDeleteCategory from "@/hooks/categories/useMutateDeleteCategory";
 
 export default function DeleteCategoryModal({ category }: {
     category: ProductCategory;
 }) {
     const refetchQuery = useRefetchQuery();
 
-    const { mutateAsync, isPending } = useDeleteCategory(category.id);
+    const { mutateAsync, isPending } = useMutateDeleteCategory(category.id);
 
     const { closeModal } = useModal();
 
