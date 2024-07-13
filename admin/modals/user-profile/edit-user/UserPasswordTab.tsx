@@ -1,20 +1,22 @@
 import useUpdateProps from "@/hooks/useUpdateProps";
 import useChanges from "@/hooks/useChanges";
 import useFeedback from "@/hooks/useFeedback";
-import useUpdateUser from "@/hooks/users/useUpdateUser";
 import Feedback from "@/components/feedback";
 import UserPassword from "../UserPassword";
 import ModalFooter from "@/modals/ModalFooter";
+import useUpdateUser from "@/hooks/users/useUpdateUser";
+import useMutateUpdateUser from "@/hooks/users/useMutateUpdateUser";
+import { User } from "@/utils/types";
 
 const DEFAULT_PASSWORDS = {
     password: '',
     repeatPassword: '',
 }
 
-export default function UpdatePasswordTab({ userId }: {
-    userId: string;
+export default function UpdatePasswordTab({ user }: {
+    user: User;
 }) {
-    const { mutateAsync, isPending } = useUpdateUser(userId);
+    const { mutateAsync, isPending } = useMutateUpdateUser(user.id);
 
     const { feedback, setFeedback, clearFeedback } = useFeedback();
 

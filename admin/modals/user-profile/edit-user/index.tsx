@@ -7,11 +7,24 @@ import SelectableTabs from "@/components/selectable-tabs";
 import UserProfileTab from "./UserProfileTab";
 import UpdatePasswordTab from "./UserPasswordTab";
 
-const USER_TABS = [
-    { id: 'PROFILE', text: 'Profile' },
-    { id: 'PASSWORD', text: 'Password' },
+// Setting up the constants for the user tabs
+const PROFILE = 'PROFILE';
+const PASSWORD = 'PASSWORD';
+
+type UserTab = typeof PROFILE | typeof PASSWORD;
+
+const USER_COMPONENTS = {
+    [PROFILE]: UserProfileTab,
+    [PASSWORD]: UpdatePasswordTab,
+}
+
+const USER_TABS: {
+    id: UserTab;
+    text: string;
+}[] = [
+    { id: PROFILE, text: 'Profile' },
+    { id: PASSWORD, text: 'Password' },
 ];
-type Tab = typeof USER_TABS[number]['id'];
 
 export default function EditUserModal({ userId }: {
     userId: string;
@@ -20,35 +33,34 @@ export default function EditUserModal({ userId }: {
     const { data: self } = useCurrentUser();
     const isAdmin = useSelfIsAdmin();
 
-    const [selectedTab, setSelectedTab] = useState<Tab>(USER_TABS[0].id);
+    const [selectedTab, setSelectedTab] = useState<UserTab>(PROFILE);
 
     if(!user) return null;
 
     const canEdit = isAdmin || self?.id === user.id;
     const userTabs = USER_TABS.filter(tab => {
-        if(tab.id === 'PROFILE') return true;
+        if(tab.id === PROFILE) return true;
         return canEdit;
     })
+
+    const ActiveComponent = USER_COMPONENTS[selectedTab];
     return(
         <>
         <ModalHeader 
             title={user.name}
-            className="bg-secondary border-b-quaternary"
         />
 
         <SelectableTabs 
             tabs={userTabs}
             activeTab={selectedTab}
             onChange={setSelectedTab}
-            className="px-4 bg-secondary"
+            className="px-4"
         />
 
-        {selectedTab === 'PROFILE' && (
-            <UserProfileTab user={user} />
-        )}
-        {selectedTab === 'PASSWORD' && (
-            <UpdatePasswordTab userId={user.id} />
-        )}
+        <ActiveComponent 
+            user={user}
+            canEdit={canEdit} 
+        />
         </>
     )
 }
