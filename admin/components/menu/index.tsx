@@ -20,13 +20,52 @@ export type MenuItem = {
 */
 export type MenuGroup = MenuItem[];
 
+const SPACE_FROM_BUTTON = 4;
+const INITIAL_SCALE = .95;
+
 export default function Menu({ groups, className }: {
     groups: MenuGroup[];
     className?: string;
 }) {
     const ref = useRef<HTMLDivElement>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
     
     const [open, setOpen] = useState(false);
+    const isMenuMount = useRef(true);
+
+    useEffect(() => {
+        if(!open) return;
+
+        const onScroll = () => {
+            if(!ref.current || !menuRef.current) return;
+
+            // Offset inital scale if it's the first render
+            const offsetFactor = isMenuMount.current ? INITIAL_SCALE : 1;
+            isMenuMount.current = false;
+
+            const { top: buttonTop, left: buttonLeft, height: buttonHeight, width: buttonWidth } = ref.current.getBoundingClientRect();
+            const { height: menuHeight, width: menuWidth } = menuRef.current.getBoundingClientRect();
+            
+            let top = buttonTop + buttonHeight + SPACE_FROM_BUTTON;
+            let left = buttonLeft - (menuWidth / offsetFactor) + buttonWidth;
+
+            if(top + menuHeight + buttonHeight > window.innerHeight) {
+                top = buttonTop - (menuHeight / offsetFactor) - SPACE_FROM_BUTTON;
+            }
+
+            menuRef.current.style.top = `${top}px`;
+            menuRef.current.style.left = `${left}px`;
+        }
+        onScroll();
+
+        window.addEventListener('scroll', onScroll);
+        window.addEventListener('resize', onScroll);
+        return () => {
+            window.removeEventListener('scroll', onScroll)
+            window.removeEventListener('resize', onScroll);
+            isMenuMount.current = true;
+        };
+    }, [open]);
     
     const toggleOpen = () => setOpen(!open);
     
@@ -50,12 +89,13 @@ export default function Menu({ groups, className }: {
             <AnimatePresence>
                 {open && (
                     <motion.div
-                        initial={{ scale: .95, opacity: 0 }}
+                        initial={{ scale: INITIAL_SCALE, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: .95, opacity: 0 }}
+                        exit={{ scale: INITIAL_SCALE, opacity: 0 }}
                         // Temporary hard-coded solution to prevent menu from mess with overflow container
                         // Move into a context instead
-                        className="fixed z-40 right-8"
+                        className="w-menu fixed z-40 right-8"
+                        ref={menuRef}
                     >
                         <MenuGroups 
                             groups={groups}
