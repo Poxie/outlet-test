@@ -52,6 +52,7 @@ export default function Dropdown<T extends string>({ activeItemId, items, onChan
                 )}
                 onClick={toggleOpen}
                 disabled={disabled}
+                type="button"
             >
                 {activeItem.text}
                 {(!disabled || !disabledIcon) && (
@@ -98,7 +99,10 @@ export default function Dropdown<T extends string>({ activeItemId, items, onChan
                             }
                             return(
                                 <li key={item.text}>
-                                    <button {...props}>
+                                    <button 
+                                        {...props}
+                                        type="button"
+                                    >
                                         {item.text}
                                     </button>
                                 </li>
