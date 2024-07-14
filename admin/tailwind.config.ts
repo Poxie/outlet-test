@@ -34,8 +34,8 @@ const config: Config = {
         tertiary: '#E7E7E7',
         quaternary: '#C9C9C9',
         'text-primary': '#0f172a',
-        danger: '#FF0000',
-        success: '#009900',
+        danger: '#CC0000',
+        success: '#007700',
       },
       fill: {
         light: '#fff',

@@ -44,7 +44,11 @@ export default function Feedback({ type, message }: FeedbackProps) {
             </button>
 
             <div 
-                className="absolute bottom-0 left-0 w-full h-[4px] bg-primary animate-feedback-progress"
+                className={twMerge(
+                    "absolute bottom-0 left-0 w-full border-2 border-transparent animate-feedback-progress",
+                    type === 'danger' && 'border-danger',
+                    type === 'success' && 'border-success',
+                )}
                 style={{ 
                     animationDuration: `${FEEDBACK_DURATION}ms`,
                     animationFillMode: 'forwards',
