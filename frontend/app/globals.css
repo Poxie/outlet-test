@@ -15,4 +15,7 @@
   .hover-underline {
     @apply border-b-[1px] border-b-transparent hover:border-b-current transition-colors;
   }
+  .header-background {
+    @apply bg-header-background bg-center bg-no-repeat bg-cover;
+  }
 }

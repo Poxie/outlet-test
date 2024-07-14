@@ -9,25 +9,24 @@ export default function ProductHeader({ title, description, image, categoryId }:
 }) {
     return(
         <div className={twMerge(
-            "relative",
-            title && "after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-black/65",
+            "relative flex flex-col md:flex-row",
         )}>
             <Image 
-                className="[--aspect-ratio:1.3/1] sm:[--aspect-ratio:2.6/1] w-full aspect-[--aspect-ratio] object-cover"
+                className="aspect-video w-full md:w-2/4 object-cover"
                 src={image}
-                width={1100}
-                height={400}
+                width={600}
+                height={300}
                 priority={true}
                 alt=""
             />
-            <div className="max-w-main z-10 absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-center text-light">
+            <div className="header-background p-10 md:w-2/4 flex flex-col justify-center text-light">
                 {title && (
                     <h1 className="text-4xl">
                         {title}
                     </h1>
                 )}
                 {description && (
-                    <p className="mt-3 w-[650px] max-w-full sm:text-lg">
+                    <p className="mt-3 sm:text-lg">
                         {description}
                     </p>
                 )}

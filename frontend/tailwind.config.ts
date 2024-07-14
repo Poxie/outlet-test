@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'header-background': 'url("/images/header-background.jpg")',
+      },
       backgroundColor: {
         primary: '#fff',
         secondary: '#F2F2F2',
