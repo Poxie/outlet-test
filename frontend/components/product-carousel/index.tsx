@@ -7,7 +7,7 @@ export default function ProductCarousel({ products }: {
 }) {
     const ProductComponents = products.map(product => (
         <ProductCard 
-            image={product.imageURL}
+            product={product}
             key={product.id}
         />
     ))

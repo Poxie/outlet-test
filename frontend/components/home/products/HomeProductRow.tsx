@@ -1,14 +1,14 @@
 import Carousel from "@/components/carousel";
+import ProductCard from "@/components/product-card";
 import SectionHeader from "@/components/section-header";
-import HomeProductItem from "./HomeProductItem";
 import { Category } from "@/utils/types";
 
 export default function HomeProductRow({ category: { id, title, products } }: {
     category: Category;
 }) {
     const imageComponents = products.map(product => (
-        <HomeProductItem 
-            imagePath={product.imageURL}
+        <ProductCard
+            product={product}
             key={product.id}
         />
     ))

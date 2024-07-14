@@ -3,21 +3,22 @@ import { useFavorites } from "@/contexts/favorites";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
+import { Product } from "@/utils/types";
 
-export default function ProductCard({ image }: {
-    image: string;
+export default function ProductCard({ product: { imageURL } }: {
+    product: Product;
 }) {
     const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
     const handleFavoriteClick = () => {
-        if(isFavorite(image)) {
-            removeFavorite(image);
+        if(isFavorite(imageURL)) {
+            removeFavorite(imageURL);
             return;
         }
-        addFavorite(image);
+        addFavorite(imageURL);
     }
 
-    const favorite = isFavorite(image);
+    const favorite = isFavorite(imageURL);
     const favoriteLabel = favorite ? 'Ta bort favorit' : 'Lägg till favorit';
     return(
         <div className="relative">
@@ -35,8 +36,8 @@ export default function ProductCard({ image }: {
                 />
             </button>
             <Image 
-                className="w-full"
-                src={image}
+                className="w-full aspect-square object-cover"
+                src={imageURL}
                 width={200}
                 height={200}
                 alt=""

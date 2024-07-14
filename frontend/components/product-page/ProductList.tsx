@@ -3,7 +3,7 @@ import ProductCard from "../product-card";
 import { Product } from "@/utils/types";
 
 export default function ProductList({ products, className }: {
-    products: Pick<Product, 'id' | 'imageURL'>[];
+    products: Product[];
     className?: string;
 }) {
     return(
@@ -19,7 +19,7 @@ export default function ProductList({ products, className }: {
                     key={product.id}
                 >
                     <ProductCard 
-                        image={product.imageURL}
+                        product={product}
                     />
                 </li>
             ))}
