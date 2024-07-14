@@ -1,12 +1,10 @@
 import useUpdateProps from "@/hooks/useUpdateProps";
 import useChanges from "@/hooks/useChanges";
-import useFeedback from "@/hooks/useFeedback";
-import Feedback from "@/components/feedback";
 import UserPassword from "../UserPassword";
 import ModalFooter from "@/modals/ModalFooter";
-import useUpdateUser from "@/hooks/users/useUpdateUser";
 import useMutateUpdateUser from "@/hooks/users/useMutateUpdateUser";
 import { User } from "@/utils/types";
+import { useFeedback } from "@/contexts/feedback";
 
 const DEFAULT_PASSWORDS = {
     password: '',
@@ -16,9 +14,9 @@ const DEFAULT_PASSWORDS = {
 export default function UpdatePasswordTab({ user }: {
     user: User;
 }) {
-    const { mutateAsync, isPending } = useMutateUpdateUser(user.id);
+    const { setFeedback } = useFeedback();
 
-    const { feedback, setFeedback, clearFeedback } = useFeedback();
+    const { mutateAsync, isPending } = useMutateUpdateUser(user.id);
 
     const { 
         state: passwords, 
@@ -64,13 +62,6 @@ export default function UpdatePasswordTab({ user }: {
 
     return(
         <form onSubmit={updatePassword}>
-            {feedback && (
-                <Feedback 
-                    {...feedback}
-                    className="m-4 mb-0"
-                />
-            )}
-
             <UserPassword 
                 passwords={passwords} 
                 updatePasswords={updatePasswords} 

@@ -2,8 +2,8 @@ import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 import ConfirmModal from "../confirm";
 import { useModal } from "@/contexts/modal";
 import { User } from "@/utils/types";
-import { useState } from "react";
 import useMutateDeleteUser from "@/hooks/users/useMutateDeleteUser";
+import { useFeedback } from "@/contexts/feedback";
 
 export default function DeleteUserModal({ user }: {
     user: User;
@@ -11,23 +11,26 @@ export default function DeleteUserModal({ user }: {
     const refetchQuery = useRefetchQuery();
 
     const { closeModal } = useModal();
+    const { setFeedback } = useFeedback();
 
-    const { mutateAsync } = useMutateDeleteUser(user.id);
-
-    const [loading, setLoading] = useState(false);
-
-    if(!user) return null;
+    const { mutateAsync, isPending } = useMutateDeleteUser(user.id);
 
     const deleteUser = async () => {
-        setLoading(true);
-
         try {
             await mutateAsync();
-            closeModal();
+
+            setFeedback({
+                type: 'success',
+                message: 'User has been removed',
+            })
+
             refetchQuery(['users']);
-        } catch (error) {
-            console.error(error);
-            setLoading(false);
+            closeModal();
+        } catch (error: any) {
+            setFeedback({
+                type: 'danger',
+                message: error.message,
+            })
         }
     }
 
@@ -39,7 +42,7 @@ export default function DeleteUserModal({ user }: {
             onConfirm={deleteUser}
             confirmText="Remove user"
             confirmLoadingText="Removing user..."
-            loading={loading}
+            loading={isPending}
         />
     )
 }

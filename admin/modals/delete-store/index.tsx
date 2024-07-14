@@ -3,20 +3,35 @@ import ConfirmModal from "../confirm";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 import { useModal } from "@/contexts/modal";
 import useMutateDeleteStore from "@/hooks/stores/useMutateDeleteStore";
+import { useFeedback } from "@/contexts/feedback";
 
 export default function DeleteStoreModal({ store }: {
     store: Store;
 }) {
     const refetchQuery = useRefetchQuery();
 
-    const { closeModal } = useModal();
-
     const { mutateAsync, isPending } = useMutateDeleteStore(store.id);
 
+    const { closeModal } = useModal();
+    const { setFeedback } = useFeedback();
+
     const deleteStore = async () => {
-        await mutateAsync();
-        refetchQuery(['stores']);
-        closeModal();
+        try {
+            await mutateAsync();
+
+            setFeedback({
+                type: 'success',
+                message: 'Store has been deleted',
+            })
+
+            refetchQuery(['stores']);
+            closeModal();
+        } catch(error: any) {
+            setFeedback({
+                type: 'danger',
+                message: error.message,
+            })
+        }
     }
 
     const title = `Remove ${store.name}`;

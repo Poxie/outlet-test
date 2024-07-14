@@ -3,6 +3,7 @@ import useUpdateProps from "../useUpdateProps";
 import useMutateCreateStore from "./useMutateCreateStore";
 import { useModal } from "@/contexts/modal";
 import useRefetchQuery from "../react-query/useRefetchQuery";
+import { useFeedback } from "@/contexts/feedback";
 
 const DEFAULT_STORE = getEmptyStoreObject();
 
@@ -10,6 +11,7 @@ export default function useCreateStore() {
     const refetchQuery = useRefetchQuery();
 
     const { closeModal } = useModal();
+    const { setFeedback } = useFeedback();
 
     const { mutateAsync, isPending } = useMutateCreateStore();
 
@@ -28,10 +30,18 @@ export default function useCreateStore() {
         try {
             await mutateAsync(storeData);
 
+            setFeedback({
+                type: 'success',
+                message: 'Store has been created',
+            })
+
             refetchQuery(['stores']);
             closeModal();
         } catch(error: any) {
-            // Show error feedback later
+            setFeedback({
+                type: 'danger',
+                message: error.message,
+            })
         }
     }
 

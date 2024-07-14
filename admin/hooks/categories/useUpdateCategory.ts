@@ -6,9 +6,12 @@ import useAddCategoryProducts from "./useAddCategoryProducts";
 import useDeleteCategoryProducts from "./useDeleteCategoryProducts";
 import { TEMP_PREFIX } from "@/utils/constants";
 import useRefetchQuery from "../react-query/useRefetchQuery";
+import { useFeedback } from "@/contexts/feedback";
 
 export default function useUpdateCategory(initialCategory: CategoryWithProducts) {
     const refetchQuery = useRefetchQuery();
+
+    const { setFeedback } = useFeedback();
 
     const { mutateAsync, isPending: loadingCategory } = useMutateUpdateCategory(initialCategory.id);
     const { mutateAsync: addProducts, isPending: loadingAddProducts } = useAddCategoryProducts(initialCategory.id);
@@ -21,7 +24,13 @@ export default function useUpdateCategory(initialCategory: CategoryWithProducts)
     const updateCategory = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if(!hasChanges) return;
+        if(!hasChanges) {
+            setFeedback({
+                type: 'danger',
+                message: 'No changes detected',
+            })
+            return;
+        }
 
         // Split up detail and products changes into separate objects
         const { products, ...categoryChanges } = changes;
@@ -76,12 +85,20 @@ export default function useUpdateCategory(initialCategory: CategoryWithProducts)
 
         // Execute all requests
         try{
-           await Promise.all(requests);
+            await Promise.all(requests);
+
+            setFeedback({
+                type: 'success',
+                message: 'Category has been updated',
+            })
            
             refetchQuery(['categories']);
             refetchQuery(['category', initialCategory.id]);
-        } catch(error) {
-            console.error(error);
+        } catch(error: any) {
+            setFeedback({
+                type: 'danger',
+                message: error.message,
+            })
         }
     }
 

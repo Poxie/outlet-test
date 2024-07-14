@@ -3,6 +3,7 @@ import useRefetchQuery from "../react-query/useRefetchQuery";
 import { useModal } from "@/contexts/modal";
 import useMutateCreateUser from "./useMutateCreateUser";
 import useUpdateProps from "../useUpdateProps";
+import { useFeedback } from "@/contexts/feedback";
 
 const INITIAL_INFORMATION = getEmptyUserObject();
 const INITIAL_PASSWORDS = {
@@ -14,6 +15,7 @@ export default function useCreateUser() {
     const refetchQuery = useRefetchQuery();
 
     const { closeModal } = useModal();
+    const { setFeedback } = useFeedback();
     
     const { mutateAsync, isPending } = useMutateCreateUser();
 
@@ -24,6 +26,10 @@ export default function useCreateUser() {
         e.preventDefault();
 
         if(passwords.password !== passwords.repeatPassword) {
+            setFeedback({
+                type: 'danger',
+                message: 'Passwords do not match',
+            })
             return;
         }
 
@@ -36,10 +42,18 @@ export default function useCreateUser() {
                 password: passwords.password,
             })
 
+            setFeedback({
+                type: 'success',
+                message: 'User has been added',
+            })
+
             refetchQuery(['users']);
             closeModal();
         } catch(error: any) {
-            console.error(error);
+            setFeedback({
+                type: 'danger',
+                message: error.message,
+            })
         }
     }
 

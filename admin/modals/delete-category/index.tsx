@@ -3,6 +3,7 @@ import ConfirmModal from "../confirm";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 import { useModal } from "@/contexts/modal";
 import useMutateDeleteCategory from "@/hooks/categories/useMutateDeleteCategory";
+import { useFeedback } from "@/contexts/feedback";
 
 export default function DeleteCategoryModal({ category }: {
     category: ProductCategory;
@@ -10,13 +11,27 @@ export default function DeleteCategoryModal({ category }: {
     const refetchQuery = useRefetchQuery();
 
     const { mutateAsync, isPending } = useMutateDeleteCategory(category.id);
-
+    
     const { closeModal } = useModal();
+    const { setFeedback } = useFeedback();
 
     const deleteCategory = async () => {
-        await mutateAsync();
-        refetchQuery(['categories', 'with-counts']);
-        closeModal();
+        try {
+            await mutateAsync();
+
+            setFeedback({
+                type: 'success',
+                message: 'Category has been deleted',
+            })
+
+            refetchQuery(['categories', 'with-counts']);
+            closeModal();
+        } catch(error: any) {
+            setFeedback({
+                type: 'danger',
+                message: error.message,
+            })
+        }
     }
 
     const title = `Delete ${category.title}`;

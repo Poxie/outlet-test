@@ -3,9 +3,12 @@ import useUpdateProps from "../useUpdateProps";
 import useChanges from "../useChanges";
 import useRefetchQuery from "../react-query/useRefetchQuery";
 import useMutateUpdateStore from "./useMutateUpdateStore";
+import { useFeedback } from "@/contexts/feedback";
 
 export default function useUpdateStore(initialStore: Store) {
     const refetchQuery = useRefetchQuery();
+
+    const { setFeedback } = useFeedback();
 
     const { mutateAsync, isPending } = useMutateUpdateStore(initialStore.id);
     
@@ -17,16 +20,28 @@ export default function useUpdateStore(initialStore: Store) {
         e.preventDefault();
 
         if(!hasChanges) {
+            setFeedback({
+                type: 'danger',
+                message: 'No changes detected',
+            })
             return;
         }
 
         try {
             await mutateAsync(changes);
+            
+            setFeedback({
+                type: 'success',
+                message: 'Store has been updated',
+            })
 
             refetchQuery(['stores']);
             refetchQuery(['store', initialStore.id]);
         } catch(error: any) {
-            console.error(error);
+            setFeedback({
+                type: 'danger',
+                message: error.message,
+            })
         }
     }
 
