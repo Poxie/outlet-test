@@ -1,16 +1,15 @@
-import { Product } from "@/utils/types";
+import { Category } from "@/utils/types";
 import ProductCarousel from "../product-carousel";
 import SectionHeader from "../section-header";
 
-export default function ProductRow({ title, products }: {
-    title: string;
-    products: Product[];
+export default function ProductRow({ category: { id, title, products } }: {
+    category: Category;
 }) {
     return(
         <div className="mb-8">
             <SectionHeader
                 buttonText="Visa fler"
-                buttonHref={`/produkter/${title.toLowerCase()}`}
+                buttonHref={`/produkter/${id}`}
             >
                 {title}
             </SectionHeader>

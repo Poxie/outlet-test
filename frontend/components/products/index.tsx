@@ -24,11 +24,10 @@ export default function Products() {
                 ]}
             />
             <div className="main-width pt-4 pb-8 flex-1">
-                {categories.map(({ id, title, products }) => (
+                {categories.map(category => (
                     <ProductRow 
-                        title={title}
-                        products={products}
-                        key={id}
+                        category={category}
+                        key={category.id}
                     />
                 ))}
             </div>

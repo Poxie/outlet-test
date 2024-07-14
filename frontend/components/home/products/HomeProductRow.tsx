@@ -1,11 +1,10 @@
 import Carousel from "@/components/carousel";
 import SectionHeader from "@/components/section-header";
 import HomeProductItem from "./HomeProductItem";
-import { Product } from "@/utils/types";
+import { Category } from "@/utils/types";
 
-export default function HomeProductRow({ title, products }: {
-    title: string;
-    products: Product[];
+export default function HomeProductRow({ category: { id, title, products } }: {
+    category: Category;
 }) {
     const imageComponents = products.map(product => (
         <HomeProductItem 
@@ -18,7 +17,7 @@ export default function HomeProductRow({ title, products }: {
         <div className="mb-10">
             <SectionHeader
                 buttonText="Visa fler"
-                buttonHref={`/produkter/${title.toLowerCase()}`}
+                buttonHref={`/produkter/${id}`}
             >
                 {title}
             </SectionHeader>

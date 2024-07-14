@@ -1,10 +1,7 @@
-// This would be replaced with server side rendering & fetching data from a database
-import categories from '@/assets/json/categories.json';
-import Link from "next/link";
-import HomeProductRow from "./HomeProductRow";
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import getCategoriesWithProducts from '@/api/products/getCategoriesWithProducts';
 import HomeProductList from './HomeProductList';
+import Link from 'next/link';
 
 export default async function HomeProducts() {
     const queryClient = new QueryClient();

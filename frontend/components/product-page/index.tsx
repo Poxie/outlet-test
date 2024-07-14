@@ -24,7 +24,7 @@ export default function Products({ categoryId }: {
                 steps={[
                     { text: 'Start', path: '/' },
                     { text: 'Produkter', path: '/produkter' },
-                    { text: category.title, path: `/produkter/${category.title.toLowerCase()}` },
+                    { text: title, path: `/produkter/${categoryId}` },
                 ]}
             />
             <div className="pb-8 main-width">
