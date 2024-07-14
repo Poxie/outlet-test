@@ -6,7 +6,7 @@ export default function Section({ children, className }: {
 }) {
     return(
         <div className={twMerge(
-            "p-5 bg-primary rounded-md",
+            "p-5 bg-primary border-[1px] border-tertiary rounded-md shadow-sm",
             className,
         )}>
             {children}
