@@ -59,6 +59,7 @@ const config: Config = {
         menu: '200px',
         dropdown: '220px',
         sidebar: '300px',
+        modal: '500px',
       },
       maxWidth: {
         main: '90%',

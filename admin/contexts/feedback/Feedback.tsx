@@ -21,7 +21,7 @@ export default function Feedback({ type, message }: FeedbackProps) {
             exit={HIDDEN}
             transition={{ bounce: false, duration: .2 }}
             className={twMerge(
-                "w-modal max-w-main p-4 flex items-center justify-between z-50 fixed left-2/4 -translate-x-2/4 text-light font-semibold rounded-md overflow-hidden",
+                "sm:min-w-modal max-w-main p-4 flex items-center justify-between gap-4 z-50 fixed left-2/4 -translate-x-2/4 text-light font-semibold rounded-md overflow-hidden",
                 type === 'danger' && ' bg-danger',
                 type === 'success' && 'bg-success',
             )}
