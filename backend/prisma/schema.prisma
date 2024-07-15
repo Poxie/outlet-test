@@ -35,6 +35,15 @@ model Category {
   createdAt   String
 }
 
+model ProductGroup {
+  id          String  @id
+  name       String
+  description String
+  bannerURL   String
+  parentId    String?
+  createdAt   String
+}
+
 model Product {
   id       String @id
   imageURL String
