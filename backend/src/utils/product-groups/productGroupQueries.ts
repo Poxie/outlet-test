@@ -11,4 +11,11 @@ export default class ProductGroupQueries {
             }
         });
     }
+    static async getProductGroupsByParentId(parentId: string) {
+        return client.productGroup.findMany({
+            where: {
+                parentId,
+            }
+        });
+    }
 }
