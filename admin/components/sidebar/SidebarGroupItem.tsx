@@ -11,7 +11,7 @@ export default function SidebarGroupItem({ item: { text, path, icon } }: {
     const { collapsed, setCollapsed } = useSidebar();
 
     const pathname = usePathname();
-    const isActive = pathname.startsWith(path);
+    const isActive = path === '/' ? pathname === path : pathname.startsWith(path);
     return(
         <Link
             onClick={() => {

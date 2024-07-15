@@ -5,10 +5,17 @@ import PeopleIcon from "@/assets/icons/PeopleIcon";
 import StoresIcon from "@/assets/icons/StoresIcon";
 import { useSidebar } from ".";
 import { twMerge } from "tailwind-merge";
+import AnalyticsIcon from "@/assets/icons/AnalyticsIcon";
 
 const ICON_SIZE = 24;
 const GROUPS = [
     {
+        items: [
+            { text: 'Analytics', path: '/', icon: <AnalyticsIcon size={ICON_SIZE} /> },
+        ]
+    },
+    {
+        title: 'Products',
         items: [
             { text: 'Veckans varor', path: '/veckans-varor', icon: <DiscountIcon size={ICON_SIZE} /> },
             { text: 'Products', path: '/produkter', icon: <ProductsIcon size={ICON_SIZE} /> },

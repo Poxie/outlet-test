@@ -53,3 +53,20 @@ export type MutableStoreProps = Pick<Store, 'name' | 'address' | 'phoneNumber' |
 export type CreateStoreProps = MutableStoreProps & {
     storeNumber: string;
 }
+
+export type AnalyticsReport = {
+    totalUsers: string;
+    newUsers: string;
+    bounceRate: string;
+    averageSessionDuration: string;
+    screenPageViewsPerUser: string;
+    sessionsPerUser: string;
+    screenPageViews: string;
+    userEngagementDuration: string;
+    engagementRate: string;
+    topPages: {
+        pageTitle: string;
+        pagePath: string;
+        pageViews: string;
+    }[];
+}
