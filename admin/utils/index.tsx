@@ -45,3 +45,8 @@ export function getReadableDate(date: string) {
         day: 'numeric',
     });
 }
+
+// Get readable role from role string
+export function getReadableRole(role: string) {
+    return role.slice(0,1) + role.slice(1).toLowerCase();
+}
