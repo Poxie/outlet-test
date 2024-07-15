@@ -1,6 +1,8 @@
 import client from "@/client";
 import { ProductGroup } from "@prisma/client";
 import { MutableProductGroupProps } from "../types";
+import { PrismaCodes } from "../errors/prismaCodes";
+import { ProductGroupNotFoundError } from "./productGroupErrors";
 
 export default class ProductGroupMutations {
     static async createProductGroup(data: ProductGroup) {
@@ -15,5 +17,18 @@ export default class ProductGroupMutations {
             },
             data,
         });
+    }
+    static async deleteProductGroup(id: string) {
+        try {
+            await client.productGroup.delete({
+                where: {
+                    id,
+                },
+            });
+        } catch(error: any) {
+            if(error.code === PrismaCodes.RECORD_NOT_FOUND) {
+                throw new ProductGroupNotFoundError();
+            }
+        }
     }
 }

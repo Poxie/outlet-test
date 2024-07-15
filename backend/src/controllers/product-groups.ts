@@ -7,6 +7,8 @@ import { ProductGroupNotFoundError } from '@/utils/product-groups/productGroupEr
 import ProductGroupMutations from '@/utils/product-groups/productGroupMutations';
 import ProductGroupQueries from '@/utils/product-groups/productGroupQueries';
 import productGroupUtils from '@/utils/product-groups/productGroupUtils';
+import ProductMutations from '@/utils/products/productMutations';
+import ProductQueries from '@/utils/products/productQueries';
 import { MutableProductGroupProps } from '@/utils/types';
 import { createProductGroupSchema } from '@/validation/productGroupSchemas';
 import express from 'express';
@@ -87,5 +89,18 @@ router.patch('/:id', auth, asyncHandler(async (req, res) => {
 
     res.send(updatedGroup);
 }))
+
+router.delete('/:id', auth, asyncHandler(async (req, res) => {
+    const id = req.params.id;
+
+    // Remove all images related to the group
+    await ImageHandler.deleteFolder(`groups/${id}`);
+
+    // Delete all products related to the group and the group itself
+    await ProductMutations.deleteProductsByParentId(id);
+    await ProductGroupMutations.deleteProductGroup(id);
+
+    res.status(StatusCodes.NO_CONTENT).send();
+}));
 
 export default router;
