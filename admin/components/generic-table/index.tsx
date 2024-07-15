@@ -37,6 +37,7 @@ export default function GenericTable<T>({ title, data, columns, searchPlaceholde
         );
     }, [data, search, searchKeys]);
 
+    const hasActiveFilters = !!search;
     return (
         <div>
             <TableHeader 
@@ -45,6 +46,7 @@ export default function GenericTable<T>({ title, data, columns, searchPlaceholde
                 searchPlaceholder={searchPlaceholder}
                 search={search}
                 setSearch={setSearch}
+                searchResultCount={filteredData.length}
             />
             <table className="w-full">
                 <TableHead 
@@ -58,6 +60,17 @@ export default function GenericTable<T>({ title, data, columns, searchPlaceholde
                     renderMenu={renderMenu}
                 />
             </table>
+            {filteredData.length === 0 && (
+                <div className="p-10 text-center border-t-[1px] border-t-tertiary">
+                    <span>
+                        {hasActiveFilters ? (
+                            'No results found'
+                        ) : (
+                            'No data to show'
+                        )}
+                    </span>
+                </div>
+            )}
         </div>
     );
 }
