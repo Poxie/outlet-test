@@ -18,4 +18,11 @@ export default class ProductGroupQueries {
             }
         });
     }
+    static async getUnassignedProductGroups() {
+        return client.productGroup.findMany({
+            where: {
+                parentId: null,
+            }
+        });
+    }
 }
