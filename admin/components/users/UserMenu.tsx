@@ -7,7 +7,7 @@ import { useModal } from "@/contexts/modal";
 import DeleteUserModal from "@/modals/delete-user";
 import EditUser from "@/modals/user-profile/edit-user";
 
-export default function UserTableRowMenu({ user, self }: {
+export default function UserMenu({ user, self }: {
     user: User;
     self: User;
 }) {
