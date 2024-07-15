@@ -19,10 +19,10 @@ export default function PageEngagement({ report }: {
     const avgBounceRate = `${Number(bounceRate) * 100}%`;
     const avgEngagementRate = `${Number(engagementRate) * 100}%`;
     return(
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-2">
             <MostVisitedPages
                 report={report}
-                className="row-span-3"
+                className="md:col-span-2 xl:row-span-3 xl:col-span-1"
             />
             <PageEngagementCard title="Average bounce rate">
                 {avgBounceRate}
