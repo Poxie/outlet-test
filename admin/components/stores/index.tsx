@@ -19,14 +19,13 @@ export default function Stores() {
 
     const openCreateModal = () => setModal(<CreateStoreModal />);
     
-    const columns: TableColumn<Store>[] = [
+    const tableColumns: TableColumn<Store>[] = [
         { dataIndex: 'name', title: 'Name' },
         { dataIndex: 'address', title: 'Address' },
         { dataIndex: 'email', title: 'Email' },
         { dataIndex: 'phoneNumber', title: 'Phone number' },
     ]
     
-    // Adjusted to match expected type signature for renderMenu
     const renderMenu = (store: Store) => <StoresTableMenu store={store} />;
 
     return(
@@ -42,7 +41,7 @@ export default function Stores() {
                 <GenericTable 
                     title="Stores"
                     data={stores}
-                    columns={columns}
+                    columns={tableColumns}
                     searchKeys={['name', 'id']}
                     searchPlaceholder="Search by name or store number..."
                     buttonText={isAdmin ? 'Add store' : undefined}
