@@ -24,7 +24,7 @@ export default function Products() {
     const openCreateModal = () => setModal(<CreateCategoryModal />);
 
     const tableColumns: TableColumn<ProductCategory>[] = [
-        { dataIndex: 'title', title: 'Details', render: category => <CategoryInfo category={category} />, width: '700px', minWidth: '450px' },
+        { dataIndex: 'title', title: 'Details', render: category => <CategoryInfo category={category} />, width: '50%', minWidth: '500px' },
         { dataIndex: 'productCount', title: 'Assigned products', render: category => `${category.productCount} products` },
         { dataIndex: 'createdAt', title: 'Created at', render: category => getReadableDate(category.createdAt) },
     ]
