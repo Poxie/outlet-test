@@ -1,5 +1,7 @@
 import auth from '@/middlewares/auth';
 import asyncHandler from '@/utils/asyncHandler';
+import { CategoryNotFound } from '@/utils/categories/categoryErrors';
+import CategoryQueries from '@/utils/categories/categoryQueries';
 import CustomError from '@/utils/errors';
 import { StatusCodes } from '@/utils/errors/statusCodes';
 import ImageHandler from '@/utils/images/imageHandler';
@@ -59,6 +61,12 @@ router.get('/:id', asyncHandler(async (req, res) => {
 router.post('/', auth, asyncHandler(async (req, res, next) => {
     const data = createProductGroupSchema.strict().parse(req.body);
 
+    // If parentId is provided, check if it exists
+    if(data.parentId) {
+        const category = await CategoryQueries.getCategoryById(data.parentId);
+        if(!category) throw new CategoryNotFound();
+    }
+
     const groupId = await productGroupUtils.generateId(data.name);
 
     let bannerImage: string;
@@ -90,6 +98,12 @@ router.patch('/:id', auth, asyncHandler(async (req, res) => {
 
     const group = await ProductGroupQueries.getProductGroupById(id);
     if(!group) throw new ProductGroupNotFoundError();
+
+    // If parentId is provided, check if it exists
+    if(data.parentId) {
+        const category = await CategoryQueries.getCategoryById(data.parentId);
+        if(!category) throw new CategoryNotFound();
+    }
 
     // If banner is provided, upload it and replace previous one
     let bannerImage: string | undefined;
