@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useSidebar } from "."
 import HamIcon from "@/assets/icons/HamIcon";
+import Link from "next/link";
 
 export default function SidebarHeader() {
     const { collapsed, toggleCollapse } = useSidebar();
@@ -15,13 +16,18 @@ export default function SidebarHeader() {
                 <HamIcon size={24} />
             </button>
             {!collapsed && (
-                <Image 
-                    src="/logo.png"
-                    width={190}
-                    height={31}
-                    alt="Logo"
-                    priority={true}
-                />
+                <Link
+                    href="/"
+                    aria-label="Go to dashboard"
+                >
+                    <Image 
+                        src="/logo.png"
+                        width={190}
+                        height={31}
+                        alt="Logo"
+                        priority={true}
+                    />
+                </Link>
             )}
         </div>
     )
