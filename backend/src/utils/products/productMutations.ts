@@ -5,11 +5,9 @@ import { Product } from "@prisma/client";
 
 export default class ProductMutations {
     static async createProducts(data: Product[]) {
-        const products = await client.product.createMany({
+        await client.product.createMany({
             data,
         });
-
-        return products;
     }
 
     static async createProduct(data: Product) {
