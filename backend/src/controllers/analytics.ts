@@ -1,5 +1,5 @@
+import getAnalyticsReport from '@/utils/google-analytics/getAnalyticsReport';
 import asyncHandler from '@/utils/asyncHandler';
-import { getAnalyticsReport } from '@/utils/google-analytics';
 import express from 'express';
 
 const router = express.Router();
