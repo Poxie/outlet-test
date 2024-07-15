@@ -14,11 +14,29 @@ export async function getAnalyticsReport() {
     const [response] = await client.runReport({
         property: `properties/${PROPERTY_ID}`,
         metrics: [
+            { name: 'activeUsers' },
+            { name: 'newUsers' },
+            { name: 'bounceRate' },
+            { name: 'averageSessionDuration' },
+            { name: 'screenPageViewsPerUser' },
+            { name: 'sessionsPerUser' },
+            { name: 'screenPageViews' },
+        ],
+        dimensions: [
+            { name: 'pagePath' },
+        ],
+        dateRanges: [
             {
-                name: 'activeUsers',
+                startDate: '2024-07-15',
+                endDate: 'today',
             }
         ]
     })
 
-    console.log(response);
+    const metrics = response.rows?.[0].metricValues;
+    if(!metrics) return null;
+
+    const [totalUsers, newUsers, bounceRate, averageSessionDuration, screenPageViewsPerUser, sessionsPerUser, screenPageViews] = metrics.map(metric => metric.value);
+
+    return { totalUsers, newUsers, bounceRate, averageSessionDuration, screenPageViewsPerUser, sessionsPerUser, screenPageViews };
 }

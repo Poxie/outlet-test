@@ -5,9 +5,9 @@ import express from 'express';
 const router = express.Router();
 
 router.get('/', asyncHandler(async (req, res) => {
-    await getAnalyticsReport();
+    const analytics = await getAnalyticsReport();
 
-    res.send('Analytics page');
+    res.send(analytics);
 }));
 
 export default router;
