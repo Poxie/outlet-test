@@ -3,6 +3,7 @@ import { Category } from "@prisma/client";
 import CategoryUtils from "./categoryUtils";
 import { PrismaCodes } from "../errors/prismaCodes";
 import { CategoryNotFound } from "./categoryErrors";
+import { MutableCategoryProps } from "../types";
 
 export default class CategoryMutations {
     static async createCategory(category: Category) {
@@ -10,18 +11,19 @@ export default class CategoryMutations {
             data: category,
         });
     }
-    static async updateCategory(id: string, category: Partial<Exclude<Category, 'id'>>) {
+    static async updateCategory(id: string, categoryProps: Partial<MutableCategoryProps>) {
         try {
             return await client.category.update({
                 where: {
                     id,
                 },
-                data: category,
+                data: categoryProps,
             });
         } catch(error: any) {
             if(error.code === PrismaCodes.RECORD_NOT_FOUND) {
                 throw new CategoryNotFound();
             }
+            throw error;
         }
     }
     static async deleteCategory(id: string) {

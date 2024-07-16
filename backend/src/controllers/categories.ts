@@ -124,21 +124,19 @@ router.patch('/:id', auth, asyncHandler(async (req, res, next) => {
 
     // If there is a new banner image, upload and add it to the changes
     if(data.banner) {
-        let bannerImage: string;
         try {
-            bannerImage = await ImageHandler.uploadImage(
+            const bannerImage = await ImageHandler.uploadImage(
                 data.banner,
                 `categories/${id}/banner`,
             );
+            changes.bannerURL = bannerImage;
         } catch (error) {
             console.error(error);
             throw new CustomError('Failed to upload image', StatusCodes.INTERNAL_SERVER_ERROR);
         }
-
-        changes.bannerURL = bannerImage;
     }
 
-    const category = await CategoryMutations.updateCategory(id, data);
+    const category = await CategoryMutations.updateCategory(id, changes);
 
     res.send(category);
 }))
