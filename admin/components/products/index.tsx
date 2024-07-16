@@ -1,5 +1,7 @@
 import PageBanner from "../page-banner"
+import Section from "../section"
 import Categories from "./Categories"
+import ProductGroups from "./ProductGroups"
 
 export default function Products() {
     return(
@@ -11,7 +13,12 @@ export default function Products() {
             ]}
         />        
         <main className="p-5">
-            <Categories />
+            <Section className="p-0">
+                <Categories />
+            </Section>
+            <Section className="p-0 mt-4">
+                <ProductGroups />
+            </Section>
         </main>
         </>
     )

@@ -1,11 +1,10 @@
 "use client";
 import useGetAllCategories from "@/hooks/categories/useGetAllCategories";
 import GenericTable, { TableColumn } from "../generic-table";
-import { Category } from "@/utils/types";
-import Section from "../section";
 import CategoryDetails from "./CategoryDetails";
 import CategoryMenu from "./CategoryMenu";
 import { getReadableDate } from "@/utils";
+import { Category } from "@/utils/types";
 
 export default function Categories() {
     const { data: categories } = useGetAllCategories();
@@ -21,15 +20,13 @@ export default function Categories() {
     const renderMenu = (category: Category) => <CategoryMenu category={category} />;
 
     return(
-        <Section className="p-0">
-            <GenericTable 
-                title="Categories"
-                columns={tableColumns}
-                data={categories}
-                searchPlaceholder="Search by category name..."
-                searchKeys={['title']}
-                renderMenu={renderMenu}
-            />
-        </Section>
+        <GenericTable 
+            title="Categories"
+            columns={tableColumns}
+            data={categories}
+            searchPlaceholder="Search by category name..."
+            searchKeys={['title']}
+            renderMenu={renderMenu}
+        />
     )
 }

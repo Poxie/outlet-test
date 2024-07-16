@@ -28,6 +28,15 @@ export type Category = {
 export type MutableCategoryProps = Pick<Category, 'title' | 'description'> & {
     banner: string;
 };
+export type ProductGroup = {
+    id: string;
+    name: string;
+    description: string;
+    bannerURL: string;
+    parentId: string | null;
+    createdAt: string;
+    productCount: number;
+}
 export type Product = {
     id: string;
     parentId: string;
