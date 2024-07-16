@@ -1,4 +1,6 @@
-import { ProductGroup, Store, User } from "@prisma/client";
+import { Product, ProductGroup, Store, User } from "@prisma/client";
+
+export type ProductGroupWithProducts = ProductGroup & { products: Product[] };
 
 export type MutableUserProps = Pick<User, 'name' | 'email' | 'password' | 'role'>;
 export type MutableStoreProps = Pick<Store, 'name' | 'address' | 'phoneNumber' | 'email'>;

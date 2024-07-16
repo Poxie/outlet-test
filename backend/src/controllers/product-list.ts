@@ -10,6 +10,14 @@ const router = express.Router();
 router.get('/', asyncHandler(async (req, res) => {
     const groups = await ProductGroupQueries.getProductGroups();
 
+    const groupsWithProducts = await Promise.all(groups.map(async group => {
+        const products = await ProductQueries.getProductsByParentId(group.id);
+        return {
+            ...group,
+            products,
+        }
+    }));
+
     const categoriesWithGroups: {
         parentId: string | null;
         groups: ProductGroup[];
@@ -36,7 +44,7 @@ router.get('/', asyncHandler(async (req, res) => {
         insertNewGroup(parentId, group);
     }
 
-    for(const group of groups) {
+    for(const group of groupsWithProducts) {
         const parentId = group.parentId;
         addGroupToList(parentId, group);
     }
