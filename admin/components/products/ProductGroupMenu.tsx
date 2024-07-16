@@ -5,6 +5,7 @@ import EditIcon from "@/assets/icons/EditIcon";
 import BinIcon from "@/assets/icons/BinIcon";
 import { useModal } from "@/contexts/modal";
 import DeleteProductGroup from "@/modals/product-group/delete-product-group";
+import EditProductGroup from "@/modals/product-group/edit-product-group";
 
 export default function ProductGroupMenu({ productGroup }: {
     productGroup: ProductGroup;
@@ -12,10 +13,11 @@ export default function ProductGroupMenu({ productGroup }: {
     const { setModal } = useModal();
 
     const openDeleteModal = () => setModal(<DeleteProductGroup productGroup={productGroup} />);
+    const openEditModal = () => setModal(<EditProductGroup productGroupId={productGroup.id} />);
 
     const firstGroup: MenuGroup = [
-        { text: 'View group', icon: <ViewIcon size={16} /> },
-        { text: 'Edit group', icon: <EditIcon size={16} /> },
+        { text: 'View group', icon: <ViewIcon size={16} />, onClick: openEditModal },
+        { text: 'Edit group', icon: <EditIcon size={16} />, onClick: openEditModal },
     ]
     const secondGroup: MenuGroup = [
         { text: 'Delete group', icon: <BinIcon size={16} />, type: 'danger', onClick: openDeleteModal },
