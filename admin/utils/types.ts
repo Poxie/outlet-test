@@ -17,24 +17,21 @@ export type WeeklyProduct = {
     imageURL: string;
     date: string;
 }
-export type ProductCategory = {
+export type Category = {
     id: string;
     title: string;
     description: string;
     bannerURL: string;
-    productCount: number;
     createdAt: string;
+    groupCount: number;
 }
-export type MutableCategoryProps = Pick<ProductCategory, 'title' | 'description'> & {
+export type MutableCategoryProps = Pick<Category, 'title' | 'description'> & {
     banner: string;
 };
 export type Product = {
     id: string;
     parentId: string;
     imageURL: string;
-}
-export type CategoryWithProducts = ProductCategory & {
-    products: Product[];
 }
 
 export type Store = {
