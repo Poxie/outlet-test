@@ -1,13 +1,8 @@
-import getCategoriesWithProductCounts from "@/api/categories/getCategoriesWithProductCounts";
 import Products from "@/components/products";
-import prefetchQuery from "@/utils/prefetchQuery";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 
 export default async function ProductsPage() {
-    const queryClient = await prefetchQuery({
-        queryKey: ["categories", 'with-counts'],
-        queryFunction: getCategoriesWithProductCounts,
-    })
+    const queryClient = new QueryClient();
 
     return(
         <HydrationBoundary state={dehydrate(queryClient)}>
