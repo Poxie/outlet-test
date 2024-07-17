@@ -4,7 +4,6 @@ import CategoryProductGroup from "./CategoryProductGroup";
 import ProductGroupDropdown from "@/components/product-group-dropdown";
 import ModalFooter from "@/modals/ModalFooter";
 import { useEffect, useRef, useState } from "react";
-import useChanges from "@/hooks/useChanges";
 import { useFeedback } from "@/contexts/feedback";
 import useMutateBulkUpdateProductGroups from "@/hooks/product-groups/useMutateBulkUpdateProductGroups";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
@@ -17,11 +16,12 @@ export default function CategoryProductGroupsTab({ category }: {
     const { mutateAsync, isPending } = useMutateBulkUpdateProductGroups();
 
     const { data: productGroups } = useGetAllProductGroups();
+    
+    const { setFeedback } = useFeedback();
 
     const initialGroups = useRef<ProductGroup[]>([]);
     const [activeGroups, setActiveGroups] = useState<ProductGroup[]>([]);
 
-    const { setFeedback } = useFeedback();
     useEffect(() => {
         if(!productGroups) return;
 
@@ -93,19 +93,15 @@ export default function CategoryProductGroupsTab({ category }: {
     const hasActiveGroups = activeGroups.length > 0;
     return(
         <form onSubmit={updateGroups}>
-            <ProductGroupDropdown 
-                onSelect={handleAddProductGroup}
-                className="p-4 border-b-[1px] border-b-tertiary"
-                label="Assign product group"
-            />
-
             <div className="p-4">
+                <ProductGroupDropdown 
+                    onSelect={handleAddProductGroup}
+                    className="mb-4 pb-4 border-b-[1px] border-b-tertiary"
+                    selectText="Assign a new product group"
+                    shouldRenderAsButton
+                />
                 {hasActiveGroups && (
-                    <>
-                    <span className="mb-2 block text-sm font-medium">
-                        Assigned product groups
-                    </span>
-                    <div className="grid gap-1">
+                    <div className="grid gap-3">
                         {activeGroups.map(group => (
                             <CategoryProductGroup 
                                 onRemove={handleRemoveProductGroup}
@@ -114,7 +110,6 @@ export default function CategoryProductGroupsTab({ category }: {
                             />
                         ))}
                     </div>
-                    </>
                 )}
                 {!hasActiveGroups && (
                     <span className="block w-full text-sm text-center">

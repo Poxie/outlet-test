@@ -12,7 +12,7 @@ type CategoryTab = typeof DETAILS | typeof GROUPS;
 
 const CATEGORY_TABS: SelectableTab<CategoryTab>[] = [
     { text: 'Details', id: DETAILS },
-    { text: 'Groups', id: GROUPS },
+    { text: 'Product Groups', id: GROUPS },
 ]
 
 const TabComponents = {
