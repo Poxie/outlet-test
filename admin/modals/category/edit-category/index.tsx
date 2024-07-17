@@ -3,6 +3,7 @@ import useQueryCategoryById from "@/hooks/categories/useQueryCategoryById";
 import ModalHeader from "@/modals/ModalHeader";
 import { useState } from "react";
 import CategoryDetailsTab from "./CategoryDetailsTab";
+import CategoryProductGroupsTab from "./CategoryProductGroupsTab";
 
 const DETAILS = 'DETAILS';
 const GROUPS = 'GROUPS';
@@ -16,7 +17,7 @@ const CATEGORY_TABS: SelectableTab<CategoryTab>[] = [
 
 const TabComponents = {
     [DETAILS]: CategoryDetailsTab,
-    [GROUPS]: CategoryDetailsTab,
+    [GROUPS]: CategoryProductGroupsTab,
 }
 
 export default function EditCategoryModal({ categoryId }: {
