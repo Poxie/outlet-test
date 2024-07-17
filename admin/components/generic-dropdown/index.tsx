@@ -38,7 +38,7 @@ export default function GenericDropdown<T>({ className, label, items, renderItem
             {label && (
                 <label
                     htmlFor={labelId}
-                    className="block font-medium text-sm mb-2"
+                    className="block font-medium text-sm mb-1"
                 >
                     {label}
                 </label>
