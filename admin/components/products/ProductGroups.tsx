@@ -6,11 +6,17 @@ import Section from "../section";
 import ProductGroupDetails from "./ProductGroupDetails";
 import ProductGroupMenu from "./ProductGroupMenu";
 import { getReadableDate } from "@/utils";
+import { useModal } from "@/contexts/modal";
+import CreateProductGroup from "@/modals/product-group/create-product-group";
 
 export default function ProductGroups() {
     const { data: groups } = useGetAllProductGroups();
 
+    const { setModal } = useModal();
+
     if(!groups) return null;
+
+    const openCreateMenu = () => setModal(<CreateProductGroup />);
     
     const tableColumns: TableColumn<ProductGroup>[] = [
         { title: 'Details', dataIndex: 'name', render: group => <ProductGroupDetails productGroup={group} />, width: '50%', minWidth: '500px' },
@@ -28,6 +34,8 @@ export default function ProductGroups() {
             searchPlaceholder="Search by group name..."
             searchKeys={['name']}
             renderMenu={renderMenu}
+            buttonText="Add product group"
+            onButtonClick={openCreateMenu}
         />
     )
 }
