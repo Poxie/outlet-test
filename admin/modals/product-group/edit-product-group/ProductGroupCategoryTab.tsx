@@ -1,14 +1,10 @@
-import CloseIcon from "@/assets/icons/CloseIcon";
-import GenericDropdown from "@/components/generic-dropdown";
-import CategoryDetails from "@/components/products/CategoryDetails";
 import useGetAllCategories from "@/hooks/categories/useGetAllCategories";
 import useUpdateProductGroup from "@/hooks/product-groups/useUpdateProductGroup";
 import useRefetchQuery from "@/hooks/react-query/useRefetchQuery";
 import ModalFooter from "@/modals/ModalFooter";
-import { Category, ProductGroup } from "@/utils/types";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { ProductGroup } from "@/utils/types";
 import ProductGroupAssignedCategory from "./ProductGroupAssignedCategory";
+import CategoryDropdown from "@/components/category-dropdown";
 
 export default function ProductGroupCategoryTab({ productGroup }: {
     productGroup: ProductGroup;
@@ -25,43 +21,13 @@ export default function ProductGroupCategoryTab({ productGroup }: {
         await updateProductGroup(e);
         refetchQuery(['categories']);
     }
-    
-    const renderItem = (category: Category) => {
-        return(
-            <div 
-                key={category.id}
-                className="flex items-center justify-between gap-4"
-            >
-                <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-medium">
-                        {category.title}
-                    </span>
-                    <span className="text-xs text-muted line-clamp-2">
-                        {category.description}
-                    </span>
-                </div>
-                <Image 
-                    className="aspect-video rounded object-cover"
-                    src={category.bannerURL}
-                    width={90}
-                    height={58}
-                    alt=""
-                />
-            </div>
-        )
-    }
 
     const activeCategory = categories.find(category => category.id === currentProductGroup.parentId);
     return(
         <form onSubmit={updateCategory}>
-            <GenericDropdown 
-                items={categories}
-                renderItem={renderItem}
-                selectText="Select a category..."
-                onSelect={category => updateProps({ parentId: category.id })}
-                searchPlaceholder="Search category..."
-                searchKeys={['title']}
+            <CategoryDropdown 
                 label="Assign category"
+                onSelect={category => updateProps({ parentId: category.id })}
                 className="p-4 border-b-[1px] border-b-tertiary"
             />
 
