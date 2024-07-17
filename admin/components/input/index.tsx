@@ -2,7 +2,7 @@ import LockIcon from "@/assets/icons/LockIcon";
 import { HTMLInputTypeAttribute } from "react";
 import { twMerge } from "tailwind-merge";
 
-export default function Input({ onChange, containerClassName, className, placeholder, value, label, textArea, disabled, type='text' }: {
+export default function Input({ onChange, containerClassName, className, placeholder, value, label, textArea, disabled, autoFocus, type='text' }: {
     containerClassName?: string;
     className?: string;
     placeholder?: string;
@@ -12,6 +12,7 @@ export default function Input({ onChange, containerClassName, className, placeho
     value?: string;
     textArea?: boolean;
     disabled?: boolean;
+    autoFocus?: boolean;
 }) {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         onChange(e.target.value);
@@ -30,6 +31,7 @@ export default function Input({ onChange, containerClassName, className, placeho
         value,
         disabled,
         type,
+        autoFocus,
     }
 
     return(
