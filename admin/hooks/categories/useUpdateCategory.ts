@@ -16,7 +16,9 @@ export default function useUpdateCategory(initialCategory: Category) {
 
     const { setFeedback } = useFeedback();
 
-    const updateCategory = async () => {
+    const updateCategory = async (e: React.FormEvent) => {
+        e.preventDefault();
+
         if(!hasChanges) {
             setFeedback({
                 message: 'No changes detected',

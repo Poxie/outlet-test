@@ -2,7 +2,7 @@ import SelectableTabs, { SelectableTab } from "@/components/selectable-tabs";
 import useQueryCategoryById from "@/hooks/categories/useQueryCategoryById";
 import ModalHeader from "@/modals/ModalHeader";
 import { useState } from "react";
-import CategoryDetailsTab from "../CategoryDetailsTab";
+import CategoryDetailsTab from "./CategoryDetailsTab";
 
 const DETAILS = 'DETAILS';
 const GROUPS = 'GROUPS';
