@@ -25,6 +25,10 @@ export type Category = {
     createdAt: string;
     groupCount: number;
 }
+export type CreateCategoryProps = Pick<Category, 'title' | 'description'> & {
+    banner: string;
+}
+
 export type CreateProductGroupProps = Pick<ProductGroup, 'name' | 'description'> & {
     banner: string;
     parentId: string | null;

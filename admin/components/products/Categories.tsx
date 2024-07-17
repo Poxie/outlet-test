@@ -5,11 +5,17 @@ import CategoryDetails from "./CategoryDetails";
 import CategoryMenu from "./CategoryMenu";
 import { getReadableDate } from "@/utils";
 import { Category } from "@/utils/types";
+import CreateCategoryModal from "@/modals/category/create-category";
+import { useModal } from "@/contexts/modal";
 
 export default function Categories() {
     const { data: categories } = useGetAllCategories();
     
+    const { setModal } = useModal();
+
     if(!categories) return null;
+
+    const openCreateModal = () => setModal(<CreateCategoryModal />);
 
     const tableColumns: TableColumn<Category>[] = [
         { dataIndex: 'title', title: 'Details', render: category => <CategoryDetails category={category} />, width: '50%', minWidth: '500px' },
@@ -27,6 +33,8 @@ export default function Categories() {
             searchPlaceholder="Search by category name..."
             searchKeys={['title']}
             renderMenu={renderMenu}
+            buttonText="Create category"
+            onButtonClick={openCreateModal}
         />
     )
 }
