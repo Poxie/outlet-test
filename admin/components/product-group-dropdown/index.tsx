@@ -1,29 +1,29 @@
 import useGetAllProductGroups from "@/hooks/product-groups/useGetAllProductGroups";
-import GenericDropdown from "../generic-dropdown";
+import GenericDropdown, { DropdownProps } from "../generic-dropdown";
 import { ProductGroup } from "@/utils/types";
 import ProductGroupDropdownItem from "./ProductGroupDropdownItem";
 
-export default function ProductGroupDropdown({ onSelect, label, className }: {
-    onSelect: (productGroup: ProductGroup) => void;
-    label?: string;
-    className?: string;
-}) {
+const DEFAULT_SEARCH_KEYS: (keyof ProductGroup)[] = ['name'];
+const DEFAULT_SELECT_TEXT = "Select a product group...";
+const DEFAULT_SEARCH_PLACEHOLDER = "Search product group...";
+export default function ProductGroupDropdown(
+    props: Omit<Partial<DropdownProps<ProductGroup>>, 'items' | 'renderItems'>
+) {
     const { data: productGroups } = useGetAllProductGroups();
 
     if(!productGroups) return null;
 
     const renderItem = (group: ProductGroup) => <ProductGroupDropdownItem productGroup={group} />;
-    
+
+    const dropdownProps = {
+        ...props,
+        renderItem: renderItem,
+        items: productGroups,
+        searchKeys: props.searchKeys || DEFAULT_SEARCH_KEYS,
+        selectText: props.selectText || DEFAULT_SELECT_TEXT,
+        searchPlaceholder: props.searchPlaceholder || DEFAULT_SEARCH_PLACEHOLDER,
+    }
     return(
-        <GenericDropdown 
-            items={productGroups}
-            renderItem={renderItem}
-            selectText="Select a product group..."
-            searchPlaceholder="Search product group..."
-            onSelect={onSelect}
-            searchKeys={['name']}
-            className={className}
-            label={label}
-        />
+        <GenericDropdown {...dropdownProps} />
     )
 }
