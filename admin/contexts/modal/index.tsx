@@ -30,7 +30,7 @@ export default function ModalProvider({ children }: {
         <ModalContext.Provider value={value}>
             {children}
 
-            <div className="z-50 fixed top-0 left-0 w-full h-full pointer-events-none">
+            <div className="flex items-center justify-center z-50 fixed top-0 left-0 w-full h-full pointer-events-none">
                 <AnimatePresence>
                     {modal && (
                         <motion.div 
@@ -46,11 +46,11 @@ export default function ModalProvider({ children }: {
                 <AnimatePresence>
                     {modal && (
                         <motion.div
-                            initial={{ opacity: 0, scale: .8, translateY: '-50%', translateX: '-50%' }}
-                            animate={{ opacity: 1, scale: 1, translateY: '-50%', translateX: '-50%' }}
-                            exit={{ opacity: 0, scale: .8, translateY: '-50%', translateX: '-50%' }}
+                            initial={{ opacity: 0, scale: .8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: .8 }}
                             transition={{ bounce: false, duration: .2 }}
-                            className="w-modal max-w-full pointer-events-auto absolute top-2/4 left-2/4"
+                            className="w-modal max-w-full pointer-events-auto"
                         >
                             <Modal>
                                 {modal}
