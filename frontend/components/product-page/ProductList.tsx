@@ -11,7 +11,7 @@ export default function ProductList({ groups, className }: {
     return(
         groups.map(({ name, description, bannerURL, products }) => (
             <div className={twMerge(
-                "py-12 first:pt-0",
+                "py-12 first:pt-0 last:pb-0",
                 className,
             )}>
                 <ProductHeader 
