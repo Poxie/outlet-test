@@ -17,9 +17,12 @@ export type WeeklyGroup = {
     products: WeeklyProduct[];
 }
 export type WeeklyProduct = {
-    id: number;
+    id: string;
     imageURL: string;
     date: string;
+    // These dont exist yet, add them later
+    position: number;
+    parentId: string;
 }
 export type Store = {
     id: string;

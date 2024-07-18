@@ -5,6 +5,8 @@ import ProductHeader from "../product-page/ProductHeader";
 import ProductList from "../product-page/ProductList";
 import SicklaNotice from "../sickla-notice";
 import getCurrentWeeksProducts from "@/api/weekly-products/getCurrentWeeksProducts";
+import { ProductGroup } from "@/utils/types";
+import ProductGrid from "../product-page/ProductGrid";
 
 export default function VeckansVaror() {
     const { data: productWeek } = useQuery({
@@ -24,11 +26,9 @@ export default function VeckansVaror() {
                     ]}
                 />
                 <ProductHeader 
-                    categoryId="veckans-varor"
-                    image="/images/weekly-products/header.png"
+                    image="/images/veckans-varor.png"
                 />
-                <ProductList 
-                    className="mt-4"
+                <ProductGrid 
                     products={productWeek.products}
                 />
             </div>
