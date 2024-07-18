@@ -29,6 +29,14 @@ export default async function ProductCategory({ params: { parentId } }: {
         }
     }
 
+    if(!groups.length) {
+        return(
+            <span>
+                sidan hittades inte
+            </span>
+        )
+    }
+
     return(
         <HydrationBoundary state={dehydrate(queryClient)}>
             <Products 
