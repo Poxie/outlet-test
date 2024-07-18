@@ -1,31 +1,22 @@
-import Carousel from "@/components/carousel";
-import ProductCard from "@/components/product-card";
-import SectionHeader from "@/components/section-header";
-import { Category } from "@/utils/types";
+import { ProductListItem } from "@/utils/types";
+import HomeProductHeader from "./HomeProductHeader";
+import HomeProductGroup from "./HomeProductGroup";
 
-export default function HomeProductRow({ category: { id, title, products } }: {
-    category: Category;
+export default function HomeProductRow({ listItem }: {
+    listItem: ProductListItem;
 }) {
-    const imageComponents = products.map(product => (
-        <ProductCard
-            product={product}
-            key={product.id}
-        />
-    ))
-
     return(
-        <div className="mb-10">
-            <SectionHeader
-                buttonText="Visa fler"
-                buttonHref={`/produkter/${id}`}
-            >
-                {title}
-            </SectionHeader>
-            <Carousel 
-                carouselGap={8}
-                items={imageComponents}
-                optimisticItemsPerRow={5}
+        <div className="grid gap-4 py-16 first:pt-0 last:pb-0">
+            <HomeProductHeader 
+                header={listItem.header}
             />
+            {listItem.groups.map(group => (
+                <HomeProductGroup 
+                    group={group}
+                    hasCategory={listItem.hasCategory}
+                    key={group.id}
+                />
+            ))}
         </div>
     )
 }

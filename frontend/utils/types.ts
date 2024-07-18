@@ -9,6 +9,7 @@ export type Product = {
     id: number,
     parentId: string;
     imageURL: string;
+    position: number;
 }
 export type WeeklyGroup = {
     date: string;
@@ -31,4 +32,23 @@ export type Store = {
     weekdayOpenHours: string;
     saturdayOpenHours: string;
     sundayOpenHours: string;
+}
+
+export type ProductGroup = {
+    id: string;
+    name: string;
+    description: string;
+    products: Product[];
+}
+export type ProductListHeader = {
+    title: string;
+    description: string;
+    bannerURL: string;
+    path: string;
+}
+export type ProductListItem = {
+    header: ProductListHeader;
+    id: string;
+    groups: ProductGroup[];
+    hasCategory: boolean;
 }

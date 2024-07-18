@@ -41,7 +41,7 @@ const config: Config = {
         'c-primary': '#E73128',
       },
       width: {
-        main: '1100px',
+        main: '1200px',
       },
       maxWidth: {
         main: '90%',

@@ -1,14 +1,14 @@
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import getCategoriesWithProducts from '@/api/products/getCategoriesWithProducts';
 import HomeProductList from './HomeProductList';
 import Link from 'next/link';
+import getHomeProductList from '@/api/products/getHomeProductList';
 
 export default async function HomeProducts() {
     const queryClient = new QueryClient();
 
     await queryClient.prefetchQuery({
-        queryKey: ['categories'],
-        queryFn: getCategoriesWithProducts,
+        queryKey: ['product-list'],
+        queryFn: getHomeProductList,
     })
 
     return(
