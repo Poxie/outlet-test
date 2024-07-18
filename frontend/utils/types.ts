@@ -3,7 +3,7 @@ export type Category = {
     title: string;
     description: string;
     bannerURL: string;
-    products: Product[];
+    groups: ProductGroup[];
 }
 export type Product = {
     id: string;

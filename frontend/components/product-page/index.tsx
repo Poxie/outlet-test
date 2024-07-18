@@ -3,38 +3,26 @@ import ProductHeader from './ProductHeader';
 import ProductList from './ProductList';
 import SicklaNotice from '../sickla-notice';
 import PageBanner from '../page-banner';
-import { useQuery } from '@tanstack/react-query';
-import getProductGroup from '@/api/products/getProductGroup';
+import { Category, ProductGroup } from '@/utils/types';
 
-export default function Products({ productGroupId }: {
-    productGroupId: string;
+export default function Products({ header, groups }: {
+    header?: Category;
+    groups: ProductGroup[];
 }) {
-    const { data: productGroup } = useQuery({
-        queryKey: ['product-groups', productGroupId],
-        queryFn: () => getProductGroup(productGroupId),
-    })
-
-    if(!productGroup) return null;
-
-    const { name, description, bannerURL, products } = productGroup;
+    const bannerText = header?.title || groups[0].name;
+    const path = header ? `/${header.id}` : `/${groups[0].id}`;
     return(
         <main>
             <PageBanner 
                 className="main-width"
                 steps={[
                     { text: 'Start', path: '/' },
-                    { text: name, path: `/${productGroupId}` },
+                    { text: bannerText, path },
                 ]}
             />
-            <div className="pb-8 main-width">
-                <ProductHeader 
-                    title={name}
-                    description={description}
-                    image={bannerURL}
-                />
+            <div className="pb-8 main-width divide-y-[1px] divide-tertiary">
                 <ProductList 
-                    products={products}
-                    className="mt-4"
+                    groups={groups}
                 />
             </div>
             <SicklaNotice />
