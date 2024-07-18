@@ -54,6 +54,7 @@ export type Product = {
     id: string;
     parentId: string;
     imageURL: string;
+    position: number;
 }
 
 export type Store = {

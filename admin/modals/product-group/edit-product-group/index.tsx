@@ -4,6 +4,7 @@ import ModalHeader from "@/modals/ModalHeader";
 import { useState } from "react";
 import ProductGroupDetailsTab from "./ProductGroupDetailsTab";
 import ProductGroupCategoryTab from "./ProductGroupCategoryTab";
+import ProductGroupProductsTab from "./ProductGroupProductsTab";
 
 const DETAILS = 'DETAILS';
 const PRODUCTS = 'PRODUCTS';
@@ -19,7 +20,7 @@ const PRODUCT_GROUP_TABS: SelectableTab<ProductGroupTab>[] = [
 
 const PRODUCT_GROUP_COMPONENTS = {
     [DETAILS]: ProductGroupDetailsTab,
-    [PRODUCTS]: ProductGroupDetailsTab,
+    [PRODUCTS]: ProductGroupProductsTab,
     [CATEGORY]: ProductGroupCategoryTab,
 }
 
