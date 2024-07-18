@@ -12,6 +12,18 @@ export default class CategoryQueries {
         return count;
     }
 
+    static async bulkGetCategoriesById(ids: string[]) {
+        const categories = await client.category.findMany({
+            where: {
+                id: {
+                    in: ids,
+                }
+            }
+        });
+
+        return categories;
+    }
+
     static async getCategories() {
         const categories = await client.category.findMany();
 

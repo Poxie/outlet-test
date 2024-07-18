@@ -11,6 +11,7 @@ import ProductGroupQueries from '@/utils/product-groups/productGroupQueries';
 import productGroupUtils from '@/utils/product-groups/productGroupUtils';
 import ProductMutations from '@/utils/products/productMutations';
 import ProductQueries from '@/utils/products/productQueries';
+import ProductUtils from '@/utils/products/productUtils';
 import { MutableProductGroupProps } from '@/utils/types';
 import { createProductGroupSchema } from '@/validation/productGroupSchemas';
 import express from 'express';
@@ -127,7 +128,7 @@ router.get('/:id/products', asyncHandler(async (req, res) => {
 
     const products = await ProductQueries.getProductsByParentId(id);
 
-    res.send(products);
+    res.send(ProductUtils.sortProductsByPosition(products));
 }))
 
 export default router;

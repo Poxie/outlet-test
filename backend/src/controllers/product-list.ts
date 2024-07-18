@@ -10,70 +10,49 @@ const router = express.Router();
 router.get('/', asyncHandler(async (req, res) => {
     const groups = await ProductGroupQueries.getProductGroups();
 
-    const groupsWithProducts = await Promise.all(groups.map(async group => {
-        const products = await ProductQueries.getProductsByParentId(group.id);
-        return {
-            ...group,
-            products,
-        }
-    }));
-
-    const categoriesWithGroups: {
-        parentId: string | null;
-        groups: ProductGroup[];
-    }[] = [];
-
-    const insertNewGroup = (parentId: string | null, group: ProductGroup) => {
-        categoriesWithGroups.push({
-            parentId,
-            groups: [group],
-        })
-    }
-    const addGroupToList = (parentId: string | null, group: ProductGroup) => {
-        if(!parentId) {
-            insertNewGroup(parentId, group);
-            return;
-        }
-
-        const category = categoriesWithGroups.find(category => category.parentId === parentId);
-        if(category) {
-            category.groups.push(group);
-            return;
-        }
-
-        insertNewGroup(parentId, group);
+    const uniqueCategoryIds: string[] = [];
+    for(const group of groups) {
+        if(!group.parentId || uniqueCategoryIds.includes(group.parentId)) continue;
+        uniqueCategoryIds.push(group.parentId);
     }
 
-    for(const group of groupsWithProducts) {
-        const parentId = group.parentId;
-        addGroupToList(parentId, group);
-    }
-    
+    const categories = await CategoryQueries.bulkGetCategoriesById(uniqueCategoryIds);
+
     const groupsWithCategories: {
-        category: Category | null;
+        id: string;
+        header: {
+            title: string;
+            description: string;
+            bannerURL: string;
+            path: string;
+        };
         groups: ProductGroup[];
+        hasCategory: boolean;
     }[] = [];
-    for(const { parentId, groups } of categoriesWithGroups) {
-        if(!parentId) {
-            groupsWithCategories.push({
-                category: null,
-                groups,
-            });
+    for(const group of groups) {
+        const category = categories.find(category => category.id === group.parentId);
+
+        const existingCategoryIds = groupsWithCategories.map(c => c.id);        
+        if(group.parentId && existingCategoryIds.includes(group.parentId)) {
+            const index = existingCategoryIds.indexOf(group.parentId);
+            groupsWithCategories[index].groups.push(group);
             continue;
         }
 
-        const category = await CategoryQueries.getCategoryById(parentId);
-        if(!category) continue;
-
         groupsWithCategories.push({
-            category,
-            groups,
+            id: group.parentId || group.id,
+            header: {
+                title: category?.title || group.name,
+                description: category?.description || group.description,
+                bannerURL: category?.bannerURL || group.bannerURL,
+                path: `/produkter/${group.parentId || group.id}`,
+            },
+            groups: [group],
+            hasCategory: !!category,
         });
     }
 
-    const sortedGroupsWithCategories = groupsWithCategories.reverse();
-
-    res.send(sortedGroupsWithCategories);
+    res.send(groupsWithCategories);
 }));
 
 export default router;

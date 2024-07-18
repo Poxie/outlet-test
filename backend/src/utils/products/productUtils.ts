@@ -1,3 +1,4 @@
+import { Product } from "@prisma/client";
 import { PRODUCT_ID_LENGTH } from "./productConstants";
 import ProductQueries from "./productQueries";
 
@@ -11,5 +12,8 @@ export default class ProductUtils {
         }
         
         return id;
+    }
+    static sortProductsByPosition(products: Product[]) {
+        return products.sort((a, b) => a.position - b.position);
     }
 }

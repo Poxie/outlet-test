@@ -39,7 +39,9 @@ export default class ProductMutations {
         id: string;
     })[]) {
         const products = await Promise.all(data.map(async (product) => {
-            return await this.updateProduct(product.id, product);
+            const updatedProduct = await this.updateProduct(product.id, product);
+            if(!updatedProduct) throw new ProductNotFoundError();
+            return updatedProduct;
         }))
         return products;
     }

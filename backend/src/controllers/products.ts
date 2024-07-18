@@ -51,9 +51,7 @@ router.post('/', auth, asyncHandler(async (req, res) => {
 
     await ProductMutations.createProducts(products);
 
-    const allProducts = await ProductQueries.getProductsByParentId(data.parentId);
-
-    res.json(allProducts);
+    res.json(products);
 }))
 
 router.patch('/positions', auth, asyncHandler(async (req, res) => {
@@ -95,7 +93,7 @@ router.patch('/positions', auth, asyncHandler(async (req, res) => {
     // Update positions
     const newProducts = await ProductMutations.bulkUpdateProducts(positions);
 
-    res.send(newProducts);
+    res.send(ProductUtils.sortProductsByPosition(newProducts));
 }))
 
 router.delete('/', auth, asyncHandler(async (req, res) => {
