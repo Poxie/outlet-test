@@ -1,6 +1,22 @@
 import client from "@/client";
+import { ProductNotFoundError } from "./productErrors";
 
 export default class ProductQueries {
+    static async bulkGetProductsById(ids: string[]) {
+        const products = await client.product.findMany({
+            where: {
+                id: {
+                    in: ids,
+                }
+            }
+        });
+        if(products.length !== ids.length) {
+            throw new ProductNotFoundError();
+        }
+
+        return products;
+    }
+
     static async getProductsByParentId(parentId: string) {
         const products = await client.product.findMany({
             where: {

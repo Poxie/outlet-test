@@ -35,6 +35,15 @@ export default class ProductMutations {
         }
     }
 
+    static async bulkUpdateProducts(data: (Partial<Product> & {
+        id: string;
+    })[]) {
+        const products = await Promise.all(data.map(async (product) => {
+            return await this.updateProduct(product.id, product);
+        }))
+        return products;
+    }
+
     static async deleteProducts(ids: string[]) {
         await client.product.deleteMany({
             where: {

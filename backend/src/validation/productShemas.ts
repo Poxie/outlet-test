@@ -11,6 +11,16 @@ export const createProductSchema = z.object({
     parentId: z.string({ message: parentIdIsRequired }),
 })
 
+export const updateProductPositionsSchema = z.object({
+    parentId: z.string({ message: parentIdIsRequired }),
+    positions: z.array(
+        z.object({
+            id: z.string(),
+            position: z.number(),
+        })
+    ).nonempty(),
+})
+
 export const deleteProductsSchema = z.object({
     productIds: z.array(
         z.string({ message: productIdsMustBeArrayString }),

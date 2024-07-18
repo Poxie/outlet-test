@@ -6,3 +6,9 @@ export class ProductGroupNotFoundError extends CustomError {
         super('Product group not found', StatusCodes.NOT_FOUND);
     }
 }
+
+export class ProductPositionError extends CustomError {
+    constructor(message: string) {
+        super(message, StatusCodes.BAD_REQUEST);
+    }
+}
