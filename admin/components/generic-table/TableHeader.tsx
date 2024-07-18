@@ -17,7 +17,7 @@ export default function TableHeader<T>({ title, searchKeys, searchPlaceholder, s
 
                 {search && (
                     <span className="text-sm text-muted">
-                        ({searchResultCount} result{searchResultCount !== 1 ? 's' : ''} based on "{search}")
+                        ({searchResultCount} result{searchResultCount !== 1 ? 's' : ''} based on {`"${search}"`})
                     </span>
                 )}
             </div>
