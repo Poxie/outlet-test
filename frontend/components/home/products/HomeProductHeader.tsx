@@ -7,16 +7,16 @@ export default function HomeProductHeader({ header: { title, description, banner
     header: ProductListHeader;
 }) {
     return(
-        <div className="flex">
+        <div className="flex flex-col lg:flex-row">
             <Image 
-                className="w-2/4 aspect-video object-cover"
+                className="w-full lg:w-2/4 aspect-video object-cover"
                 src={bannerURL}
                 width={850}
                 height={500}
                 alt={""}
                 priority={true}
             />
-            <div className="header-background p-12 w-2/4 flex flex-col items-start justify-center text-light">
+            <div className="header-background p-8 sm:p-12 lg:w-2/4 flex flex-col items-start justify-center text-light">
                 <h2 className="text-4xl">
                     {title}
                 </h2>
@@ -24,7 +24,7 @@ export default function HomeProductHeader({ header: { title, description, banner
                     {description}
                 </p>
                 <Link
-                    className="mt-5 py-3 px-5 text-sm flex items-center gap-3 text-light border-[1px] border-white rounded-md hover:bg-primary hover:text-primary transition-colors"
+                    className="mt-5 py-3 px-5 w-full sm:w-[unset] text-sm flex items-center justify-center gap-3 text-light border-[1px] border-white rounded-md hover:bg-primary hover:text-primary transition-colors"
                     href={path}
                     aria-label="Visa mer"
                 >
