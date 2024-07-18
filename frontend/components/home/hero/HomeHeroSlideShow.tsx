@@ -96,7 +96,7 @@ export default function HomeHeroSlideShow({ className }: {
 
     return(
         <div className={twMerge(
-            "[--items-per-row:2] sm:[--items-per-row:4] md:[--items-per-row:6] overflow-hidden",
+            "[--items-per-row:2] sm:[--items-per-row:4] md:[--items-per-row:5] xl:[--items-per-row:6] overflow-hidden",
             className,
         )}>
             <div className="-translate-x-[calc((1/var(--items-per-row))*100%)]">
