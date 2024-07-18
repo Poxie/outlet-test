@@ -2,15 +2,16 @@ import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import Button from "../button";
 
-export default function FileInput({ className, label, value, onChange, multiple, addText, hasEditButton, editText='Edit' }: {
+export default function FileInput({ containerClassName, className, label, value, onChange, multiple, addText, hasEditButton, editText='Edit' }: {
     label?: string;
     value?: string;
     addText?: string;
     onChange: (base64: string[]) => void;
     multiple?: boolean;
-    className?: string;
     hasEditButton?: boolean;
     editText?: string;
+    className?: string;
+    containerClassName?: string;
 }) {
     const ref = useRef<HTMLInputElement>(null);
 
@@ -37,7 +38,7 @@ export default function FileInput({ className, label, value, onChange, multiple,
 
     const labelId = label?.toLowerCase().replace(' ', '-');
     return(
-        <div>
+        <div className={containerClassName}>
             {label && (
                 <label 
                     className="mb-1 block text-sm font-medium"
