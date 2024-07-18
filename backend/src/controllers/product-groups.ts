@@ -122,4 +122,12 @@ router.delete('/:id', auth, asyncHandler(async (req, res) => {
     res.status(StatusCodes.NO_CONTENT).send();
 }));
 
+router.get('/:id/products', asyncHandler(async (req, res) => {
+    const id = req.params.id;
+
+    const products = await ProductQueries.getProductsByParentId(id);
+
+    res.send(products);
+}))
+
 export default router;
