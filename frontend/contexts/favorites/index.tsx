@@ -1,11 +1,12 @@
 "use client";
+import { Product } from '@/utils/types';
 import React, { useEffect, useState } from 'react';
 
 const FavoritesContext = React.createContext<null | {
-    favorites: string[];
-    addFavorite: (image: string) => void;
-    removeFavorite: (image: string) => void;
-    isFavorite: (image: string) => boolean;
+    favorites: Product[];
+    addFavorite: (product: Product) => void;
+    removeFavorite: (productId: string) => void;
+    isFavorite: (productId: string) => boolean;
     getFavoriteCount: () => number;
 }>(null)
 
@@ -20,7 +21,7 @@ export const useFavorites = () => {
 export default function FavoritesProvider({ children }: {
     children: React.ReactNode;
 }) {
-    const [favorites, setFavorites] = useState<string[]>([]);
+    const [favorites, setFavorites] = useState<Product[]>([]);
 
     // Get favorties from local storage on mount
     useEffect(() => {
@@ -30,30 +31,30 @@ export default function FavoritesProvider({ children }: {
 
     // Get favorties from local storage
     const getFavorites = () => {
-        const localFavorites: string[] = JSON.parse(localStorage.getItem("favorites") || '[]');
+        const localFavorites: Product[] = JSON.parse(localStorage.getItem("favorites") || '[]');
         return localFavorites;
     }
-    const addFavoriteToLocalStorage = (image: string) => {
+    const addFavoriteToLocalStorage = (product: Product) => {
         const localFavorites = getFavorites();
-        localFavorites.push(image);
+        localFavorites.push(product);
         localStorage.setItem("favorites", JSON.stringify(localFavorites));
     }
-    const removeFavoriteFromLocalStorage = (image: string) => {
+    const removeFavoriteFromLocalStorage = (productId: string) => {
         const localFavorites = getFavorites();
-        const newFavorites = localFavorites.filter(favorite => favorite !== image);
+        const newFavorites = localFavorites.filter(favorite => favorite.id !== productId);
         localStorage.setItem("favorites", JSON.stringify(newFavorites));
     }
 
-    const addFavorite = (image: string) => {
+    const addFavorite = (image: Product) => {
         addFavoriteToLocalStorage(image);
         setFavorites([...favorites, image]);
     }
-    const removeFavorite = (image: string) => {
-        removeFavoriteFromLocalStorage(image);
-        setFavorites(favorites.filter(favorite => favorite !== image));
+    const removeFavorite = (productId: string) => {
+        removeFavoriteFromLocalStorage(productId);
+        setFavorites(favorites.filter(favorite => favorite.id !== productId));
     }
-    const isFavorite = (image: string) => {
-        return favorites.includes(image);
+    const isFavorite = (productId: string) => {
+        return favorites.map(favorite => favorite.id).includes(productId);
     }
     const getFavoriteCount = () => {
         return favorites.length;

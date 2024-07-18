@@ -6,7 +6,7 @@ export type Category = {
     products: Product[];
 }
 export type Product = {
-    id: number,
+    id: string;
     parentId: string;
     imageURL: string;
     position: number;

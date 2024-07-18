@@ -5,20 +5,20 @@ import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { Product } from "@/utils/types";
 
-export default function ProductCard({ product: { imageURL } }: {
+export default function ProductCard({ product }: {
     product: Product;
 }) {
     const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
     const handleFavoriteClick = () => {
-        if(isFavorite(imageURL)) {
-            removeFavorite(imageURL);
+        if(isFavorite(product.id)) {
+            removeFavorite(product.id);
             return;
         }
-        addFavorite(imageURL);
+        addFavorite(product);
     }
 
-    const favorite = isFavorite(imageURL);
+    const favorite = isFavorite(product.id);
     const favoriteLabel = favorite ? 'Ta bort favorit' : 'Lägg till favorit';
     return(
         <div className="relative">
@@ -37,7 +37,7 @@ export default function ProductCard({ product: { imageURL } }: {
             </button>
             <Image 
                 className="w-full aspect-square object-cover"
-                src={imageURL}
+                src={product.imageURL}
                 width={200}
                 height={200}
                 alt=""
