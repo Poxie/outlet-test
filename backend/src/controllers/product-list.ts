@@ -45,7 +45,7 @@ router.get('/', asyncHandler(async (req, res) => {
                 title: category?.title || group.name,
                 description: category?.description || group.description,
                 bannerURL: category?.bannerURL || group.bannerURL,
-                path: `/produkter/${group.parentId || group.id}`,
+                path: `/${group.parentId || group.id}`,
             },
             groups: [group],
             hasCategory: !!category,
