@@ -42,6 +42,7 @@ export const getEmptyProductObject: (props?: Partial<Product>) => Product = (pro
     id: `${TEMP_PREFIX}${Math.random()}`,
     parentId: '',
     imageURL: '',
+    position: 0,
     ...props,
 })
 
