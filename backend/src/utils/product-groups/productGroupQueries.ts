@@ -1,4 +1,6 @@
 import client from "@/client";
+import ProductGroupUtils from "./productGroupUtils";
+import { IncludeGroupProps } from "./productGroupConstants";
 
 export default class ProductGroupQueries {
     // temporary function to get count, replace with relationship queries later
@@ -6,45 +8,46 @@ export default class ProductGroupQueries {
         const count = await client.product.count({
             where: {
                 parentId: productGroupId,
-            }
+            },
         });
 
         return count;
     }
-    static async getProductGroups() {
-        const groups = await client.productGroup.findMany();
-        
-        const groupsWithProductCounts = await Promise.all(
-            groups.map(async group => {
-                const productCount = await this.getProductGroupProductCount(group.id);
-                return {
-                    ...group,
-                    productCount,
-                };
-            })
+    static async getProductGroups(withProducts?: boolean) {
+        const groups = await client.productGroup.findMany(
+            IncludeGroupProps({ products: withProducts })
         );
+        
+        const groupsWithCounts = groups.map(ProductGroupUtils.transformGroup);
 
-        return groupsWithProductCounts;
+        return groupsWithCounts;
     }
-    static async getProductGroupById(id: string) {
-        return client.productGroup.findUnique({
+    static async getProductGroupById(id: string, withProducts = false) {
+        const group = await client.productGroup.findUnique({
             where: {
                 id,
-            }
+            },
+            ...IncludeGroupProps({ products: withProducts }),
         });
+
+        return group ? ProductGroupUtils.transformGroup(group) : null;
     }
     static async getProductGroupsByParentId(parentId: string) {
-        return client.productGroup.findMany({
+        const groups = await client.productGroup.findMany({
             where: {
                 parentId,
-            }
+            },
+            ...IncludeGroupProps(),
         });
+        return groups.map(ProductGroupUtils.transformGroup);
     }
     static async getUnassignedProductGroups() {
-        return client.productGroup.findMany({
+        const groups = await client.productGroup.findMany({
             where: {
                 parentId: null,
-            }
+            },
+            ...IncludeGroupProps(),
         });
+        return groups.map(ProductGroupUtils.transformGroup);
     }
 }

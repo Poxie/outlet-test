@@ -41,6 +41,8 @@ router.post('/', auth, asyncHandler(async (req, res) => {
             id: productId,
             imageURL,
             parentId: data.parentId,
+            // !Fix this to be based on the position of the image in the array
+            position: 0,
         }
         
         products.push(productObject);

@@ -20,23 +20,7 @@ const router = express.Router();
 router.get('/', asyncHandler(async (req, res) => {
     const withProducts = req.query.withProducts === 'true';
 
-    const groups = await ProductGroupQueries.getProductGroups();
-
-    // If withProducts is true, fetch all products related to each group
-    if(withProducts) {
-        const groupsWithProducts = await Promise.all(
-            groups.map(async group => {
-                const products = await ProductQueries.getProductsByParentId(group.id);
-                return {
-                    ...group,
-                    products,
-                }
-            })
-        );
-
-        res.send(groupsWithProducts);
-        return;
-    }
+    const groups = await ProductGroupQueries.getProductGroups(withProducts);
 
     res.send(groups);
 }));
@@ -45,15 +29,8 @@ router.get('/:id', asyncHandler(async (req, res) => {
     const id = req.params.id;
     const withProducts = req.query.withProducts === 'true';
 
-    const group = await ProductGroupQueries.getProductGroupById(id);
+    const group = await ProductGroupQueries.getProductGroupById(id, withProducts);
     if(!group) throw new ProductGroupNotFoundError();
-
-    // If withProducts is true, fetch all products related to the group
-    if(withProducts) {
-        const products = await ProductQueries.getProductsByParentId(id);
-        res.send({ ...group, products });
-        return;
-    }
 
     res.send(group);
 }))
@@ -87,6 +64,7 @@ router.post('/', auth, asyncHandler(async (req, res, next) => {
         bannerURL: bannerImage,
         createdAt: Date.now().toString(),
         parentId: null,
+        productCount: 0,
     });
 
     res.send(productGroup);

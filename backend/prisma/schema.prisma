@@ -36,18 +36,22 @@ model Category {
 }
 
 model ProductGroup {
-  id          String  @id
-  name       String
-  description String
-  bannerURL   String
-  parentId    String?
-  createdAt   String
+  id           String    @id
+  name         String
+  description  String
+  bannerURL    String
+  parentId     String?
+  createdAt    String
+  productCount Int
+  products     Product[] // Relation to Product
 }
 
 model Product {
-  id       String @id
-  imageURL String
-  parentId String
+  id           String       @id
+  imageURL     String
+  parentId     String
+  position     Int
+  productGroup ProductGroup @relation(fields: [parentId], references: [id])
 }
 
 model WeeklyProduct {

@@ -1,3 +1,4 @@
+import { ProductGroup } from "@prisma/client";
 import ProductGroupQueries from "./productGroupQueries";
 
 export default class productGroupUtils {
@@ -13,5 +14,15 @@ export default class productGroupUtils {
         }
 
         return id;
+    }
+
+    static transformGroup(group: ProductGroup & {
+        _count: { products: number };
+    }) {
+        const { _count, ...rest } = group;
+        return {
+            ...rest,
+            productCount: _count.products,
+        };
     }
 }
