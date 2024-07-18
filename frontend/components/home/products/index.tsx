@@ -18,14 +18,14 @@ export default async function HomeProducts() {
                     Upptäck vårt sortiment
                 </h2>
                 <HomeProductList />
-                <div className="mt-8 flex justify-center relative">
+                {/* <div className="mt-8 flex justify-center relative">
                     <Link
                         className="px-5 bg-primary after:z-[-1] after:absolute after:top-2/4 after:left-0 after:-translate-y-2/4 after:w-full after:h-[1px] after:bg-tertiary"
                         href={'/produkter'}
                     >
                         Utforska mer
                     </Link>
-                </div>
+                </div> */}
             </section>
         </HydrationBoundary>
     )

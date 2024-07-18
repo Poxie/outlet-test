@@ -9,7 +9,7 @@ export default function ProductRow({ category: { id, title, products } }: {
         <div className="mb-8">
             <SectionHeader
                 buttonText="Visa fler"
-                buttonHref={`/produkter/${id}`}
+                buttonHref={`/${id}`}
             >
                 {title}
             </SectionHeader>

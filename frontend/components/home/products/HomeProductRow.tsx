@@ -6,7 +6,7 @@ export default function HomeProductRow({ listItem }: {
     listItem: ProductListItem;
 }) {
     return(
-        <div className="grid gap-4 py-16 first:pt-0 last:pb-0">
+        <div className="grid gap-4 py-16 first:pt-0">
             <HomeProductHeader 
                 header={listItem.header}
             />

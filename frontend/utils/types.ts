@@ -38,6 +38,7 @@ export type ProductGroup = {
     id: string;
     name: string;
     description: string;
+    bannerURL: string;
     products: Product[];
 }
 export type ProductListHeader = {

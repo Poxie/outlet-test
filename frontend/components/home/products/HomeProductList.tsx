@@ -12,7 +12,7 @@ export default function HomeProductList() {
     if(!productList) return null;
 
     return(
-        <div className="grid divide-y-[1px] divide-tertiary">
+        <div className="grid divide-y-[1px] divide-tertiary border-b-[1px] border-b-tertiary">
             {productList.map((listItem, key) => (
                 <HomeProductRow 
                     listItem={listItem}

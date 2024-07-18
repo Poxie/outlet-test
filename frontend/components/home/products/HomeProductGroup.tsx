@@ -19,7 +19,7 @@ export default function HomeProductGroup({ hasCategory, group: { id, name, produ
             {hasCategory && (
                 <SectionHeader
                     buttonText="Visa fler"
-                    buttonHref={`/produkter/${id}`}
+                    buttonHref={`/${id}`}
                 >
                     {name}
                 </SectionHeader>

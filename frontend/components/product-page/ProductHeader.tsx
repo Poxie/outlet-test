@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 
-export default function ProductHeader({ title, description, image, categoryId }: {
-    categoryId: string;
+export default function ProductHeader({ title, description, image }: {
     title?: string;
     description?: string;
     image: string;

@@ -4,33 +4,31 @@ import ProductList from './ProductList';
 import SicklaNotice from '../sickla-notice';
 import PageBanner from '../page-banner';
 import { useQuery } from '@tanstack/react-query';
-import getCategoryWithProducts from '@/api/products/getCategoryWithProducts';
+import getProductGroup from '@/api/products/getProductGroup';
 
-export default function Products({ categoryId }: {
-    categoryId: string;
+export default function Products({ productGroupId }: {
+    productGroupId: string;
 }) {
-    const { data: category } = useQuery({
-        queryKey: ['products', categoryId],
-        queryFn: () => getCategoryWithProducts(categoryId),
+    const { data: productGroup } = useQuery({
+        queryKey: ['product-groups', productGroupId],
+        queryFn: () => getProductGroup(productGroupId),
     })
 
-    if(!category) return null;
+    if(!productGroup) return null;
 
-    const { title, description, bannerURL, products } = category;
+    const { name, description, bannerURL, products } = productGroup;
     return(
         <main>
             <PageBanner 
                 className="main-width"
                 steps={[
                     { text: 'Start', path: '/' },
-                    { text: 'Produkter', path: '/produkter' },
-                    { text: title, path: `/produkter/${categoryId}` },
+                    { text: name, path: `/${productGroupId}` },
                 ]}
             />
             <div className="pb-8 main-width">
                 <ProductHeader 
-                    categoryId={categoryId}
-                    title={title}
+                    title={name}
                     description={description}
                     image={bannerURL}
                 />
