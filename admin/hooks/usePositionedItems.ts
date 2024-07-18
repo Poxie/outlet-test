@@ -59,6 +59,7 @@ export default function usePositionedItems<T extends {
                     return i;
                 })
                 const sortedItems = sortItems(newItems);
+                onChange(sortedItems);
                 return sortedItems;
             })
         }
@@ -81,6 +82,7 @@ export default function usePositionedItems<T extends {
                     return i;
                 })
                 const sortedItems = sortItems(newItems);
+                onChange(sortedItems);
                 return sortedItems;
             })
         }

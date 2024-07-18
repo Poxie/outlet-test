@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PositionedItem from "./PositionedItem";
 import FileInput from "../file-input";
 import usePositionedItems from "@/hooks/usePositionedItems";
+import { twMerge } from "tailwind-merge";
 
 type PositionedItemsProps<T> = {
     items: T[];
@@ -9,13 +10,16 @@ type PositionedItemsProps<T> = {
     onPositionChange: (items: T[]) => void;
     addItemsFunction: (images: string[], currentCount: number) => T[];
     onChange: (items: T[]) => void;
+    className?: string;
 }
 
 export type ItemWithPosition = {
     id: string;
     position: number;
 }
-export default function PositionedItems<T extends ItemWithPosition>({ items, renderItem, onPositionChange, addItemsFunction, onChange }: PositionedItemsProps<T>) {
+export default function PositionedItems<T extends ItemWithPosition>({ 
+    className, items, renderItem, onPositionChange, addItemsFunction, onChange 
+}: PositionedItemsProps<T>) {
     const { currentItems, addItems, removeItem, updatePosition } = usePositionedItems(items, onChange);
 
     const handleAddItems = (images: string[]) => {
@@ -24,7 +28,10 @@ export default function PositionedItems<T extends ItemWithPosition>({ items, ren
     }
 
     return(
-        <div className="grid grid-cols-3 gap-2 select-none">
+        <div className={twMerge(
+            "grid grid-cols-3 gap-2 select-none",
+            className,
+        )}>
             {currentItems.map(item => (
                 <PositionedItem 
                     key={item.id}
