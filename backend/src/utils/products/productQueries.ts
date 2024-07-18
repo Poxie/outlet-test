@@ -20,4 +20,16 @@ export default class ProductQueries {
 
         return product;
     }
+
+    static async getProductsByPositionGreaterThan(position: number) {
+        const products = await client.product.findMany({
+            where: {
+                position: {
+                    gt: position,
+                }
+            }
+        });
+
+        return products;
+    }
 }

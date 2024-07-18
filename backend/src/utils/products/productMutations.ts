@@ -18,6 +18,23 @@ export default class ProductMutations {
         return product;
     }
 
+    static async updateProduct(id: string, data: Partial<Product>) {
+        try {
+            const product = await client.product.update({
+                where: {
+                    id,
+                },
+                data,
+            });
+
+            return product;
+        } catch(error: any) {
+            if(error.code === PrismaCodes.RECORD_NOT_FOUND) {
+                throw new ProductNotFoundError();
+            }
+        }
+    }
+
     static async deleteProducts(ids: string[]) {
         await client.product.deleteMany({
             where: {

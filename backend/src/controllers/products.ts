@@ -33,16 +33,18 @@ router.post('/', auth, asyncHandler(async (req, res) => {
 
     // Upload images and create product objects
     const products: Product[] = [];
-    for(const image of data.images) {
+    for(let i = 0; i < data.images.length; i++) {
+        const image = data.images[i];
+
         const productId = await ProductUtils.generateId();
         const imageURL = await ImageHandler.uploadImage(image, `groups/${data.parentId}/products/${productId}`);
 
+        const currentProductCount = group.productCount;
         const productObject: Product = {
             id: productId,
             imageURL,
             parentId: data.parentId,
-            // !Fix this to be based on the position of the image in the array
-            position: 0,
+            position: currentProductCount + i,
         }
         
         products.push(productObject);
@@ -58,10 +60,15 @@ router.post('/', auth, asyncHandler(async (req, res) => {
 router.delete('/', auth, asyncHandler(async (req, res) => {
     const { productIds } = deleteProductsSchema.strict().parse(req.body);
 
+    const indicesDeleted: number[] = [];
     try {
         await Promise.all(productIds.map(async (productId: string) => {
             const product = await ProductQueries.getProductById(productId);
+            if(!product) return;
+
             ImageHandler.deleteImage(`groups/${product?.parentId}/products/${productId}`);
+
+            indicesDeleted.push(product.position);
         }));
     } catch(error) {
         // Log error somewhere for later investigation
@@ -69,6 +76,16 @@ router.delete('/', auth, asyncHandler(async (req, res) => {
     }
 
     await ProductMutations.deleteProducts(productIds);
+
+    // Updating all products with position greater than the deleted product
+    for(const index of indicesDeleted) {
+        const products = await ProductQueries.getProductsByPositionGreaterThan(index);
+        await Promise.all(products.map(async (product, i) => {
+            await ProductMutations.updateProduct(product.id, {
+                position: product.position - 1,
+            });
+        }));
+    }
 
     res.status(StatusCodes.NO_CONTENT).send();
 }))
