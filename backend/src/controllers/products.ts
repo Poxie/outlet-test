@@ -78,7 +78,8 @@ router.delete('/', auth, asyncHandler(async (req, res) => {
     await ProductMutations.deleteProducts(productIds);
 
     // Updating all products with position greater than the deleted product
-    for(const index of indicesDeleted) {
+    const largestToSmallestIndices = indicesDeleted.sort((a, b) => b - a);
+    for(const index of largestToSmallestIndices) {
         const products = await ProductQueries.getProductsByPositionGreaterThan(index);
         await Promise.all(products.map(async (product, i) => {
             await ProductMutations.updateProduct(product.id, {
