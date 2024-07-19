@@ -1,9 +1,9 @@
 import deleteProducts from "@/api/products/deleteProducts";
 import { useMutation } from "@tanstack/react-query";
 
-export default function useMutateDeleteProducts() {
+export default function useMutateDeleteProducts(parentId: string) {
     return useMutation({
-        mutationKey: ['products', 'deletee'],
-        mutationFn: (productIds: string[]) => deleteProducts(productIds),
+        mutationKey: ['products', 'delete'],
+        mutationFn: (productIds: string[]) => deleteProducts(parentId, productIds),
     })
 }

@@ -9,8 +9,8 @@ import useRefetchQuery from "../react-query/useRefetchQuery";
 export default function useUpdateProducts(parentId: string, initialProducts: Product[]) {
     const refetchQuery = useRefetchQuery();
 
-    const { mutateAsync: deleteProducts, isPending: deletePending } = useMutateDeleteProducts();
     const { mutateAsync: addProducts, isPending: addPending } = useMutateCreateProducts(parentId);
+    const { mutateAsync: deleteProducts, isPending: deletePending } = useMutateDeleteProducts(parentId);
     const { mutateAsync: updateProductPositions, isPending: positionsPending } = useMutateProductPositions(parentId);
 
     const { setFeedback } = useFeedback();
