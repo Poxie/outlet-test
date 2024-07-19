@@ -1,11 +1,13 @@
 import { ItemWithPosition } from "@/components/positioned-items";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function usePositionedItems<T extends {
     id: string;
     position: number;
 }>(items: T[], onChange: (items: T[]) => void) {
     const [currentItems, setCurrentItems] = useState(items);
+
+    useEffect(() => setCurrentItems(items), [items]);
 
     const sortItems = (items: T[]) => {
         return items.sort((a, b) => a.position - b.position);

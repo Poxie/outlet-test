@@ -14,6 +14,8 @@ export default function ProductGroupProductsTab({ productGroup }: {
 
     const { setCurrentProducts, updateProducts, isPending } = useUpdateProducts(productGroup.id, products || []);
 
+    useEffect(() => setCurrentProducts(products || []), [products]);
+
     if(!products) return null;
 
     const addItemsFunction = (images: string[], currentCount: number) => {

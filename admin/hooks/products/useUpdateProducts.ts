@@ -20,6 +20,15 @@ export default function useUpdateProducts(parentId: string, initialProducts: Pro
     const updateProducts = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Check if there are any changes
+        if(JSON.stringify(initialProducts) === JSON.stringify(currentProducts)) {
+            setFeedback({
+                type: 'danger',
+                message: 'No changes detected',
+            });
+            return;
+        }
+
         const previousProducts = initialProducts;
         const newProducts = currentProducts;
 
