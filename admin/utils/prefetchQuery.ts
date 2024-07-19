@@ -4,8 +4,8 @@ import { cookies } from "next/headers";
 export default async function prefetchQuery({ queryKey, queryFunction }: {
     queryKey: string[];
     queryFunction: (options: RequestInit) => Promise<any>;
-}) {
-    const queryClient = new QueryClient();
+}, queryClient?: QueryClient) {
+    queryClient = queryClient || new QueryClient();
 
     await queryClient.prefetchQuery({
         queryKey,
