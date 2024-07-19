@@ -57,6 +57,7 @@ export default function useUpdateProducts(parentId: string, initialProducts: Pro
             })
 
             refetchQuery(['products', parentId]);
+            refetchQuery(['product-groups']);
         } catch(error: any) {
             setFeedback({
                 type: 'danger',
