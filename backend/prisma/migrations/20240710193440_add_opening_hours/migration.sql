@@ -7,6 +7,6 @@
 
 */
 -- AlterTable
-ALTER TABLE `store` ADD COLUMN `saturdayOpenHours` VARCHAR(191) NOT NULL,
+ALTER TABLE `Store` ADD COLUMN `saturdayOpenHours` VARCHAR(191) NOT NULL,
     ADD COLUMN `sundayOpenHours` VARCHAR(191) NOT NULL,
     ADD COLUMN `weekdayOpenHours` VARCHAR(191) NOT NULL;

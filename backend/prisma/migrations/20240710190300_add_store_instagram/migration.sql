@@ -5,4 +5,4 @@
 
 */
 -- AlterTable
-ALTER TABLE `store` ADD COLUMN `instagramURL` VARCHAR(191) NOT NULL;
+ALTER TABLE `Store` ADD COLUMN `instagramURL` VARCHAR(191) NOT NULL;

@@ -5,4 +5,4 @@
 
 */
 -- AlterTable
-ALTER TABLE `product` ADD COLUMN `position` INTEGER NOT NULL;
+ALTER TABLE `Product` ADD COLUMN `position` INTEGER NOT NULL;

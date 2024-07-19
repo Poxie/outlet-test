@@ -5,4 +5,4 @@
 
 */
 -- AlterTable
-ALTER TABLE `productgroup` ADD COLUMN `createdAt` VARCHAR(191) NOT NULL;
+ALTER TABLE `ProductGroup` ADD COLUMN `createdAt` VARCHAR(191) NOT NULL;
