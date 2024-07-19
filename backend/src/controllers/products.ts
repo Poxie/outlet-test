@@ -31,23 +31,20 @@ router.post('/', auth, asyncHandler(async (req, res) => {
     if(!group) throw new ProductNotFoundError();
 
     // Upload images and create product objects
-    const products: Product[] = [];
-    for(let i = 0; i < data.images.length; i++) {
-        const image = data.images[i];
-
+    const currentProductCount = group.productCount;
+    const products = await Promise.all(data.images.map(async (image, index) => {
         const productId = await ProductUtils.generateId();
         const imageURL = await ImageHandler.uploadImage(image, `groups/${data.parentId}/products/${productId}`);
 
-        const currentProductCount = group.productCount;
         const productObject: Product = {
             id: productId,
             imageURL,
             parentId: data.parentId,
-            position: currentProductCount + i,
+            position: currentProductCount + index,
         }
-        
-        products.push(productObject);
-    }
+
+        return productObject;
+    }));
 
     await ProductMutations.createProducts(products);
 
@@ -97,7 +94,7 @@ router.patch('/positions', auth, asyncHandler(async (req, res) => {
 }))
 
 router.delete('/', auth, asyncHandler(async (req, res) => {
-    const { productIds } = deleteProductsSchema.strict().parse(req.body);
+    const { productIds, parentId } = deleteProductsSchema.strict().parse(req.body);
 
     const indicesDeleted: number[] = [];
     try {
@@ -119,7 +116,7 @@ router.delete('/', auth, asyncHandler(async (req, res) => {
     // Updating all products with position greater than the deleted product
     const largestToSmallestIndices = indicesDeleted.sort((a, b) => b - a);
     for(const index of largestToSmallestIndices) {
-        const products = await ProductQueries.getProductsByPositionGreaterThan(index);
+        const products = await ProductQueries.getProductsByPositionGreaterThan(parentId, index);
         await Promise.all(products.map(async (product, i) => {
             await ProductMutations.updateProduct(product.id, {
                 position: product.position - 1,

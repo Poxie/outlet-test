@@ -37,9 +37,10 @@ export default class ProductQueries {
         return product;
     }
 
-    static async getProductsByPositionGreaterThan(position: number) {
+    static async getProductsByPositionGreaterThan(parentId: string, position: number) {
         const products = await client.product.findMany({
             where: {
+                parentId,
                 position: {
                     gt: position,
                 }

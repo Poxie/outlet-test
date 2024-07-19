@@ -22,6 +22,7 @@ export const updateProductPositionsSchema = z.object({
 })
 
 export const deleteProductsSchema = z.object({
+    parentId: z.string({ message: parentIdIsRequired }),
     productIds: z.array(
         z.string({ message: productIdsMustBeArrayString }),
         { message: productIdsMustBeArrayString },
