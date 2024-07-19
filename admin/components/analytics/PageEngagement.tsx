@@ -2,12 +2,19 @@ import { AnalyticsReport } from "@/utils/types";
 import PageEngagementCard from "./PageEngagementCard";
 import MostVisitedPages from "./MostVisitedPages";
 
+const formatNumber = (num: string) => {
+    let number = Number(num);
+    number = Math.round(number * 100) / 100; // Round to at most 2 decimal places
+    return number.toString().replace(/\.00$/, '').replace(/(\.\d)0$/, '$1');
+};
+
 const getMinSecFromSeconds = (seconds: number) => {
-    const min = Math.floor(seconds / 60);
-    const sec = seconds % 60;
+    const min = formatNumber(String(Math.floor(seconds / 60)));
+    const sec = formatNumber(String(seconds % 60));
 
     return `${min}m ${sec}s`;
 }
+
 export default function PageEngagement({ report }: {
     report: AnalyticsReport
 }) {
@@ -16,8 +23,8 @@ export default function PageEngagement({ report }: {
         sessionsPerUser, engagementRate, userEngagementDuration,
     } = report;
 
-    const avgBounceRate = `${Number(bounceRate) * 100}%`;
-    const avgEngagementRate = `${Number(engagementRate) * 100}%`;
+    const avgBounceRate = formatNumber(String(Number(bounceRate) * 100)) + '%';
+    const avgEngagementRate = formatNumber(String(Number(engagementRate) * 100)) + '%';
     return(
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-2">
             <MostVisitedPages
@@ -28,10 +35,10 @@ export default function PageEngagement({ report }: {
                 {avgBounceRate}
             </PageEngagementCard>
             <PageEngagementCard title="Average pages visited">
-                {screenPageViews}
+                {formatNumber(screenPageViews)}
             </PageEngagementCard>
             <PageEngagementCard title="Average sessions per user">
-                {sessionsPerUser}
+                {formatNumber(sessionsPerUser)}
             </PageEngagementCard>
             <PageEngagementCard title="Average engagement rate">
                 {avgEngagementRate}
