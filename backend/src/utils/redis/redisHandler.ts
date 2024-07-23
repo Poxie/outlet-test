@@ -23,7 +23,7 @@ export default class RedisHandler {
             console.log(`Redis GET operation for key ${key} took ${durationInSeconds} seconds`);
         }
     }
-    static async set<T>(key: string, data: T, expirationInSeconds: number = 3600) {
+    static async set<T>(key: string, data: T, tags: string[] = [], expirationInSeconds: number = 3600) {
         const start = process.hrtime();
 
         let stringifiedData: string;
@@ -37,6 +37,9 @@ export default class RedisHandler {
         const client = await getRedisClient();
         try {
             await client.set(key, stringifiedData, { EX: expirationInSeconds });
+            if(tags.length) {
+                await Promise.all(tags.map(async tag => await client.sAdd(tag, key)));
+            }
         } catch(error) {
             console.error(`Redis SET error for key ${key}`, error);
         } finally {
@@ -57,6 +60,26 @@ export default class RedisHandler {
             const duration = process.hrtime(start);
             const durationInSeconds = duration[0] + duration[1] / 1e9;
             console.log(`Redis DEL operation for key ${key} took ${durationInSeconds} seconds`);
+        }
+    }
+    static async invalidateTags(tags: string[]) {
+        const start = process.hrtime();
+
+        const client = await getRedisClient();
+        try {
+            for(const tag of tags) {
+                const keys = await client.sMembers(tag);
+                if(keys.length) {
+                    await Promise.all(keys.map(async key => await client.del(key)));
+                }
+                await client.del(tag);
+            }
+        } catch(error) {
+            console.error(`Redis DEL error for tags ${tags}`, error);
+        } finally {
+            const duration = process.hrtime(start);
+            const durationInSeconds = duration[0] + duration[1] / 1e9;
+            console.log(`Redis DEL operation for tags ${tags} took ${durationInSeconds} seconds`);
         }
     }
 }
