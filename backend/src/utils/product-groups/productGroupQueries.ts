@@ -3,16 +3,6 @@ import ProductGroupUtils from "./productGroupUtils";
 import { IncludeGroupProps } from "./productGroupConstants";
 
 export default class ProductGroupQueries {
-    // temporary function to get count, replace with relationship queries later
-    static async getProductGroupProductCount(productGroupId: string) {
-        const count = await client.product.count({
-            where: {
-                parentId: productGroupId,
-            },
-        });
-
-        return count;
-    }
     static async getProductGroups(withProducts?: boolean) {
         const groups = await client.productGroup.findMany(
             IncludeGroupProps({ products: withProducts })
