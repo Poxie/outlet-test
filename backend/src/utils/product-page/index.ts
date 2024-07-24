@@ -33,7 +33,7 @@ export default class ProductPage {
 
         if(category) {
             const groups = await ProductGroupQueries.getProductGroupsByParentId(id);
-            productGroups.concat(groups);
+            productGroups.push(...groups);
         }
         if(!category) {
             const group = await ProductGroupQueries.getProductGroupById(id, true);

@@ -11,6 +11,8 @@ export default class ProductGroupMutations {
             data,
         });
 
+        await CacheInvalidator.invalidateProductList();
+
         return newProductGroup;
     }
     static async updateProductGroup(id: string, data: Partial<MutableProductGroupProps>) {
@@ -21,19 +23,19 @@ export default class ProductGroupMutations {
             data,
         });
 
-        await CacheInvalidator.invalidateProductPage(id);
+        await CacheInvalidator.invalidateProductPage([id, newProductGroup.parentId]);
 
         return newProductGroup;
     }
     static async deleteProductGroup(id: string) {
         try {
-            await client.productGroup.delete({
+            const removedProductGroup = await client.productGroup.delete({
                 where: {
                     id,
                 },
             });
 
-            await CacheInvalidator.invalidateProductPage(id);
+            await CacheInvalidator.invalidateProductPage([id, removedProductGroup.parentId]);
         } catch(error: any) {
             if(error.code === PrismaCodes.RECORD_NOT_FOUND) {
                 throw new ProductGroupNotFoundError();

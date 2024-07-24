@@ -19,10 +19,21 @@ export default class CacheInvalidator {
     static async invalidateStores() {
         await RedisHandler.del(REDIS_KEYS.stores);
     }
-    static async invalidateProductPage(id: string) {
-        this.debounceInvalidation(
-            [REDIS_KEYS.productList, REDIS_KEYS.productPage(id)], 
-            `productPage:${id}`,
-        );
+    static async invalidateProductList() {
+        await RedisHandler.del(REDIS_KEYS.productList);
+    }
+    static async invalidateProductPage(ids: string | (string | null)[]) {
+        if(typeof ids === 'string') {
+            ids = [ids];
+        }
+
+        for(const id of ids) {
+            if(!id) continue;
+            
+            this.debounceInvalidation(
+                [REDIS_KEYS.productList, REDIS_KEYS.productPage(id)], 
+                `productPage:${id}`,
+            );
+        }   
     }
 }
