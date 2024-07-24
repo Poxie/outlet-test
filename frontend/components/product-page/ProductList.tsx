@@ -1,5 +1,4 @@
 import { twMerge } from "tailwind-merge";
-import ProductCard from "../product-card";
 import { ProductGroup as ProductGroupType } from "@/utils/types";
 import ProductHeader from "./ProductHeader";
 import ProductGrid from "./ProductGrid";

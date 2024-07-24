@@ -42,6 +42,7 @@ export type ProductGroup = {
     name: string;
     description: string;
     bannerURL: string;
+    productCount: number;
     products: Product[];
 }
 export type ProductListHeader = {
@@ -55,4 +56,13 @@ export type ProductListItem = {
     id: string;
     groups: ProductGroup[];
     hasCategory: boolean;
+}
+
+export type ProductPage = {
+    header: {
+        title: string;
+        description: string;
+        bannerURL: string;
+    };
+    groups: ProductGroup[];
 }

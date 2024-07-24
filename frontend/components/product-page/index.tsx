@@ -1,23 +1,23 @@
 "use client";
-import ProductHeader from './ProductHeader';
 import ProductList from './ProductList';
 import SicklaNotice from '../sickla-notice';
 import PageBanner from '../page-banner';
-import { Category, ProductGroup } from '@/utils/types';
+import { ProductPage } from '@/utils/types';
+import { usePathname } from 'next/navigation';
 
 export default function Products({ header, groups }: {
-    header?: Category;
-    groups: ProductGroup[];
+    header: ProductPage['header'];
+    groups: ProductPage['groups'];
 }) {
-    const bannerText = header?.title || groups[0].name;
-    const path = header ? `/${header.id}` : `/${groups[0].id}`;
+    const path = usePathname();
+
     return(
         <main>
             <PageBanner 
                 className="main-width"
                 steps={[
                     { text: 'Start', path: '/' },
-                    { text: bannerText, path },
+                    { text: header.title, path },
                 ]}
             />
             <div className="pb-8 main-width divide-y-[1px] divide-tertiary">
