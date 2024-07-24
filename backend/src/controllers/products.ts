@@ -111,7 +111,7 @@ router.delete('/', auth, asyncHandler(async (req, res) => {
         console.error(error);
     }
 
-    await ProductMutations.deleteProducts(productIds);
+    await ProductMutations.deleteProducts(productIds, parentId);
 
     // Updating all products with position greater than the deleted product
     const largestToSmallestIndices = indicesDeleted.sort((a, b) => b - a);

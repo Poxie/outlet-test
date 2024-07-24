@@ -4,6 +4,7 @@ import { ProductNotFoundError } from "./productErrors";
 import { Product } from "@prisma/client";
 import CacheInvalidator from "../cache-invalidator";
 import ProductUtils from "./productUtils";
+import ProductGroupQueries from "../product-groups/productGroupQueries";
 
 export default class ProductMutations {
     static async createProducts(data: Product[]) {
@@ -63,7 +64,7 @@ export default class ProductMutations {
         return products;
     }
 
-    static async deleteProducts(ids: string[]) {
+    static async deleteProducts(ids: string[], parentId: string) {
         await client.product.deleteMany({
             where: {
                 id: {
@@ -71,6 +72,8 @@ export default class ProductMutations {
                 }
             }
         });
+        
+        ProductUtils.invalidateProductParentPages(parentId);
     }
 
     static async deleteProduct(id: string) {
@@ -81,7 +84,7 @@ export default class ProductMutations {
                 }
             });
             
-            await CacheInvalidator.invalidateProductPage(product.parentId);
+            ProductUtils.invalidateProductParentPages(product.parentId);
     
             return product;
         } catch(error: any) {
@@ -98,7 +101,7 @@ export default class ProductMutations {
             }
         });
 
-        await CacheInvalidator.invalidateProductPage(parentId);
+        ProductUtils.invalidateProductParentPages(parentId);
     }
 
     static async deleteByParentId(parentId: string) {
@@ -108,6 +111,6 @@ export default class ProductMutations {
             }
         });
 
-        await CacheInvalidator.invalidateProductPage(parentId);
+        ProductUtils.invalidateProductParentPages(parentId);
     }
 }

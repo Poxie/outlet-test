@@ -1,6 +1,8 @@
 import { Product } from "@prisma/client";
 import { PRODUCT_ID_LENGTH } from "./productConstants";
 import ProductQueries from "./productQueries";
+import ProductGroupQueries from "../product-groups/productGroupQueries";
+import CacheInvalidator from "../cache-invalidator";
 
 export default class ProductUtils {
     static async generateId(): Promise<string> {
@@ -24,5 +26,16 @@ export default class ProductUtils {
         }
 
         return Array.from(parentIds);
+    }
+
+    static async invalidateProductParentPages(productGroupId: string) {
+        const productGroup = await ProductGroupQueries.getProductGroupById(productGroupId, false)
+
+        const productPageIds: (null | string)[] = [productGroupId];
+        if(productGroup) {
+            productPageIds.push(productGroup.parentId);
+        }
+
+        CacheInvalidator.invalidateProductPage(productPageIds);
     }
 }
