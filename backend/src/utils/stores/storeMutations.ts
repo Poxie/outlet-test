@@ -1,13 +1,9 @@
-import { EventEmitter } from "events";
-
 import client from "@/client";
 import { Store } from "@prisma/client";
 import { PrismaCodes } from "../errors/prismaCodes";
 import { BadRequestError } from "../errors/commonErrors";
 import { StoreErrorMessages } from "@/constants/storeErrorMessages";
 import { MutableStoreProps } from "../types";
-import RedisHandler from "../redis/redisHandler";
-import REDIS_KEYS from "../redis/redisKeys";
 import CacheInvalidator from "../cache-invalidator";
 
 export default class StoreMutations {
@@ -40,7 +36,7 @@ export default class StoreMutations {
                 data,
             });
 
-            await CacheInvalidator.invalidateStores(id);
+            await CacheInvalidator.invalidateStores();
 
             return store;
         } catch(error: any) {
@@ -59,7 +55,7 @@ export default class StoreMutations {
                 },
             });
 
-            await CacheInvalidator.invalidateStores(id);
+            await CacheInvalidator.invalidateStores();
         } catch(error: any) {
             if(error.code === PrismaCodes.RECORD_NOT_FOUND) {
                 throw new BadRequestError(StoreErrorMessages.storeNotFound(id));
