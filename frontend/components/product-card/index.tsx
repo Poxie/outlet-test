@@ -38,8 +38,8 @@ export default function ProductCard({ product }: {
             <Image 
                 className="w-full aspect-square object-cover"
                 src={product.imageURL}
-                width={200}
-                height={200}
+                width={700}
+                height={700}
                 alt=""
             />
         </div>
