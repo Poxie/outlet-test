@@ -3,16 +3,13 @@ import { ProductGroup } from "@prisma/client";
 import { MutableProductGroupProps } from "../types";
 import { PrismaCodes } from "../errors/prismaCodes";
 import { ProductGroupNotFoundError } from "./productGroupErrors";
-import RedisHandler from "../redis/redisHandler";
-import REDIS_TAGS from "../redis/redisTags";
+import CacheInvalidator from "../cache-invalidator";
 
 export default class ProductGroupMutations {
     static async createProductGroup(data: ProductGroup) {
         const newProductGroup = await client.productGroup.create({
             data,
         });
-
-        await RedisHandler.invalidateTags(REDIS_TAGS.productGroups);
 
         return newProductGroup;
     }
@@ -24,7 +21,7 @@ export default class ProductGroupMutations {
             data,
         });
 
-        await RedisHandler.invalidateTags(REDIS_TAGS.productGroups);
+        await CacheInvalidator.invalidateProductPage(id);
 
         return newProductGroup;
     }
@@ -36,7 +33,7 @@ export default class ProductGroupMutations {
                 },
             });
 
-            await RedisHandler.invalidateTags(REDIS_TAGS.productGroups);
+            await CacheInvalidator.invalidateProductPage(id);
         } catch(error: any) {
             if(error.code === PrismaCodes.RECORD_NOT_FOUND) {
                 throw new ProductGroupNotFoundError();

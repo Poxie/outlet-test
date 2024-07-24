@@ -2,18 +2,27 @@ import client from "@/client";
 import { PrismaCodes } from "../errors/prismaCodes";
 import { ProductNotFoundError } from "./productErrors";
 import { Product } from "@prisma/client";
+import CacheInvalidator from "../cache-invalidator";
+import ProductUtils from "./productUtils";
 
 export default class ProductMutations {
     static async createProducts(data: Product[]) {
         await client.product.createMany({
             data,
         });
+
+        const uniqueParentIds = ProductUtils.getUniqueParentIds(data);
+        await Promise.all(uniqueParentIds.map(async parentId => {
+            await CacheInvalidator.invalidateProductPage(parentId);
+        }));
     }
 
     static async createProduct(data: Product) {
         const product = await client.product.create({
             data,
         });
+        
+        await CacheInvalidator.invalidateProductPage(product.parentId)
 
         return product;
     }
@@ -26,6 +35,8 @@ export default class ProductMutations {
                 },
                 data,
             });
+            
+            await CacheInvalidator.invalidateProductPage(product.parentId);
 
             return product;
         } catch(error: any) {
@@ -43,6 +54,12 @@ export default class ProductMutations {
             if(!updatedProduct) throw new ProductNotFoundError();
             return updatedProduct;
         }))
+
+        const uniqueParentIds = ProductUtils.getUniqueParentIds(products);
+        await Promise.all(uniqueParentIds.map(async parentId => {
+            await CacheInvalidator.invalidateProductPage(parentId);
+        }));
+
         return products;
     }
 
@@ -63,6 +80,8 @@ export default class ProductMutations {
                     id,
                 }
             });
+            
+            await CacheInvalidator.invalidateProductPage(product.parentId);
     
             return product;
         } catch(error: any) {
@@ -78,6 +97,8 @@ export default class ProductMutations {
                 parentId,
             }
         });
+
+        await CacheInvalidator.invalidateProductPage(parentId);
     }
 
     static async deleteByParentId(parentId: string) {
@@ -86,5 +107,7 @@ export default class ProductMutations {
                 parentId,
             }
         });
+
+        await CacheInvalidator.invalidateProductPage(parentId);
     }
 }

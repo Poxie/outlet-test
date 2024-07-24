@@ -16,4 +16,13 @@ export default class ProductUtils {
     static sortProductsByPosition(products: Product[]) {
         return products.sort((a, b) => a.position - b.position);
     }
+
+    static getUniqueParentIds(products: Product[]) {
+        const parentIds = new Set<string>();
+        for(const product of products) {
+            parentIds.add(product.parentId);
+        }
+
+        return Array.from(parentIds);
+    }
 }
