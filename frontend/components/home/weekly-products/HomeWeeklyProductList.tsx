@@ -1,8 +1,8 @@
 "use client";
 import Carousel from "@/components/carousel"
-import HomeWeeklyProduct from "./HomeWeeklyProduct"
 import { useQuery } from "@tanstack/react-query"
 import getCurrentWeeksProducts from "@/api/weekly-products/getCurrentWeeksProducts"
+import ProductCard from "@/components/product-card";
 
 export default function HomeWeeklyProductList() {
     const { data: productWeek } = useQuery({
@@ -13,8 +13,8 @@ export default function HomeWeeklyProductList() {
     if(!productWeek) return null;
 
     const imageComponents = productWeek.products.map(product => (
-        <HomeWeeklyProduct 
-            imagePath={product.imageURL}
+        <ProductCard 
+            product={product}
             key={product.id}
         />
     ))
@@ -24,7 +24,7 @@ export default function HomeWeeklyProductList() {
             items={imageComponents}
             smItemsPerRow={1}
             carouselGap={0}
-            optimisticItemsPerRow={4}
+            optimisticItemsPerRow={3}
         />
     )
 }
