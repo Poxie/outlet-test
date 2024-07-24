@@ -1,4 +1,6 @@
 const REDIS_KEYS = {
+    productList: 'productList',
+
     stores: 'stores',
     store: (id: string) => `store:${id}`,
 
