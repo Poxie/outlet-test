@@ -8,6 +8,7 @@ import { StoreErrorMessages } from "@/constants/storeErrorMessages";
 import { MutableStoreProps } from "../types";
 import RedisHandler from "../redis/redisHandler";
 import REDIS_KEYS from "../redis/redisKeys";
+import CacheInvalidator from "../cache-invalidator";
 
 export default class StoreMutations {
     static async createStore(data: Omit<Store, 'createdAt'>) {
@@ -19,7 +20,7 @@ export default class StoreMutations {
                 },
             });
 
-            await RedisHandler.del(REDIS_KEYS.stores);
+            await CacheInvalidator.invalidateStores();
 
             return store;
         } catch(error: any) {
@@ -30,7 +31,7 @@ export default class StoreMutations {
         }
     }
 
-    static async updateStore(id:string, data: Partial<MutableStoreProps>) {
+    static async updateStore(id: string, data: Partial<MutableStoreProps>) {
         try {
             const store = await client.store.update({
                 where: {
@@ -39,8 +40,7 @@ export default class StoreMutations {
                 data,
             });
 
-            await RedisHandler.del(REDIS_KEYS.store(id));
-            await RedisHandler.del(REDIS_KEYS.stores);
+            await CacheInvalidator.invalidateStores(id);
 
             return store;
         } catch(error: any) {
@@ -55,11 +55,11 @@ export default class StoreMutations {
         try {
             await client.store.delete({
                 where: {
-                    id,
+                    id, 
                 },
             });
-            await RedisHandler.del(REDIS_KEYS.store(id));
-            await RedisHandler.del(REDIS_KEYS.stores);
+
+            await CacheInvalidator.invalidateStores(id);
         } catch(error: any) {
             if(error.code === PrismaCodes.RECORD_NOT_FOUND) {
                 throw new BadRequestError(StoreErrorMessages.storeNotFound(id));
