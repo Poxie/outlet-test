@@ -27,7 +27,7 @@ router.post('/', auth, asyncHandler(async (req, res) => {
     const data = createProductSchema.strict().parse(req.body);
 
     // Check if product group exists
-    const group = await ProductGroupQueries.getProductGroupById(data.parentId);
+    const group = await ProductGroupQueries.getProductGroupById(data.parentId, false);
     if(!group) throw new ProductNotFoundError();
 
     // Upload images and create product objects
@@ -58,7 +58,7 @@ router.patch('/positions', auth, asyncHandler(async (req, res) => {
     const products = await ProductQueries.bulkGetProductsById(productIds);
 
     // Check if product group exists
-    const productGroup = await ProductGroupQueries.getProductGroupById(parentId);
+    const productGroup = await ProductGroupQueries.getProductGroupById(parentId, false);
     if(!productGroup) throw new ProductNotFoundError();
 
     // Check that all products belong to the same group

@@ -12,8 +12,9 @@ import productGroupUtils from '@/utils/product-groups/productGroupUtils';
 import ProductMutations from '@/utils/products/productMutations';
 import ProductQueries from '@/utils/products/productQueries';
 import ProductUtils from '@/utils/products/productUtils';
-import { MutableProductGroupProps } from '@/utils/types';
+import { MutableProductGroupProps, ProductGroupWithProducts } from '@/utils/types';
 import { createProductGroupSchema } from '@/validation/productGroupSchemas';
+import { ProductGroup } from '@prisma/client';
 import express from 'express';
 
 const router = express.Router();
@@ -30,7 +31,13 @@ router.get('/:id', asyncHandler(async (req, res) => {
     const id = req.params.id;
     const withProducts = req.query.withProducts === 'true';
 
-    const group = await ProductGroupQueries.getProductGroupById(id, withProducts);
+    // A way around the overload signature error
+    let group: ProductGroup | ProductGroupWithProducts | null = null;
+    if(withProducts) {
+        group = await ProductGroupQueries.getProductGroupById(id, true);
+    } else {
+        group = await ProductGroupQueries.getProductGroupById(id, false);
+    }
     if(!group) throw new ProductGroupNotFoundError();
 
     res.send(group);
@@ -75,7 +82,7 @@ router.patch('/:id', auth, asyncHandler(async (req, res) => {
     const id = req.params.id;
     const data = createProductGroupSchema.strict().partial().parse(req.body);
 
-    const group = await ProductGroupQueries.getProductGroupById(id);
+    const group = await ProductGroupQueries.getProductGroupById(id, false);
     if(!group) throw new ProductGroupNotFoundError();
 
     // If parentId is provided, check if it exists

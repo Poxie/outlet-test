@@ -9,7 +9,7 @@ export default class productGroupUtils {
             .replace(/ä/g, 'a')
             .replace(/ö/g, 'o') + suffix;
 
-        if(await ProductGroupQueries.getProductGroupById(id)) {
+        if(await ProductGroupQueries.getProductGroupById(id, false)) {
             return this.generateId(name, `-${Math.floor(Math.random() * 1000)}`);
         }
 

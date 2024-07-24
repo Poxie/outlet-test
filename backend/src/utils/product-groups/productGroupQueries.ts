@@ -1,10 +1,8 @@
 import client from "@/client";
 import ProductGroupUtils from "./productGroupUtils";
 import { IncludeGroupProps } from "./productGroupConstants";
-import REDIS_KEYS from "../redis/redisKeys";
-import RedisHandler from "../redis/redisHandler";
-import REDIS_TAGS from "../redis/redisTags";
 import { ProductGroup } from "@prisma/client";
+import { ProductGroupWithProducts } from "../types";
 
 export default class ProductGroupQueries {
     static async getProductGroups(withProducts = false) {
@@ -16,7 +14,12 @@ export default class ProductGroupQueries {
         
         return groupsWithCounts;
     }
-    static async getProductGroupById(id: string, withProducts = false) {
+
+    static async getProductGroupById(id: string, withProducts: false): Promise<ProductGroup | null>;
+    static async getProductGroupById(id: string, withProducts: true): Promise<ProductGroupWithProducts | null>;
+    static async getProductGroupById(id: string, withProducts: boolean): Promise<
+        ProductGroup | ProductGroupWithProducts | null
+    > {
         const group = await client.productGroup.findUnique({
             where: {
                 id,
@@ -29,12 +32,14 @@ export default class ProductGroupQueries {
 
         return groupWithCount;
     }
+
+    static async getProductGroupsByParentId(parentId: string): Promise<ProductGroupWithProducts[]>;
     static async getProductGroupsByParentId(parentId: string) {
         const groups = await client.productGroup.findMany({
             where: {
                 parentId,
             },
-            ...IncludeGroupProps(),
+            ...IncludeGroupProps({ products: true }),
         });
         const groupsWithCounts = groups.map(ProductGroupUtils.transformGroup);
 

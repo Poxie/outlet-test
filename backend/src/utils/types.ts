@@ -17,7 +17,16 @@ export type ProductListItem = {
     };
     groups: ProductGroup[];
     hasCategory: boolean;
-};
+}
+type ProductPageHeader = {
+    title: string;
+    description: string;
+    bannerURL: string;
+}
+export type ProductPage = {
+    header: ProductPageHeader;
+    groups: ProductGroupWithProducts[];
+}
 
 // Helper types
 export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
