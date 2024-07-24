@@ -1,5 +1,8 @@
 export default async function fetchFromAPI<T>(query: string, options: RequestInit = {}) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}${query}`, options);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}${query}`, {
+        next: { revalidate: 0 },
+        ...options,
+    });
     
     const data = await res.json();
 
