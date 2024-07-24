@@ -8,7 +8,7 @@ import express from 'express';
 const router = express.Router();
 
 router.get('/', asyncHandler(async (req, res) => {
-    const groups = await ProductGroupQueries.getProductGroups();
+    const groups = await ProductGroupQueries.getProductGroups(true);
 
     const uniqueCategoryIds: string[] = [];
     for(const group of groups) {
