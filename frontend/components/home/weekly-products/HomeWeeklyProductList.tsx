@@ -1,18 +1,11 @@
-"use client";
 import Carousel from "@/components/carousel"
-import { useQuery } from "@tanstack/react-query"
-import getCurrentWeeksProducts from "@/api/weekly-products/getCurrentWeeksProducts"
 import ProductCard from "@/components/product-card";
+import { WeeklyProduct } from "@/utils/types";
 
-export default function HomeWeeklyProductList() {
-    const { data: productWeek } = useQuery({
-        queryKey: ['weeklyProducts'],
-        queryFn: getCurrentWeeksProducts,
-    })
-
-    if(!productWeek) return null;
-
-    const imageComponents = productWeek.products.map(product => (
+export default function HomeWeeklyProductList({ products }: {
+    products: WeeklyProduct[];
+}) {
+    const imageComponents = products.map(product => (
         <ProductCard 
             product={product}
             key={product.id}

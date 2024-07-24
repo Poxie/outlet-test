@@ -1,20 +1,11 @@
-"use client";
-import { useQuery } from "@tanstack/react-query";
 import PageBanner from "../page-banner";
 import ProductHeader from "../product-page/ProductHeader";
-import ProductList from "../product-page/ProductList";
 import SicklaNotice from "../sickla-notice";
-import getCurrentWeeksProducts from "@/api/weekly-products/getCurrentWeeksProducts";
-import { ProductGroup } from "@/utils/types";
 import ProductGrid from "../product-page/ProductGrid";
+import getCurrentWeeksProducts from "@/api/weekly-products/getCurrentWeeksProducts";
 
-export default function VeckansVaror() {
-    const { data: productWeek } = useQuery({
-        queryKey: ['weeklyProducts'],
-        queryFn: getCurrentWeeksProducts,
-    })
-
-    if(!productWeek) return null;
+export default async function VeckansVaror() {
+    const week = await getCurrentWeeksProducts();
 
     return(
         <main>
@@ -29,7 +20,7 @@ export default function VeckansVaror() {
                     image="/images/veckans-varor.png"
                 />
                 <ProductGrid 
-                    products={productWeek.products}
+                    products={week.products}
                 />
             </div>
             <SicklaNotice />

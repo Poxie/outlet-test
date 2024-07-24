@@ -1,15 +1,8 @@
-"use client";
-import { useQuery } from "@tanstack/react-query"
 import HomeProductRow from "./HomeProductRow"
-import getHomeProductList from "@/api/products/getHomeProductList";
+import getProductList from "@/api/product-list/getProductList";
 
-export default function HomeProductList() {
-    const { data: productList } = useQuery({
-        queryKey: ['product-list'],
-        queryFn: getHomeProductList,
-    })
-
-    if(!productList) return null;
+export default async function HomeProductList() {
+    const productList = await getProductList();
 
     return(
         <div className="grid divide-y-[1px] divide-tertiary border-b-[1px] border-b-tertiary">
