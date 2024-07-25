@@ -1,22 +1,20 @@
 import { Product, ProductGroup } from "@/utils/types"
-import useQueryProductsByParentId from "@/hooks/products/useQueryProductsByParentId";
 import { getEmptyProductObject } from "@/utils";
 import PositionedItems from "@/components/positioned-items";
 import ProductGroupProduct from "./ProductGroupProduct";
 import { useEffect, useRef } from "react";
 import ModalFooter from "@/modals/ModalFooter";
 import useUpdateProducts from "@/hooks/products/useUpdateProducts";
+import withLoadingSkeleton from "@/components/skeletons/WithLoadingSkeleton";
+import ProductGroupProductsSkeleton from "@/components/skeletons/ProductGroupProductsSkeleton";
 
-export default function ProductGroupProductsTab({ productGroup }: {
+function ProductGroupProductsTab({ products, productGroup }: {
     productGroup: ProductGroup;
+    products: Product[];
 }) {
-    const { data: products } = useQueryProductsByParentId(productGroup.id);
-
     const { setCurrentProducts, updateProducts, isPending } = useUpdateProducts(productGroup.id, products || []);
 
     useEffect(() => setCurrentProducts(products || []), [products]);
-
-    if(!products) return null;
 
     const addItemsFunction = (images: string[], currentCount: number) => {
         const newProducts: Product[] = [];
@@ -35,7 +33,7 @@ export default function ProductGroupProductsTab({ productGroup }: {
     return(
         <form onSubmit={updateProducts}>
             <PositionedItems
-                items={products}
+                items={products || []}
                 renderItem={renderItem}
                 onPositionChange={() => {}}
                 addItemsFunction={addItemsFunction}
@@ -50,3 +48,5 @@ export default function ProductGroupProductsTab({ productGroup }: {
         </form>
     )
 }
+
+export default withLoadingSkeleton(ProductGroupProductsTab, ProductGroupProductsSkeleton);

@@ -4,7 +4,6 @@ import { memo } from "react";
 function ProductGroupProduct({ imageURL }: {
     imageURL: string;
 }) {
-    console.log('rerneder');
     return(
         <Image 
             draggable={false}
