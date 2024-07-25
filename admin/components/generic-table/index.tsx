@@ -22,9 +22,11 @@ export type GenericTableProps<T> = {
     buttonText?: string; // Optional button text
     onButtonClick?: () => void; // Optional button click handler
     renderMenu?: RenderTableComponent<T>; // Optional custom render function for the menu
+    loading?: boolean; // Optional loading state
+    loadingPlaceholder?: ReactNode; // Optional loading placeholder
 }
 
-export default function GenericTable<T>({ title, data, columns, searchPlaceholder='Search', searchKeys, buttonText, onButtonClick, renderMenu }: GenericTableProps<T>) {
+export default function GenericTable<T>({ title, data, columns, searchPlaceholder='Search', searchKeys, buttonText, onButtonClick, renderMenu, loading, loadingPlaceholder='Loading...' }: GenericTableProps<T>) {
     const [search, setSearch] = useState('');
 
     const filteredData = useMemo(() => {
@@ -54,13 +56,20 @@ export default function GenericTable<T>({ title, data, columns, searchPlaceholde
                     buttonText={buttonText}
                     onButtonClick={onButtonClick}
                 />
-                <TableBody 
-                    data={filteredData}
-                    columns={columns}
-                    renderMenu={renderMenu}
-                />
+                {!loading && (
+                    <TableBody 
+                        data={filteredData}
+                        columns={columns}
+                        renderMenu={renderMenu}
+                    />
+                )}
             </table>
-            {filteredData.length === 0 && (
+            {loading && (
+                <span className="block py-5 text-center">
+                    {loadingPlaceholder}
+                </span>
+            )}
+            {!loading && filteredData.length === 0 && (
                 <div className="p-10 text-center border-t-[1px] border-t-tertiary">
                     <span>
                         {hasActiveFilters ? (
