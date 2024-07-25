@@ -9,20 +9,11 @@ export default async function MainLayout({ children }: {
 }) {
     const queryClient = new QueryClient();
 
-    const getCurrentUserFn = async () => getCurrentUser({
-        headers: {
-            Cookie: cookies().toString(),
-        }
-    })
-
-    const prefetchUser =  queryClient.prefetchQuery({
-        queryKey: ['current-user'],
-        queryFn: getCurrentUserFn,
-    })
-    const currentUser = getCurrentUserFn();
-
     try {
-        const [_, user] = await Promise.all([prefetchUser, currentUser]);
+        console.log('Cookies:', cookies().toString()); // Log cookies
+        const user = await getCurrentUser({ headers: { Cookie: cookies().toString() } });
+        console.log('User:', user); // Log user data
+        queryClient.setQueryData(['current-user'], user);
     } catch(error) {
         redirect('/login');
         return null;
