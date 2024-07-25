@@ -1,8 +1,9 @@
 import { TableColumn } from "."
 
 const SKELETON_ROWS = 3;
-export default function TableSkeleton<T>({ columns }: {
+export default function TableSkeleton<T>({ columns, defaultLoadingSkeleton }: {
     columns: TableColumn<T>[];
+    defaultLoadingSkeleton?: React.ReactNode;
 }) {
     const skeletonColumns = Array.from(Array(SKELETON_ROWS)).map(() => '');
 
@@ -12,7 +13,7 @@ export default function TableSkeleton<T>({ columns }: {
                 <tr>
                     {columns.map((column, colIndex) => (
                         <td className="p-4">
-                            {column.renderSkeleton}
+                            {column.renderSkeleton || defaultLoadingSkeleton}
                         </td>
                     ))}
                 </tr>

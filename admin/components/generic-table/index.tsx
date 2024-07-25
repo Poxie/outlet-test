@@ -26,10 +26,11 @@ export type GenericTableProps<T> = {
     renderMenu?: RenderTableComponent<T>; // Optional custom render function for the menu
     loading?: boolean; // Optional loading state
     loadingPlaceholder?: ReactNode; // Optional loading placeholder
+    defaultLoadiangSkeleton?: ReactNode; // Optional default loading skeleton
     hasLoadingSkeleton?: boolean; // Optional loading skeleton
 }
 
-export default function GenericTable<T>({ title, data, columns, searchPlaceholder='Search', searchKeys, buttonText, onButtonClick, renderMenu, loading, hasLoadingSkeleton, loadingPlaceholder='Loading...' }: GenericTableProps<T>) {
+export default function GenericTable<T>({ title, data, columns, searchPlaceholder='Search', searchKeys, buttonText, onButtonClick, renderMenu, loading, hasLoadingSkeleton, defaultLoadiangSkeleton, loadingPlaceholder='Loading...' }: GenericTableProps<T>) {
     const [search, setSearch] = useState('');
 
     const filteredData = useMemo(() => {
@@ -62,6 +63,7 @@ export default function GenericTable<T>({ title, data, columns, searchPlaceholde
                 {loading && hasLoadingSkeleton && (
                     <TableSkeleton 
                         columns={columns}
+                        defaultLoadingSkeleton={defaultLoadiangSkeleton}
                     />
                 )}
                 {!loading && (
