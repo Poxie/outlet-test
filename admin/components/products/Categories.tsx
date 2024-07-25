@@ -7,18 +7,18 @@ import { getReadableDate } from "@/utils";
 import { Category } from "@/utils/types";
 import CreateCategoryModal from "@/modals/category/create-category";
 import { useModal } from "@/contexts/modal";
+import BannerWithInfoSkeleton from "../skeletons/BannerWithInfoSkeleton";
+import TextSkeleton from "../skeletons/TextSkeleton";
 
 export default function Categories() {
-    const { data: categories } = useGetAllCategories();
+    const { data: categories, isPending } = useGetAllCategories();
     
     const { setModal } = useModal();
-
-    if(!categories) return null;
 
     const openCreateModal = () => setModal(<CreateCategoryModal />);
 
     const tableColumns: TableColumn<Category>[] = [
-        { dataIndex: 'title', title: 'Details', render: category => <CategoryDetails category={category} />, width: '50%', minWidth: '500px' },
+        { dataIndex: 'title', title: 'Details', render: category => <CategoryDetails category={category} />, width: '50%', minWidth: '500px', renderSkeleton: <BannerWithInfoSkeleton /> },
         { dataIndex: 'groupCount', title: 'Assigned groups', render: category => `${category.groupCount} groups` },
         { dataIndex: 'createdAt', title: 'Added at', render: category => getReadableDate(category.createdAt) },
     ]
@@ -29,12 +29,15 @@ export default function Categories() {
         <GenericTable 
             title="Categories"
             columns={tableColumns}
-            data={categories}
+            data={categories || []}
             searchPlaceholder="Search by category name..."
             searchKeys={['title']}
             renderMenu={renderMenu}
             buttonText="Create category"
             onButtonClick={openCreateModal}
+            loading={isPending}
+            defaultLoadiangSkeleton={<TextSkeleton />}
+            hasLoadingSkeleton
         />
     )
 }

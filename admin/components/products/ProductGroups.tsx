@@ -8,18 +8,18 @@ import ProductGroupMenu from "./ProductGroupMenu";
 import { getReadableDate } from "@/utils";
 import { useModal } from "@/contexts/modal";
 import CreateProductGroup from "@/modals/product-group/create-product-group";
+import TextSkeleton from "../skeletons/TextSkeleton";
+import BannerWithInfoSkeleton from "../skeletons/BannerWithInfoSkeleton";
 
 export default function ProductGroups() {
-    const { data: groups } = useGetAllProductGroups();
+    const { data: groups, isPending } = useGetAllProductGroups();
 
     const { setModal } = useModal();
-
-    if(!groups) return null;
 
     const openCreateMenu = () => setModal(<CreateProductGroup />);
     
     const tableColumns: TableColumn<ProductGroup>[] = [
-        { title: 'Details', dataIndex: 'name', render: group => <ProductGroupDetails productGroup={group} />, width: '50%', minWidth: '500px' },
+        { title: 'Details', dataIndex: 'name', render: group => <ProductGroupDetails productGroup={group} />, width: '50%', minWidth: '500px', renderSkeleton: <BannerWithInfoSkeleton /> },
         { title: 'Assigned products', dataIndex: 'productCount', render: group => `${group.productCount} products` },
         { title: 'Added at', dataIndex: 'createdAt', render: group => getReadableDate(group.createdAt) },
     ]
@@ -30,12 +30,15 @@ export default function ProductGroups() {
         <GenericTable 
             title="Product groups"
             columns={tableColumns}
-            data={groups}
+            data={groups || []}
             searchPlaceholder="Search by group name..."
             searchKeys={['name']}
             renderMenu={renderMenu}
             buttonText="Add product group"
             onButtonClick={openCreateMenu}
+            loading={isPending}
+            defaultLoadiangSkeleton={<TextSkeleton />}
+            hasLoadingSkeleton
         />
     )
 }
