@@ -43,6 +43,13 @@ jobs:
         run: |
           gcloud auth configure-docker europe-north1-docker.pkg.dev
 
+      - name: Fetch analytics-config.json from Secret Manager
+        run: |
+          echo ${{ secrets.GCP_SA_KEY }} > key.json
+          gcloud auth activate-service-account --key-file=key.json
+          gcloud secrets versions access latest --secret="analytics-config" > backend/analytics-config.json
+          rm key.json
+
       - name: Build and push Docker image with docker-compose
         run: |
           docker-compose build backend
