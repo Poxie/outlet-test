@@ -28,7 +28,7 @@ router.post('/', asyncHandler(async (req, res) => {
         maxAge: MAX_COOKIE_AGE,
     });
 
-    const formattedUser = await UserUtils.formatUser(user);
+    const formattedUser = UserUtils.formatUser(user);
 
     res.json(formattedUser);
 }))
