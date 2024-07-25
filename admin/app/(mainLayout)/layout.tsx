@@ -1,32 +1,32 @@
+"use client";
 import getCurrentUser from "@/api/users/getCurrentUser";
 import Sidebar from "@/components/sidebar";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary, QueryClient, useQuery } from "@tanstack/react-query";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export default async function MainLayout({ children }: {
     children: React.ReactNode;
 }) {
-    const queryClient = new QueryClient();
+    const router = useRouter();
 
-    try {
-        console.log('Cookies:', cookies().toString()); // Log cookies
-        const user = await getCurrentUser({ headers: { Cookie: cookies().toString() } });
-        console.log('User:', user); // Log user data
-        queryClient.setQueryData(['current-user'], user);
-    } catch(error) {
-        redirect('/login');
+    const { data, isPending } = useQuery({
+        queryKey: ['current-user'],
+        queryFn: getCurrentUser,
+    })
+
+    if(!data && !isPending) {
+        router.replace('/login');
         return null;
     }
+    if(!data) return null;
 
     return(
-        <HydrationBoundary state={dehydrate(queryClient)}>
-            <div className="min-h-screen flex items-start">
-                <Sidebar />
-                <div className="flex-1">
-                    {children}
-                </div>
+        <div className="min-h-screen flex items-start">
+            <Sidebar />
+            <div className="flex-1">
+                {children}
             </div>
-        </HydrationBoundary>
+        </div>
     );
 }
