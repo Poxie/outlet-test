@@ -1,0 +1,48 @@
+name: Deploy to Google Cloud
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      NEXT_PUBLIC_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}
+      GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+      GOOGLE_MAPS_BASE_URL: ${{ secrets.GOOGLE_MAPS_BASE_URL }}
+      GOOGLE_MAPS_API_BASE_URL: ${{ secrets.GOOGLE_MAPS_API_BASE_URL }}
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: install the gcloud cli
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+
+      - name: Configure Docker to use the gcloud command-line tool as a credential helper
+        run: |
+          gcloud auth configure-docker europe-north1-docker.pkg.dev
+
+      - name: Build and push Docker image with docker-compose
+        run: |
+          docker-compose up --build -d
+          docker-compose push frontend
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy frontend \
+            --image europe-north1-docker.pkg.dev/$PROJECT_ID/docker-test/frontend:latest \
+            --allow-unauthenticated \
+            --platform managed \
+            --region europe-north1

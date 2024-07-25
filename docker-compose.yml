@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_ENDPOINT: ${NEXT_PUBLIC_API_ENDPOINT}
+        GOOGLE_MAPS_BASE_URL: ${GOOGLE_MAPS_BASE_URL}
+        GOOGLE_MAPS_API_BASE_URL: ${GOOGLE_MAPS_API_BASE_URL}
+        GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
+    image: "europe-north1-docker.pkg.dev/${PROJECT_ID}/app/frontend:latest"
+  
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_ENDPOINT: ${NEXT_PUBLIC_API_ENDPOINT}
+    image: "europe-north1-docker.pkg.dev/${PROJECT_ID}/app/admin:latest"
