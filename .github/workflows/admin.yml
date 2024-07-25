@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'admin/**'
+      - '.github/workflows/admin.yml'
     branches:
       - main
 
