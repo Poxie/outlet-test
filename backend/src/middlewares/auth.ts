@@ -4,8 +4,8 @@ import UserQueries from "@/utils/users/userQueries";
 import { NextFunction, Request, Response } from "express";
 
 export default async function auth(req: Request, res: Response, next: NextFunction) {
-    console.log(req.cookies);
     const accessToken = req.cookies?.accessToken;
+    console.log(accessToken);
     if(!accessToken) {
         next(new UnauthorizedError());
         return;
@@ -13,6 +13,7 @@ export default async function auth(req: Request, res: Response, next: NextFuncti
 
     // Get the logged in users id
     const userId = AuthUtils.verifyToken(accessToken);
+    console.log(userId);
     if(!userId) {
         next(new UnauthorizedError());
         return;
