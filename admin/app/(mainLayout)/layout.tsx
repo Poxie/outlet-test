@@ -1,11 +1,10 @@
 "use client";
 import getCurrentUser from "@/api/users/getCurrentUser";
 import Sidebar from "@/components/sidebar";
-import { dehydrate, HydrationBoundary, QueryClient, useQuery } from "@tanstack/react-query";
-import { cookies } from "next/headers";
-import { redirect, useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
-export default async function MainLayout({ children }: {
+export default function MainLayout({ children }: {
     children: React.ReactNode;
 }) {
     const router = useRouter();
