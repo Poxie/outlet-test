@@ -25,6 +25,7 @@ router.post('/', asyncHandler(async (req, res) => {
 
     const token = AuthUtils.signToken(user.id);
     res.cookie('accessToken', token, { 
+        httpOnly: true,
         maxAge: MAX_COOKIE_AGE,
     });
 
