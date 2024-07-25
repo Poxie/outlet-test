@@ -20,14 +20,14 @@ export default function PageEngagementSkeleton() {
                     className="p-4 border-b-[1px] border-b-tertiary"
                 />
                 {Array.from(Array(MOST_VISITED_PAGE_COUNT).keys()).map((i) => (
-                    <div className="px-4 py-2.5 flex items-center justify-between">
+                    <div className="px-4 py-2.5 flex items-center justify-between" key={i}>
                         <TextSkeleton height={20} />
                         <TextSkeleton height={20} width={80} />
                     </div>
                 ))}
             </div>
             {PAGE_CARD_TITLES.map((title) => (
-                <div className="bg-primary border-[1px] border-tertiary rounded-md">
+                <div className="bg-primary border-[1px] border-tertiary rounded-md" key={title}>
                     <AnalyticsCardTitleSkeleton 
                         title={title}
                         className="p-4 border-b-[1px] border-b-tertiary"

@@ -2,9 +2,7 @@ import { AnalyticsReport } from "@/utils/types"
 import Section from "../section";
 import AnalyticsCardTitle from "./AnalyticsCardTitle";
 import { twMerge } from "tailwind-merge";
-import TextSkeleton from "../skeletons/TextSkeleton";
 
-const SKELETON_COUNT = 5;
 export default function MostVisitedPages({ report, className }: {
     report: AnalyticsReport | undefined;
     className?: string;
@@ -19,15 +17,6 @@ export default function MostVisitedPages({ report, className }: {
                 className="p-4 border-b-[1px] border-b-tertiary"
             />
             <ul className="flex flex-col divide-y-[1px] divide-secondary">
-                {!report && (
-                    Array.from(Array(SKELETON_COUNT)).map((_, index) => (
-                        <li className="px-4 py-2.5 flex items-center justify-between">
-                            <TextSkeleton height={20} />
-                            <TextSkeleton height={20} width={80} />
-                        </li>
-                    ))
-                )}
-
                 {report?.topPages.map(page => (
                     <li 
                         className="px-4 py-2.5 flex justify-between"

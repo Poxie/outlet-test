@@ -4,17 +4,26 @@ interface WithLoadingSkeletonProps {
     loading: boolean;
 }
 
-const withLoadingSkeleton = <P extends object>(
+const WithLoadingSkeleton = <P extends object>(
     WrappedComponent: React.ComponentType<P>,
     Skeleton: React.ComponentType,
-): React.FC<P & WithLoadingSkeletonProps> => ({
-    loading,
-    ...props
-}: WithLoadingSkeletonProps) => {
-    if(loading) {
-        return <Skeleton />;
-    }
-    return <WrappedComponent {...(props as P)} />;
-};
+): React.FC<P & WithLoadingSkeletonProps> => {
+    const ComponentWithLoadingSkeleton: React.FC<P & WithLoadingSkeletonProps> = ({
+        loading,
+        ...props
+    }: WithLoadingSkeletonProps) => {
+        if (loading) {
+            return <Skeleton />;
+        }
+        return <WrappedComponent {...(props as P)} />;
+    };
 
-export default withLoadingSkeleton;
+    ComponentWithLoadingSkeleton.displayName = `WithLoadingSkeleton(${getDisplayName(WrappedComponent)})`;
+
+    return ComponentWithLoadingSkeleton;
+};
+function getDisplayName<P>(WrappedComponent: React.ComponentType<P>): string {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+
+export default WithLoadingSkeleton;

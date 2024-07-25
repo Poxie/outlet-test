@@ -1,7 +1,7 @@
 import { AnalyticsReport } from "@/utils/types";
 import PageEngagementCard from "./PageEngagementCard";
 import MostVisitedPages from "./MostVisitedPages";
-import withLoadingSkeleton from "../skeletons/WithLoadingSkeleton";
+import WithLoadingSkeleton from "../skeletons/WithLoadingSkeleton";
 import PageEngagementSkeleton from "../skeletons/PageEngagementSkeleton";
 
 const formatNumber = (num: string | undefined) => {
@@ -56,4 +56,4 @@ function PageEngagement({ report, loading }: {
     )
 }
 
-export default withLoadingSkeleton(PageEngagement, PageEngagementSkeleton);
+export default WithLoadingSkeleton(PageEngagement, PageEngagementSkeleton);

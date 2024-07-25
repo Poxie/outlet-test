@@ -5,7 +5,7 @@ import ProductGroupProduct from "./ProductGroupProduct";
 import { useEffect, useRef } from "react";
 import ModalFooter from "@/modals/ModalFooter";
 import useUpdateProducts from "@/hooks/products/useUpdateProducts";
-import withLoadingSkeleton from "@/components/skeletons/WithLoadingSkeleton";
+import WithLoadingSkeleton from "@/components/skeletons/WithLoadingSkeleton";
 import ProductGroupProductsSkeleton from "@/components/skeletons/ProductGroupProductsSkeleton";
 
 function ProductGroupProductsTab({ products, productGroup }: {
@@ -49,4 +49,4 @@ function ProductGroupProductsTab({ products, productGroup }: {
     )
 }
 
-export default withLoadingSkeleton(ProductGroupProductsTab, ProductGroupProductsSkeleton);
+export default WithLoadingSkeleton(ProductGroupProductsTab, ProductGroupProductsSkeleton);

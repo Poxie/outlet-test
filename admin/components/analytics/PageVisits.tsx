@@ -1,8 +1,8 @@
 import { AnalyticsReport } from "@/utils/types";
 import Section from "../section";
 import PageVisitCard from "./PageVisitCard";
-import withLoadingSkeleton from "../skeletons/WithLoadingSkeleton";
 import PageVisitsSkeleton from "../skeletons/PageVisitsSkeleton";
+import WithLoadingSkeleton from "../skeletons/WithLoadingSkeleton";
 
 function PageVisits({ report, loading }: {
     report?: AnalyticsReport;
@@ -29,4 +29,4 @@ function PageVisits({ report, loading }: {
     )
 }
 
-export default withLoadingSkeleton(PageVisits, PageVisitsSkeleton);
+export default WithLoadingSkeleton(PageVisits, PageVisitsSkeleton);

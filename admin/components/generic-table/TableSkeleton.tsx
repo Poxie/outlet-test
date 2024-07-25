@@ -10,9 +10,9 @@ export default function TableSkeleton<T>({ columns, defaultLoadingSkeleton }: {
     return(
         <tbody className="divide-y-[1px] divide-secondary">
             {skeletonColumns.map((_,index) => (
-                <tr>
+                <tr key={index}>
                     {columns.map((column, colIndex) => (
-                        <td className="p-4">
+                        <td className="p-4" key={colIndex}>
                             {column.renderSkeleton || defaultLoadingSkeleton}
                         </td>
                     ))}
