@@ -1,0 +1,56 @@
+name: Deploy to Google Cloud
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      PORT: ${{ secrets.PORT }}
+      ADMIN_URL: ${{ secrets.ADMIN_URL }}
+      CLIENT_URL: ${{ secrets.CLIENT_URL }}
+      BCRYPT_SALT_ROUNDS: ${{ secrets.BCRYPT_SALT_ROUNDS }}
+      REDIS_URL: ${{ secrets.REDIS_URL }}
+      CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+      CLOUDINARY_SECRET: ${{ secrets.CLOUDINARY_SECRET }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      PROPERTY_ID: ${{ secrets.PROPERTY_ID }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: install the gcloud cli
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+
+      - name: Configure Docker to use the gcloud command-line tool as a credential helper
+        run: |
+          gcloud auth configure-docker europe-north1-docker.pkg.dev
+
+      - name: Build and push Docker image with docker-compose
+        run: |
+          docker-compose up --build -d
+          docker-compose push backend
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy backend \
+            --image europe-north1-docker.pkg.dev/$PROJECT_ID/app/backend:latest \
+            --allow-unauthenticated \
+            --platform managed \
+            --region europe-north1
