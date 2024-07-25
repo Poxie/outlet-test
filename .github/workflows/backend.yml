@@ -14,17 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
-      PORT: ${{ secrets.PORT }}
-      ADMIN_URL: ${{ secrets.ADMIN_URL }}
-      CLIENT_URL: ${{ secrets.CLIENT_URL }}
-      BCRYPT_SALT_ROUNDS: ${{ secrets.BCRYPT_SALT_ROUNDS }}
-      REDIS_URL: ${{ secrets.REDIS_URL }}
-      CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
-      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
-      CLOUDINARY_SECRET: ${{ secrets.CLOUDINARY_SECRET }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      PROPERTY_ID: ${{ secrets.PROPERTY_ID }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
       - name: checkout code
         uses: actions/checkout@v2
@@ -42,6 +31,10 @@ jobs:
       - name: Configure Docker to use the gcloud command-line tool as a credential helper
         run: |
           gcloud auth configure-docker europe-north1-docker.pkg.dev
+        
+      - name: Fetch .env from Secret Manager
+        run: |
+          gcloud secrets versions access latest --secret="api-env" > backend/.env
 
       - name: Fetch analytics-config.json from Secret Manager
         run: |
