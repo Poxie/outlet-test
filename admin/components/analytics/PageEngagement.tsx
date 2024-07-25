@@ -1,8 +1,10 @@
 import { AnalyticsReport } from "@/utils/types";
 import PageEngagementCard from "./PageEngagementCard";
 import MostVisitedPages from "./MostVisitedPages";
+import withLoadingSkeleton from "../skeletons/WithLoadingSkeleton";
+import PageEngagementSkeleton from "../skeletons/PageEngagementSkeleton";
 
-const formatNumber = (num: string) => {
+const formatNumber = (num: string | undefined) => {
     let number = Number(num);
     number = Math.round(number * 100) / 100; // Round to at most 2 decimal places
     return number.toString().replace(/\.00$/, '').replace(/(\.\d)0$/, '$1');
@@ -15,13 +17,14 @@ const getMinSecFromSeconds = (seconds: number) => {
     return `${min}m ${sec}s`;
 }
 
-export default function PageEngagement({ report }: {
-    report: AnalyticsReport
+function PageEngagement({ report, loading }: {
+    report?: AnalyticsReport;
+    loading: boolean
 }) {
     const { 
         bounceRate, screenPageViews, averageSessionDuration, 
         sessionsPerUser, engagementRate, userEngagementDuration,
-    } = report;
+    } = report || {};
 
     const avgBounceRate = formatNumber(String(Number(bounceRate) * 100)) + '%';
     const avgEngagementRate = formatNumber(String(Number(engagementRate) * 100)) + '%';
@@ -47,8 +50,10 @@ export default function PageEngagement({ report }: {
                 {getMinSecFromSeconds(Number(averageSessionDuration))}
             </PageEngagementCard>
             <PageEngagementCard title="Average active time on page">
-                {getMinSecFromSeconds(Number(report.userEngagementDuration))}
+                {getMinSecFromSeconds(Number(report?.userEngagementDuration))}
             </PageEngagementCard>
         </div>
     )
 }
+
+export default withLoadingSkeleton(PageEngagement, PageEngagementSkeleton);

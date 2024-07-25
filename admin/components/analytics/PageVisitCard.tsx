@@ -1,9 +1,10 @@
 import { twMerge } from "tailwind-merge";
 import AnalyticsCardTitle from "./AnalyticsCardTitle";
+import TextSkeleton from "../skeletons/TextSkeleton";
 
 export default function PageVisitCard({ title, userCount, className }: {
     title: string;
-    userCount: string;
+    userCount: string | undefined;
     className?: string;
 }) {
     return(
@@ -12,9 +13,14 @@ export default function PageVisitCard({ title, userCount, className }: {
             className,
         )}>
             <AnalyticsCardTitle title={title} />
-            <span className="text-4xl font-semibold">
-                {userCount}
-            </span>
+            {userCount !== undefined && (
+                <span className="text-4xl font-semibold">
+                    {userCount}
+                </span>
+            )}
+            {userCount === undefined && (
+                <TextSkeleton height={40} />
+            )}
         </div>
     )
 }

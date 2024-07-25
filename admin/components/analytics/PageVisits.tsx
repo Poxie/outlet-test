@@ -1,27 +1,32 @@
 import { AnalyticsReport } from "@/utils/types";
 import Section from "../section";
 import PageVisitCard from "./PageVisitCard";
+import withLoadingSkeleton from "../skeletons/WithLoadingSkeleton";
+import PageVisitsSkeleton from "../skeletons/PageVisitsSkeleton";
 
-export default function PageVisits({ report: { totalUsers, newUsers } }: {
-    report: AnalyticsReport;
+function PageVisits({ report, loading }: {
+    report?: AnalyticsReport;
+    loading: boolean;
 }) {
-    const returningVisitors = Number(totalUsers) - Number(newUsers);
+    const returningVisitors = report ?  Number(report.totalUsers) - Number(report.newUsers) : undefined;
 
     return(
         <Section className="p-0 grid md:grid-cols-2 xl:grid-cols-3 divide-y-[1px] divide-x-[1px] divide-tertiary">
             <PageVisitCard 
                 title="Total visitors"
-                userCount={totalUsers}
+                userCount={report?.totalUsers}
                 className="md:col-span-2 xl:col-span-1"
             />
             <PageVisitCard 
                 title="Returning visitors"
-                userCount={returningVisitors.toString()}
+                userCount={returningVisitors?.toString()}
             />
             <PageVisitCard 
                 title="New visitors"
-                userCount={newUsers}
+                userCount={report?.newUsers}
             />
         </Section>
     )
 }
+
+export default withLoadingSkeleton(PageVisits, PageVisitsSkeleton);

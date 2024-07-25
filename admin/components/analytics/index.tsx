@@ -1,13 +1,16 @@
+"use client";
 import getAnalyticsReport from "@/api/analytics/getAnalyticsReport";
 import PageBanner from "../page-banner";
 import PageVisits from "./PageVisits";
 import PageEngagement from "./PageEngagement";
 import SectionHeader from "../section-header";
+import { useQuery } from "@tanstack/react-query";
 
-export default async function Analytics() {
-    const report = await getAnalyticsReport();
-
-    if(!report) return;
+export default function Analytics() {
+    const { data: report, isPending } = useQuery({
+        queryKey: ['analytics-report'],
+        queryFn: getAnalyticsReport,
+    })
 
     return(
         <>
@@ -21,12 +24,18 @@ export default async function Analytics() {
                 title="Page visits"
                 className="mb-2"
             />
-            <PageVisits report={report} />
+            <PageVisits 
+                report={report}
+                loading={isPending}
+            />
             <SectionHeader 
                 title="Visitor engagement"
                 className="mt-4 mb-2"
             />
-            <PageEngagement report={report} />
+            <PageEngagement 
+                report={report}
+                loading={isPending}
+            />
         </main>
         </>
     )
