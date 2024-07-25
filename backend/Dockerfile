@@ -38,10 +38,10 @@ ENV PROPERTY_ID=$PROPERTY_ID
 ENV DATABASE_URL=$DATABASE_URL
 
 # Generate Prisma client
-RUN npx prisma generate
+RUN DATABASE_URL=$DATABASE_URL npx prisma generate
 
 # Run Prisma migrations
-RUN npx prisma migrate deploy
+RUN DATABASE_URL=$DATABASE_URL npx prisma migrate deploy
 
 # Build the application
 RUN npm run build
