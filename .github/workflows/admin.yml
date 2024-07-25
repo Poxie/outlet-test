@@ -35,7 +35,7 @@ jobs:
 
       - name: Build and push Docker image with docker-compose
         run: |
-          docker-compose up --build -d
+          docker-compose build admin
           docker-compose push admin
 
       - name: Deploy to Cloud Run
