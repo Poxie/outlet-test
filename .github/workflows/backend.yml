@@ -44,7 +44,7 @@ jobs:
 
       - name: Build and push Docker image with docker-compose
         run: |
-          docker-compose up --build -d
+          docker-compose build backend
           docker-compose push backend
 
       - name: Deploy to Cloud Run
