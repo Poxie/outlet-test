@@ -8,14 +8,13 @@ import { useModal } from "@/contexts/modal";
 import CreateStoreModal from "@/modals/store/create-store";
 import StoresTableMenu from "./StoresTableMenu";
 import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
+import TextSkeleton from "../skeletons/TextSkeleton";
 
 export default function Stores() {
-    const { data: stores } = useGetStores();
+    const { data: stores, isPending } = useGetStores();
     const isAdmin = useSelfIsAdmin();
 
     const { setModal } = useModal();
-
-    if(!stores) return null;
 
     const openCreateModal = () => setModal(<CreateStoreModal />);
     
@@ -40,13 +39,16 @@ export default function Stores() {
             <Section className="p-0">
                 <GenericTable 
                     title="Stores"
-                    data={stores}
+                    data={stores || []}
                     columns={tableColumns}
                     searchKeys={['name', 'id']}
                     searchPlaceholder="Search by name or store number..."
                     buttonText={isAdmin ? 'Add store' : undefined}
                     onButtonClick={openCreateModal}
                     renderMenu={renderMenu}
+                    loading={isPending}
+                    defaultLoadiangSkeleton={<TextSkeleton />}
+                    hasLoadingSkeleton
                 />
             </Section>
         </main>
