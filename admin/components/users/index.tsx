@@ -14,13 +14,11 @@ import CreateUserModal from "@/modals/user-profile/create-user";
 import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
 
 export default function Users() {
-    const { data: users } = useGetUsers();
+    const { data: users, isPending } = useGetUsers();
     const { data: self } = useCurrentUser();
     const isAdmin = useSelfIsAdmin();
 
     const { setModal } = useModal();
-
-    if(!users || !self) return null;
 
     const openCreateModal = () => setModal(<CreateUserModal />);
 
@@ -31,7 +29,10 @@ export default function Users() {
         { dataIndex: 'createdAt', title: 'Added At', render: user => getReadableDate(user.createdAt) },
     ]
 
-    const renderMenu = (user: User) => <UserMenu self={self} user={user} />;
+    const renderMenu = (user: User) => {
+        if(!self) return null;
+        <UserMenu self={self} user={user} />;
+    }
 
     return(
         <>
@@ -45,13 +46,15 @@ export default function Users() {
             <Section className="p-0">
                 <GenericTable 
                     title="People"
-                    data={users}
+                    data={users || []}
                     columns={tableColumns}
                     renderMenu={renderMenu}
                     searchKeys={['name', 'email']}
                     searchPlaceholder="Search by name or email..."
                     buttonText={isAdmin ? 'Add person' : undefined}
                     onButtonClick={openCreateModal}
+                    loading={isPending}
+                    loadingPlaceholder="Loading people..."
                 />
             </Section>
         </main>
