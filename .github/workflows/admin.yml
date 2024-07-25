@@ -35,12 +35,12 @@ jobs:
       - name: Build and push Docker image with docker-compose
         run: |
           docker-compose up --build -d
-          docker-compose push admin
+          docker-compose push outlet-admin
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy admin \
-            --image europe-north1-docker.pkg.dev/$PROJECT_ID/app/admin:latest \
+          gcloud run deploy outlet-admin \
+            --image europe-north1-docker.pkg.dev/$PROJECT_ID/app/outlet-admin:latest \
             --allow-unauthenticated \
             --platform managed \
             --region europe-north1
