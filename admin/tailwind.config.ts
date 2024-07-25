@@ -68,9 +68,14 @@ const config: Config = {
         section: '4rem 0',
       },
       animation: {
+        'loading-opacity-in': 'loading-opacity-in 0.5s ease-in-out',
         'feedback-progress': 'feedback-progress linear',
       },
       keyframes: {
+        'loading-opacity-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
         'feedback-progress': {
           '0%': { width: '100%' },
           '100%': { width: '0%' },

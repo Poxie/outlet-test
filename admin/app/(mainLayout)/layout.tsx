@@ -21,7 +21,7 @@ export default function MainLayout({ children }: {
     if(!data) return null;
 
     return(
-        <div className="min-h-screen flex items-start">
+        <div className="min-h-screen flex items-start animate-loading-opacity-in">
             <Sidebar />
             <div className="flex-1">
                 {children}
