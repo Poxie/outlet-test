@@ -5,6 +5,7 @@ on:
     paths:
       - 'frontend/**'
       - '.github/workflows/frontend.yml'
+      - 'docker-compose.yml'
     branches:
       - main
 

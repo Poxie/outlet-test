@@ -5,6 +5,7 @@ on:
     paths:
       - 'admin/**'
       - '.github/workflows/admin.yml'
+      - 'docker-compose.yml'
     branches:
       - main
 
