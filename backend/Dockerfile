@@ -37,6 +37,12 @@ ENV CLOUDINARY_SECRET=$CLOUDINARY_SECRET
 ENV PROPERTY_ID=$PROPERTY_ID
 ENV DATABASE_URL=$DATABASE_URL
 
+# Generate Prisma client
+RUN npx prisma generate
+
+# Run Prisma migrations
+RUN npx prisma migrate deploy
+
 # Build the application
 RUN npm run build
 
