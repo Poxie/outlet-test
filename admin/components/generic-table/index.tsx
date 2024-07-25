@@ -2,6 +2,7 @@ import React, { memo, useMemo, ReactNode, useState } from 'react';
 import TableHeader from './TableHeader';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
+import TableSkeleton from './TableSkeleton';
 
 export type RenderTableComponent<T> = (record: T) => ReactNode;
 
@@ -11,6 +12,7 @@ export type TableColumn<T> = {
     render?: RenderTableComponent<T>; // Optional custom render function for the column cell
     width?: string; // Optional width for the column
     minWidth?: string; // Optional min width for the column
+    renderSkeleton?: ReactNode; // Skeleton to display while loading
 }
 
 export type GenericTableProps<T> = {
@@ -24,9 +26,10 @@ export type GenericTableProps<T> = {
     renderMenu?: RenderTableComponent<T>; // Optional custom render function for the menu
     loading?: boolean; // Optional loading state
     loadingPlaceholder?: ReactNode; // Optional loading placeholder
+    hasLoadingSkeleton?: boolean; // Optional loading skeleton
 }
 
-export default function GenericTable<T>({ title, data, columns, searchPlaceholder='Search', searchKeys, buttonText, onButtonClick, renderMenu, loading, loadingPlaceholder='Loading...' }: GenericTableProps<T>) {
+export default function GenericTable<T>({ title, data, columns, searchPlaceholder='Search', searchKeys, buttonText, onButtonClick, renderMenu, loading, hasLoadingSkeleton, loadingPlaceholder='Loading...' }: GenericTableProps<T>) {
     const [search, setSearch] = useState('');
 
     const filteredData = useMemo(() => {
@@ -56,6 +59,11 @@ export default function GenericTable<T>({ title, data, columns, searchPlaceholde
                     buttonText={buttonText}
                     onButtonClick={onButtonClick}
                 />
+                {loading && hasLoadingSkeleton && (
+                    <TableSkeleton 
+                        columns={columns}
+                    />
+                )}
                 {!loading && (
                     <TableBody 
                         data={filteredData}
@@ -64,7 +72,7 @@ export default function GenericTable<T>({ title, data, columns, searchPlaceholde
                     />
                 )}
             </table>
-            {loading && (
+            {loading && !hasLoadingSkeleton && (
                 <span className="block py-5 text-center">
                     {loadingPlaceholder}
                 </span>
