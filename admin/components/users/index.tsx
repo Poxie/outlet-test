@@ -26,9 +26,9 @@ export default function Users() {
 
     const tableColumns: TableColumn<User>[] = [
         { dataIndex: 'name', title: 'Name', render: user => <UserInfo user={user} />, renderSkeleton: <UserInfoSkeleton /> },
-        { dataIndex: 'email', title: 'Email', renderSkeleton: <TextSkeleton /> },
-        { dataIndex: 'role', title: 'Role', render: user => getReadableRole(user.role), renderSkeleton: <TextSkeleton /> },
-        { dataIndex: 'createdAt', title: 'Added At', render: user => getReadableDate(user.createdAt), renderSkeleton: <TextSkeleton /> },
+        { dataIndex: 'email', title: 'Email' },
+        { dataIndex: 'role', title: 'Role', render: user => getReadableRole(user.role) },
+        { dataIndex: 'createdAt', title: 'Added At', render: user => getReadableDate(user.createdAt) },
     ]
 
     const renderMenu = (user: User) => {
@@ -56,6 +56,7 @@ export default function Users() {
                     buttonText={isAdmin ? 'Add person' : undefined}
                     onButtonClick={openCreateModal}
                     loading={isPending}
+                    defaultLoadiangSkeleton={<TextSkeleton />}
                     hasLoadingSkeleton
                 />
             </Section>
