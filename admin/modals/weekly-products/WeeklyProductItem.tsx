@@ -11,6 +11,7 @@ export default function WeeklyProductItem({ product }: {
             height={200}
             src={product.imageURL}
             className="w-full"
+            draggable={false}
         />
     )
 }
