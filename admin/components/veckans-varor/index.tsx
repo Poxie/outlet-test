@@ -7,7 +7,7 @@ import getAllWeekProducts from "@/api/weekly-products/getAllWeekProducts";
 
 export default function VeckansVaror() {
     const { data: allWeeks } = useQuery({
-        queryKey: ['weekly-products', 'all'],
+        queryKey: ['products', 'weekly'],
         queryFn: getAllWeekProducts,
     })
 

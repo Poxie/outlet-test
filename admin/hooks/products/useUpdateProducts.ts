@@ -6,7 +6,9 @@ import { useFeedback } from "@/contexts/feedback";
 import useMutateProductPositions from "./useMutateProductPositions";
 import useRefetchQuery from "../react-query/useRefetchQuery";
 
-export default function useUpdateProducts(parentId: string, initialProducts: Product[]) {
+export default function useUpdateProducts(parentId: string, initialProducts: Product[], options?: {
+    refetchQueryKeys?: string[];
+}) {
     const refetchQuery = useRefetchQuery();
 
     const { mutateAsync: addProducts, isPending: addPending } = useMutateCreateProducts(parentId);
@@ -67,6 +69,9 @@ export default function useUpdateProducts(parentId: string, initialProducts: Pro
 
             refetchQuery(['products', parentId]);
             refetchQuery(['product-groups']);
+            if(options?.refetchQueryKeys?.length) {
+                options.refetchQueryKeys.forEach(key => refetchQuery([key]));
+            }
         } catch(error: any) {
             setFeedback({
                 type: 'danger',

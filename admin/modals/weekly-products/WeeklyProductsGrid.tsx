@@ -13,7 +13,13 @@ function WeeklyProductGrid({ date, products, loading }: {
     products: Product[];
     loading: boolean;
 }) {
-    const { setCurrentProducts, updateProducts, isPending } = useUpdateProducts(date, products || []);
+    const { setCurrentProducts, updateProducts, isPending } = useUpdateProducts(
+        date, 
+        products || [],
+        {
+            refetchQueryKeys: ['products', 'weekly'],
+        },
+    );
 
     useEffect(() => setCurrentProducts(products || []), [products]);
 
