@@ -51,7 +51,7 @@ export default function Login() {
                 alt="Logo"
             />
             <form 
-                className="w-[550px] p-5 bg-primary rounded-md"
+                className="w-[550px] max-w-main p-5 bg-primary rounded-md"
                 onSubmit={handleSubmit}
             >
                 <Input 
@@ -73,7 +73,7 @@ export default function Login() {
                     </span>
                 )}
                 <Button 
-                    className="w-full"
+                    className="w-full text-center"
                     disabled={loading}
                     buttonType="submit"
                 >
