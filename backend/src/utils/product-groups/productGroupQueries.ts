@@ -2,7 +2,7 @@ import client from "@/client";
 import ProductGroupUtils from "./productGroupUtils";
 import { IncludeGroupProps, PRODUCT_GROUP_TYPE } from "./productGroupConstants";
 import { ProductGroup } from "@prisma/client";
-import { ProductGroupWithProducts } from "../types";
+import { ProductGroupType, ProductGroupWithProducts } from "../types";
 
 export default class ProductGroupQueries {
     static async getProductGroups(withProducts = false) {
@@ -37,14 +37,15 @@ export default class ProductGroupQueries {
         return groupsWithCounts;
     }
 
-    static async getProductGroupById(id: string, withProducts: false): Promise<ProductGroup | null>;
-    static async getProductGroupById(id: string, withProducts: true): Promise<ProductGroupWithProducts | null>;
-    static async getProductGroupById(id: string, withProducts: boolean): Promise<
+    static async getProductGroupById(id: string, withProducts: false, groupType?: ProductGroupType): Promise<ProductGroup | null>;
+    static async getProductGroupById(id: string, withProducts: true, groupType?: ProductGroupType): Promise<ProductGroupWithProducts | null>;
+    static async getProductGroupById(id: string, withProducts: boolean, groupType?: ProductGroupType): Promise<
         ProductGroup | ProductGroupWithProducts | null
     > {
         const group = await client.productGroup.findUnique({
             where: {
                 id,
+                groupType,
             },
             ...IncludeGroupProps({ products: withProducts }),
         });
@@ -59,6 +60,7 @@ export default class ProductGroupQueries {
     static async getProductGroupsByParentId(parentId: string) {
         const groups = await client.productGroup.findMany({
             where: {
+                groupType: PRODUCT_GROUP_TYPE.PRODUCT_GROUP,
                 parentId,
             },
             ...IncludeGroupProps({ products: true }),

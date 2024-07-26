@@ -1,4 +1,5 @@
 import { Product, ProductGroup, Store, User } from "@prisma/client";
+import { PRODUCT_GROUP_TYPE } from "./product-groups/productGroupConstants";
 
 export type ProductGroupWithProducts = ProductGroup & { products: Product[] };
 
@@ -27,6 +28,8 @@ export type ProductPage = {
     header: ProductPageHeader;
     groups: ProductGroupWithProducts[];
 }
+
+export type ProductGroupType = typeof PRODUCT_GROUP_TYPE[keyof typeof PRODUCT_GROUP_TYPE];
 
 // Helper types
 export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;

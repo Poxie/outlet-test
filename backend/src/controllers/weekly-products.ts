@@ -27,7 +27,7 @@ router.get('/:date', asyncHandler(async (req, res, next) => {
         throw new InvalidDealDateError();
     }
 
-    const group = await ProductGroupQueries.getProductGroupById(date, true);
+    const group = await ProductGroupQueries.getProductGroupById(date, true, 'WEEKLY_PRODUCT');
     if(!group) {
         throw new ProductGroupNotFoundError();
     }
