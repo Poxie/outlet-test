@@ -60,16 +60,16 @@ export function getReadableRole(role: string) {
     return role.slice(0,1) + role.slice(1).toLowerCase();
 }
 
-export const getWeekFromDate = (date: string) => {
+export const getWeekOfYear = (date: string) => {
     const dateObj = new Date(date);
-    const today = new Date();
-    const diff = dateObj.getTime() - today.getTime();
+    const startOfYear = new Date(dateObj.getFullYear(), 0, 1);
+    const diff = dateObj.getTime() - startOfYear.getTime();
     const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-    return Math.floor(diffDays / 7) + 1;
+    return Math.ceil((diffDays + startOfYear.getDay() + 1) / 7);
 }
 export const getWeekText = (date: string) => {
     const dateObj = new Date(date);
     const today = new Date();
     const isCurrentWeek = dateObj.getTime() - today.getTime() < 0;
-    return isCurrentWeek ? 'This week' : `Week ${getWeekFromDate(date)}`;
+    return isCurrentWeek ? 'This week' : `Week ${getWeekOfYear(date)}`;
 }
