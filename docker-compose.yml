@@ -6,9 +6,8 @@ services:
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_API_ENDPOINT: ${NEXT_PUBLIC_API_ENDPOINT}
-        GOOGLE_MAPS_BASE_URL: ${GOOGLE_MAPS_BASE_URL}
-        GOOGLE_MAPS_API_BASE_URL: ${GOOGLE_MAPS_API_BASE_URL}
-        GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
+        NEXT_PUBLIC_GOOGLE_MAPS_BASE_URL: ${NEXT_PUBLIC_GOOGLE_MAPS_BASE_URL}
+        NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
     image: "europe-north1-docker.pkg.dev/${PROJECT_ID}/app/outlet-frontend:latest"
   
   admin:
