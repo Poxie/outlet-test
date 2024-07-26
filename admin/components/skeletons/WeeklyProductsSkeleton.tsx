@@ -22,7 +22,7 @@ export default function WeeklyProductsSkeleton() {
             />
             <Section className="grid gap-2">
                 {Array.from({ length: UPCOMING_WEEKS_COUNT }).map((_, i) => (
-                    <div className="p-4 flex items-center justify-between rounded-md border-[1px] border-secondary">
+                    <div className="p-4 flex items-center justify-between rounded-md border-[1px] border-secondary" key={i}>
                         <TextSkeleton height={24} />
                         <TextSkeleton />
                     </div>
