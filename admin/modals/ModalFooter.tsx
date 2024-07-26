@@ -2,7 +2,7 @@ import Button from "@/components/button";
 import { useModal } from "@/contexts/modal";
 
 export default function ModalFooter({ 
-    closeOnCancel, onCancel, onConfirm, loading, 
+    closeOnCancel=true, onCancel, onConfirm, loading, 
     cancelText='Cancel', confirmText='Confirm',
     confirmLoadingText='Confirming...',
 }: {
