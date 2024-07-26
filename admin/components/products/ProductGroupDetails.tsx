@@ -7,7 +7,7 @@ export default function ProductGroupDetails({ productGroup: { name, description,
     return(
         <div className="flex items-center gap-3">
             <Image 
-                className="aspect-video rounded-md"
+                className="aspect-video rounded-md object-cover"
                 src={bannerURL}
                 width={120}
                 height={70}
