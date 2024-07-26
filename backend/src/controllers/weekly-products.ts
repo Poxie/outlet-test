@@ -1,5 +1,7 @@
 import auth from '@/middlewares/auth';
 import asyncHandler from '@/utils/asyncHandler';
+import { ProductGroupNotFoundError } from '@/utils/product-groups/productGroupErrors';
+import ProductGroupQueries from '@/utils/product-groups/productGroupQueries';
 import ProductQueries from '@/utils/products/productQueries';
 import WeeklyProductQueries from '@/utils/weekly-products/weeklyProductQueries';
 import { InvalidDealDateError } from '@/utils/weekly-products/weeklyProductsErrors';
@@ -25,13 +27,19 @@ router.get('/:date', asyncHandler(async (req, res, next) => {
         throw new InvalidDealDateError();
     }
 
-    const products = await ProductQueries.getProductsByParentId(date);
+    const group = await ProductGroupQueries.getProductGroupById(date, true);
+    if(!group) {
+        throw new ProductGroupNotFoundError();
+    }
+
     const week = WeeklyProductsUtils.getWeekNumber(date);
+
+    group.products = group?.products.sort((a, b) => a.position - b.position);
 
     res.json({
         date,
         week,
-        products,
+        group,
     });
 }))
 
