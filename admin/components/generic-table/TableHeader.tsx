@@ -9,7 +9,7 @@ export default function TableHeader<T>({ title, searchKeys, searchPlaceholder, s
     searchResultCount?: number;
 }) {
     return(
-        <div className="p-4 flex items-center justify-between border-b-[1px] border-b-tertiary">
+        <div className="p-4 flex items-center justify-between flex-wrap gap-3 border-b-[1px] border-b-tertiary">
             <div className="flex items-center gap-2">
                 <span className="text-lg">
                     {title}
@@ -26,7 +26,8 @@ export default function TableHeader<T>({ title, searchKeys, searchPlaceholder, s
                     value={search}
                     onChange={setSearch}
                     placeholder={searchPlaceholder}
-                    className="w-[280px] -m-1.5 px-2.5 py-2 text-sm"
+                    className="sm:w-[280px] -m-1.5 px-2.5 py-2 text-sm"
+                    containerClassName="w-full sm:w-auto"
                 />
             )}
         </div>

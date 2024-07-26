@@ -45,7 +45,7 @@ export default function GenericTable<T>({ title, data, columns, searchPlaceholde
 
     const hasActiveFilters = !!search;
     return (
-        <div>
+        <div className="grid max-w-full">
             <TableHeader 
                 title={title}
                 searchKeys={searchKeys}
@@ -54,42 +54,44 @@ export default function GenericTable<T>({ title, data, columns, searchPlaceholde
                 setSearch={setSearch}
                 searchResultCount={filteredData.length}
             />
-            <table className="w-full">
-                <TableHead 
-                    columns={columns}
-                    buttonText={buttonText}
-                    onButtonClick={onButtonClick}
-                />
-                {loading && hasLoadingSkeleton && (
-                    <TableSkeleton 
+            <div className="overflow-x-auto">
+                <table className="w-full">
+                    <TableHead 
                         columns={columns}
-                        defaultLoadingSkeleton={defaultLoadiangSkeleton}
+                        buttonText={buttonText}
+                        onButtonClick={onButtonClick}
                     />
-                )}
-                {!loading && (
-                    <TableBody 
-                        data={filteredData}
-                        columns={columns}
-                        renderMenu={renderMenu}
-                    />
-                )}
-            </table>
-            {loading && !hasLoadingSkeleton && (
-                <span className="block py-5 text-center">
-                    {loadingPlaceholder}
-                </span>
-            )}
-            {!loading && filteredData.length === 0 && (
-                <div className="p-10 text-center border-t-[1px] border-t-tertiary">
-                    <span>
-                        {hasActiveFilters ? (
-                            'No results found'
-                        ) : (
-                            'No data to show'
-                        )}
+                    {loading && hasLoadingSkeleton && (
+                        <TableSkeleton 
+                            columns={columns}
+                            defaultLoadingSkeleton={defaultLoadiangSkeleton}
+                        />
+                    )}
+                    {!loading && (
+                        <TableBody 
+                            data={filteredData}
+                            columns={columns}
+                            renderMenu={renderMenu}
+                        />
+                    )}
+                </table>
+                {loading && !hasLoadingSkeleton && (
+                    <span className="block py-5 text-center">
+                        {loadingPlaceholder}
                     </span>
-                </div>
-            )}
+                )}
+                {!loading && filteredData.length === 0 && (
+                    <div className="p-10 text-center border-t-[1px] border-t-tertiary">
+                        <span>
+                            {hasActiveFilters ? (
+                                'No results found'
+                            ) : (
+                                'No data to show'
+                            )}
+                        </span>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
