@@ -4,14 +4,13 @@ import PageBanner from "../page-banner";
 import CurrentWeekProducts from "./CurrentWeekProducts";
 import UpcomingWeekProducts from "./UpcomingWeekProducts";
 import getAllWeekProducts from "@/api/weekly-products/getAllWeekProducts";
+import WeeklyProducts from "./WeeklyProducts";
 
 export default function VeckansVaror() {
-    const { data: allWeeks } = useQuery({
+    const { data: weeks, isPending } = useQuery({
         queryKey: ['products', 'weekly'],
         queryFn: getAllWeekProducts,
     })
-
-    if(!allWeeks) return null;
 
     return(
         <>
@@ -21,15 +20,11 @@ export default function VeckansVaror() {
                 { text: 'Veckans varor', href: '/veckans-varor' },
             ]}
         />
-        <main>
-            <div className="p-5">
-                <CurrentWeekProducts 
-                    week={allWeeks[0]}
-                />
-                <UpcomingWeekProducts 
-                    weeks={allWeeks.slice(1)}
-                />
-            </div>
+        <main className="p-5">
+            <WeeklyProducts 
+                weeks={weeks || []}
+                loading={isPending}
+            />
         </main>
         </>
     )

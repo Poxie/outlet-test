@@ -11,7 +11,7 @@ export default function SectionHeader({ title, buttonText, buttonHref, onButtonC
 }) {
     return(
         <div className={twMerge(
-            "flex justify-between",
+            "flex justify-between flex-wrap",
             className,
         )}>
             <span className="text-lg">

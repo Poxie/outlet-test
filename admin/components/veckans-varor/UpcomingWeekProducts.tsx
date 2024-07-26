@@ -16,16 +16,16 @@ export default function UpcomingWeekProducts({ weeks }: {
         <>
         <SectionHeader 
             title="Upcoming weeks"
-            className="mt-8 mb-2"
+            className="mt-5 mb-2"
         />
         <Section className="grid gap-2">
             {weeks.map(week => (
                 <button 
-                    className="p-4 flex justify-between border-[1px] border-tertiary hover:bg-secondary transition-colors rounded-md"
+                    className="p-4 flex items-center justify-between border-[1px] border-tertiary hover:bg-secondary transition-colors rounded-md"
                     onClick={() => openEditModal(week.date)}
                     key={week.date}
                 >
-                    <div className="flex items-center sm:gap-2 flex-col sm:flex-row">
+                    <div className="flex sm:items-center sm:gap-2 flex-col sm:flex-row">
                         <span className="font-medium">
                             Week
                             {' '}
