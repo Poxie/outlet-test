@@ -14,15 +14,7 @@ export type Product = {
 export type WeeklyGroup = {
     date: string;
     week: number;
-    products: WeeklyProduct[];
-}
-export type WeeklyProduct = {
-    id: string;
-    imageURL: string;
-    date: string;
-    // These dont exist yet, add them later
-    position: number;
-    parentId: string;
+    group: ProductGroup;
 }
 export type Store = {
     id: string;

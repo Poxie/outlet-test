@@ -1,9 +1,9 @@
 import Carousel from "@/components/carousel"
 import ProductCard from "@/components/product-card";
-import { WeeklyProduct } from "@/utils/types";
+import { Product } from "@/utils/types";
 
 export default function HomeWeeklyProductList({ products }: {
-    products: WeeklyProduct[];
+    products: Product[];
 }) {
     const imageComponents = products.map(product => (
         <ProductCard 

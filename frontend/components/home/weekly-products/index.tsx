@@ -16,7 +16,7 @@ export default async function HomeWeeklyProducts() {
                     Veckans varor
                 </SectionHeader>
                 <div className="mt-4 p-4 bg-primary rounded-md">
-                    <HomeWeeklyProductList products={week.products} />
+                    <HomeWeeklyProductList products={week.group.products} />
                 </div>
             </div>
         </section>

@@ -20,7 +20,7 @@ export default async function VeckansVaror() {
                     image="/images/veckans-varor.png"
                 />
                 <ProductGrid 
-                    products={week.products}
+                    products={week.group.products}
                 />
             </div>
             <SicklaNotice />
