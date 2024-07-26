@@ -1,14 +1,17 @@
 import client from "@/client";
 import ProductGroupUtils from "./productGroupUtils";
-import { IncludeGroupProps } from "./productGroupConstants";
+import { IncludeGroupProps, PRODUCT_GROUP_TYPE } from "./productGroupConstants";
 import { ProductGroup } from "@prisma/client";
 import { ProductGroupWithProducts } from "../types";
 
 export default class ProductGroupQueries {
     static async getProductGroups(withProducts = false) {
-        const groups = await client.productGroup.findMany(
-            IncludeGroupProps({ products: withProducts })
-        );
+        const groups = await client.productGroup.findMany({
+            where: {
+                groupType: PRODUCT_GROUP_TYPE.PRODUCT_GROUP,
+            },
+            ...IncludeGroupProps({ products: withProducts })
+        });
         
         const groupsWithCounts = groups.map(ProductGroupUtils.transformGroup);
         
