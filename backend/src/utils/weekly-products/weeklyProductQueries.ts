@@ -44,7 +44,10 @@ export default class WeeklyProductQueries {
             return {
                 date,
                 week,
-                group,
+                group: {
+                    ...group,
+                    products: group.products.sort((a, b) => a.position - b.position),
+                },
             };
         }));
 
