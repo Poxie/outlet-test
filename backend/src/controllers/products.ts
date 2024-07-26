@@ -2,12 +2,17 @@ import auth from '@/middlewares/auth';
 import asyncHandler from '@/utils/asyncHandler';
 import { StatusCodes } from '@/utils/errors/statusCodes';
 import ImageHandler from '@/utils/images/imageHandler';
-import { ProductPositionError } from '@/utils/product-groups/productGroupErrors';
+import { PRODUCT_GROUP_TYPE } from '@/utils/product-groups/productGroupConstants';
+import { ProductGroupNotFoundError, ProductPositionError } from '@/utils/product-groups/productGroupErrors';
+import ProductGroupMutations from '@/utils/product-groups/productGroupMutations';
 import ProductGroupQueries from '@/utils/product-groups/productGroupQueries';
 import { ProductNotFoundError } from '@/utils/products/productErrors';
 import ProductMutations from '@/utils/products/productMutations';
 import ProductQueries from '@/utils/products/productQueries';
 import ProductUtils from '@/utils/products/productUtils';
+import WeeklyProductMutations from '@/utils/weekly-products/weeklyProductMutations';
+import { InvalidDealDateError } from '@/utils/weekly-products/weeklyProductsErrors';
+import WeeklyProductsUtils from '@/utils/weekly-products/weeklyProductsUtils';
 import { createProductSchema, deleteProductsSchema, updateProductPositionsSchema } from '@/validation/productShemas';
 import { Product } from '@prisma/client';
 import express from 'express';
@@ -25,10 +30,30 @@ router.get('/:productId', asyncHandler(async (req, res) => {
 
 router.post('/', auth, asyncHandler(async (req, res) => {
     const data = createProductSchema.strict().parse(req.body);
+    if(!data.parentType) {
+        data.parentType = PRODUCT_GROUP_TYPE.PRODUCT_GROUP;
+    }
+
+    // If its weekly deals, and the date is not a deal date, throw an error
+    if(
+        data.parentType === PRODUCT_GROUP_TYPE.WEEKLY_PRODUCT && 
+        !WeeklyProductsUtils.isDealDate(data.parentId)
+    ) {
+        throw new InvalidDealDateError();
+    }
 
     // Check if product group exists
-    const group = await ProductGroupQueries.getProductGroupById(data.parentId, false);
-    if(!group) throw new ProductNotFoundError();
+    let group = await ProductGroupQueries.getProductGroupById(data.parentId, false);
+
+    // If it doesnt exist & type is weekly product, create it
+    if(!group && data.parentType === PRODUCT_GROUP_TYPE.WEEKLY_PRODUCT) {
+        group = await WeeklyProductMutations.createWeeklyProductGroup(data.parentId);
+    }
+
+    // Else if the group doesnt exist, throw an error
+    if(!group) {
+        throw new ProductGroupNotFoundError();
+    }
 
     // Upload images and create product objects
     const currentProductCount = group.productCount;

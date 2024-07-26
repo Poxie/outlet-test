@@ -18,6 +18,11 @@ enum Role {
   PERSONNEL
 }
 
+enum GroupType {
+  PRODUCT_GROUP
+  WEEKLY_PRODUCT
+}
+
 model User {
   id        String @id
   name      String
@@ -44,6 +49,7 @@ model ProductGroup {
   createdAt    String
   productCount Int
   products     Product[] // Relation to Product
+  groupType    GroupType @default(PRODUCT_GROUP)
 }
 
 model Product {

@@ -1,3 +1,8 @@
+export const PRODUCT_GROUP_TYPE = {
+    PRODUCT_GROUP: 'PRODUCT_GROUP',
+    WEEKLY_PRODUCT: 'WEEKLY_PRODUCT',
+} as const;
+
 export const IncludeGroupProps = (args?: {
     products?: boolean;
     productCount?: boolean;

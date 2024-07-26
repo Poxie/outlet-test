@@ -5,6 +5,7 @@ import CategoryQueries from '@/utils/categories/categoryQueries';
 import CustomError from '@/utils/errors';
 import { StatusCodes } from '@/utils/errors/statusCodes';
 import ImageHandler from '@/utils/images/imageHandler';
+import { PRODUCT_GROUP_TYPE } from '@/utils/product-groups/productGroupConstants';
 import { ProductGroupNotFoundError } from '@/utils/product-groups/productGroupErrors';
 import ProductGroupMutations from '@/utils/product-groups/productGroupMutations';
 import ProductGroupQueries from '@/utils/product-groups/productGroupQueries';
@@ -73,6 +74,7 @@ router.post('/', auth, asyncHandler(async (req, res, next) => {
         createdAt: Date.now().toString(),
         parentId: null,
         productCount: 0,
+        groupType: PRODUCT_GROUP_TYPE.PRODUCT_GROUP,
     });
 
     res.send(productGroup);

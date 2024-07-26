@@ -2,6 +2,16 @@ import client from "@/client";
 import { ProductNotFoundError } from "./productErrors";
 
 export default class ProductQueries {
+    static async getProductCountByGroupId(groupId: string) {
+        const count = await client.product.count({
+            where: {
+                id: groupId,
+            },
+        });
+
+        return count;
+    }
+    
     static async bulkGetProductsById(ids: string[]) {
         const products = await client.product.findMany({
             where: {

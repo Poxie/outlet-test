@@ -15,6 +15,25 @@ export default class ProductGroupQueries {
         return groupsWithCounts;
     }
 
+    static async getProductGroupsByIds(id: string[], withProducts: false): Promise<ProductGroup[]>;
+    static async getProductGroupsByIds(id: string[], withProducts: true): Promise<ProductGroupWithProducts[]>;
+    static async getProductGroupsByIds(ids: string[], withProducts = false): Promise<
+        ProductGroup[] | ProductGroupWithProducts[]
+    > {
+        const groups = await client.productGroup.findMany({
+            where: {
+                id: {
+                    in: ids,
+                },
+            },
+            ...IncludeGroupProps({ products: withProducts }),
+        });
+
+        const groupsWithCounts = groups.map(ProductGroupUtils.transformGroup);
+
+        return groupsWithCounts;
+    }
+
     static async getProductGroupById(id: string, withProducts: false): Promise<ProductGroup | null>;
     static async getProductGroupById(id: string, withProducts: true): Promise<ProductGroupWithProducts | null>;
     static async getProductGroupById(id: string, withProducts: boolean): Promise<

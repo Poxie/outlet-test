@@ -1,18 +1,20 @@
 import client from "@/client";
 import WeeklyProductsUtils from "./weeklyProductsUtils";
-import { WeeklyProduct } from "@prisma/client";
+import { Product, ProductGroup } from "@prisma/client";
+import ProductGroupQueries from "../product-groups/productGroupQueries";
+import WeeklyProductMutations from "./weeklyProductMutations";
 
 export default class WeeklyProductQueries {
     static async getWeeklyProducts(date: string) {
-        const weeklyProducts = await client.weeklyProduct.findMany({
+        const weeklyProducts = await client.product.findMany({
             where: {
-                date,
+                parentId: date,
             }
         });
         return weeklyProducts;
     }
     static async getWeeklyProductById(id: string) {
-        const weeklyProduct = await client.weeklyProduct.findUnique({
+        const weeklyProduct = await client.product.findUnique({
             where: {
                 id,
             }
@@ -23,33 +25,28 @@ export default class WeeklyProductQueries {
     static async getAllProductWeeks() {
         const weekDates = WeeklyProductsUtils.getAllProductWeeks();
 
+        const weekGroups = await ProductGroupQueries.getProductGroupsByIds(
+            weekDates.map(week => week.date),
+            true,
+        );
+
         // Create an array of objects with the date, week number, and an empty array of products
         const productWeeksData: {
             date: string;
             week: number;
-            products: WeeklyProduct[];
-        }[] = weekDates.map(({ date, week }) => {
+            group: ProductGroup;
+        }[] = await Promise.all(weekDates.map(async ({ date, week }) => {
+            let group = weekGroups.find(group => group.id === date);
+            if(!group) {
+                group = await WeeklyProductMutations.createWeeklyProductGroup(date);
+            }
+
             return {
                 date,
                 week,
-                products: [],
+                group,
             };
-        });
-
-        // Get all products for each week
-        const productWeekProducts = await client.weeklyProduct.findMany({
-            where: {
-                date: {
-                    in: weekDates.map(week => week.date),
-                }
-            }
-        });
-
-        // Add products to the correct week object
-        for(const product of productWeekProducts) {
-            const index = productWeeksData.findIndex(week => week.date === product.date);
-            productWeeksData[index].products.push(product);
-        }
+        }));
 
         return productWeeksData;
     }

@@ -9,6 +9,7 @@ export const createProductSchema = z.object({
         { message: imagesMustBeArrayString }
     ).nonempty({ message: imagesNonEmpty }),
     parentId: z.string({ message: parentIdIsRequired }),
+    parentType: z.enum(['PRODUCT_GROUP', 'WEEKLY_PRODUCT']).optional(),
 })
 
 export const updateProductPositionsSchema = z.object({

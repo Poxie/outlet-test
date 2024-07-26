@@ -10,6 +10,7 @@ declare global {
             CLOUDINARY_SECRET: string;
             JWT_SECRET: string;
             PROPERTY_ID: string;
+            DEFAULT_WEEKLY_BANNER_URL: string;
         }
     }
     namespace Express {
