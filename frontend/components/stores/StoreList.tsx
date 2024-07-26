@@ -14,7 +14,7 @@ export default function StoresList({ stores, onSelect, selectedId }: {
     const filteredStores = stores.filter(store => store.name.toLowerCase().includes(search.toLowerCase()));
 
     return(
-        <div className="w-[400px] overflow-hidden flex flex-col">
+        <div className="max-h-stores lg:h-stores lg:w-[400px] overflow-hidden flex flex-col">
             <Input 
                 onChange={setSearch}
                 icon={<SearchIcon size={20} />}

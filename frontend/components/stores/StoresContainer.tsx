@@ -18,7 +18,7 @@ export default function StoresContainer({ stores }: {
     }
     
     return(
-        <div className="h-stores flex border-[1px] border-tertiary rounded-md">
+        <div className="flex flex-col-reverse lg:flex-row border-[1px] border-tertiary rounded-md">
             <StoresList 
                 stores={stores}
                 selectedId={selectedStoreId}
