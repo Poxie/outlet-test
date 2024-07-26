@@ -1,14 +1,19 @@
 import { Store } from "@/utils/types";
-import StoreListSectionHeader from "./StoreListSectionHeader";
+import StoreSectionHeader from "./StoreSectionHeader";
+import { twMerge } from "tailwind-merge";
 
-export default function StoreOpeningHours({ store }: {
+export default function StoreOpeningHours({ store, className }: {
     store: Store;
+    className?: string;
 }) {
     return(
-        <div className="flex flex-col">
-            <StoreListSectionHeader>
+        <div className={twMerge(
+            "flex flex-col",
+            className,
+        )}>
+            <StoreSectionHeader>
                 Öppettider
-            </StoreListSectionHeader>
+            </StoreSectionHeader>
             <span>
                 Vardag {store.weekdayOpenHours}
             </span>

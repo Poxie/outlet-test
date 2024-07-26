@@ -43,6 +43,9 @@ const config: Config = {
       width: {
         main: '1200px',
       },
+      height: {
+        stores: '500px',
+      },
       maxWidth: {
         main: '90%',
       },

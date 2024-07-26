@@ -1,40 +1,43 @@
-import { getStoreIframeSrc, getStoreMapImage } from "@/utils/storeUtils";
+import SmallArrowIcon from "@/assets/icons/SmallArrowIcon";
 import { Store } from "@/utils/types";
+import StoreDetails from "./StoreDetails";
 import { twMerge } from "tailwind-merge";
-import StoreContact from "./StoreContact";
-import StoreOpeningHours from "./StoreOpeningHours";
-import StoreInformation from "./StoreInformation";
-import StoreImage from "./StoreImage";
+import { getOpenText } from "@/utils/storeUtils";
 
-export default function StoreListItem({ store, reverse }: {
+export default function StoreListItem({ store, onSelect, selected }: {
     store: Store;
-    reverse: boolean;
+    onSelect: (storeId: string) => void;
+    selected: boolean;
 }) {
-    const iframeSrc = getStoreIframeSrc(store);
-    const storeImageSrc = getStoreMapImage(store);
-
     return(
-        <div 
-            data-store-id={store.id}
-            className={twMerge(
-                "md:flex border-[1px] border-tertiary rounded-md overflow-hidden flex-row",
-                reverse && "flex-row-reverse",
-            )}
-        >
-            <div className="flex-1">
-                <div className="p-5 flex flex-col items-start border-b-[1px] border-tertiary">
-                    <StoreInformation store={store} />
+        <div>
+            <button 
+                className="w-full p-4 flex justify-between items-center text-left"
+                onClick={() => onSelect(store.id)}
+            >
+                <div>
+                    <h2 className="text-lg font-medium text-c-primary">
+                        {store.name}
+                    </h2>
+                    <span className="text-sm">
+                        {getOpenText(store)}
+                    </span>
                 </div>
-                <div className="p-5 grid gap-4">
-                    <StoreOpeningHours store={store} />
-                    <StoreContact store={store} />
-                </div>
-            </div>
-            <div className="flex-1">
-                <StoreImage 
-                    imageSrc={storeImageSrc}
-                    iframeSrc={iframeSrc}
+                <SmallArrowIcon 
+                    className={twMerge(
+                        "transition-transform",
+                        selected && '-rotate-90',
+                    )} 
+                    size={20} 
                 />
+            </button>
+            <div className={twMerge(
+                "grid grid-rows-[0fr] overflow-hidden duration-500 transition-[grid-template-rows]",
+                selected && 'grid-rows-[1fr]',
+            )}>
+                <div className="min-h-0">
+                    <StoreDetails store={store} />
+                </div>
             </div>
         </div>
     )

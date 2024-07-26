@@ -1,4 +1,4 @@
-export default function StoreListSectionHeader({ children }: {
+export default function StoreSectionHeader({ children }: {
     children: React.ReactNode;
 }) {
     return(

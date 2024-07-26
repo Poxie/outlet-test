@@ -18,4 +18,19 @@
   .header-background {
     @apply bg-header-background bg-center bg-no-repeat bg-cover;
   }
+  .scrollbar {
+    &::-webkit-scrollbar {
+      @apply w-5
+    }
+    &::-webkit-scrollbar-thumb {
+      @apply bg-tertiary rounded-full transition-colors;
+      border: 6px solid transparent; /* Space around the thumb */
+      background-clip: padding-box; /* Ensures the border is transparent */
+    }
+    &:active {
+      &::-webkit-scrollbar-thumb {
+        @apply bg-quaternary;
+      }
+    }
+  }
 }

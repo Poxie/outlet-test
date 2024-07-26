@@ -1,8 +1,7 @@
 import { Store } from "./types";
 
-const MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
-const MAPS_BASE_URL = process.env.GOOGLE_MAPS_BASE_URL;
-const MAPS_API_BASE_URL = process.env.GOOGLE_MAPS_API_BASE_URL;
+const MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+const MAPS_BASE_URL = process.env.NEXT_PUBLIC_GOOGLE_MAPS_BASE_URL;
 
 export const getAllStoresIframeSrc = () => {
     const src = `${MAPS_BASE_URL}/embed/v1/search?q=Ahlens Outlet Sweden&key=${MAPS_API_KEY}`;
@@ -17,8 +16,17 @@ export const getStoreMapLocation = (store: Store) => {
     const src = `${MAPS_BASE_URL}/place?q=Åhléns+Outlet+${store.name}+${store.address}&key=${MAPS_API_KEY}`;
     return src;
 }
-export const getStoreMapImage = (store: Store) => {
-    const address = store.address.replaceAll(' ', '+') + '+Åhléns+Outlet';
-    const src = `${MAPS_API_BASE_URL}/staticmap?center=${address}&zoom=12&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C${store.name}&key=${MAPS_API_KEY}`;
-    return src;
+
+export const getOpenText = (store: Store) => {
+    const today = new Date().getDay();
+
+    let times = store.weekdayOpenHours;
+    if(today === 0) {
+        times = store.sundayOpenHours;
+    }
+    if(today === 6) {
+        times = store.saturdayOpenHours;
+    }
+
+    return `Öppet idag ${times}`;
 }

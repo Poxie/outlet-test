@@ -1,16 +1,21 @@
 import { Store } from "@/utils/types";
-import StoreListSectionHeader from "./StoreListSectionHeader";
+import StoreSectionHeader from "./StoreSectionHeader";
 import InstagramIcon from "@/assets/icons/InstagramIcon";
+import { twMerge } from "tailwind-merge";
 
-export default function StoreContact({ store }: {
+export default function StoreContact({ store, className }: {
     store: Store;
+    className?: string;
 }) {
     return(
-        <div className="flex items-end justify-between">
+        <div className={twMerge(
+            "flex items-end justify-between",
+            className,
+        )}>
             <div className="flex flex-col items-start">
-                <StoreListSectionHeader>
+                <StoreSectionHeader>
                     Kontakt
-                </StoreListSectionHeader>
+                </StoreSectionHeader>
                 <span>
                     Tel:
                     {' '}
