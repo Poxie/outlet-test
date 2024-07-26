@@ -1,5 +1,5 @@
 import { PERSONNEL_ROLE, TEMP_PREFIX } from "./constants";
-import { Category, Product, ProductGroup, Store, User } from "./types";
+import { Category, Product, ProductGroup, Store, User, WeeklyProductGroup } from "./types";
 
 // Fucntions to get dummy objects
 export const getEmptyUserObject: () => User = () => ({
@@ -58,4 +58,18 @@ export function getReadableDate(date: string) {
 // Get readable role from role string
 export function getReadableRole(role: string) {
     return role.slice(0,1) + role.slice(1).toLowerCase();
+}
+
+export const getWeekFromDate = (date: string) => {
+    const dateObj = new Date(date);
+    const today = new Date();
+    const diff = dateObj.getTime() - today.getTime();
+    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+    return Math.floor(diffDays / 7) + 1;
+}
+export const getWeekText = (date: string) => {
+    const dateObj = new Date(date);
+    const today = new Date();
+    const isCurrentWeek = dateObj.getTime() - today.getTime() < 0;
+    return isCurrentWeek ? 'This week' : `Week ${getWeekFromDate(date)}`;
 }

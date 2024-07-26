@@ -1,13 +1,17 @@
 import SectionHeader from "../section-header";
 import ArrowIcon from "@/assets/icons/ArrowIcon";
-import Link from "next/link";
 import Section from "../section";
-import getAllWeekProducts from "@/api/weekly-products/getAllWeekProducts";
 import { WeeklyProductGroup } from "@/utils/types";
+import { useModal } from "@/contexts/modal";
+import WeeklyProductsModal from "@/modals/weekly-products";
 
 export default function UpcomingWeekProducts({ weeks }: {
     weeks: WeeklyProductGroup[];
 }) {
+    const { setModal } = useModal();
+
+    const openEditModal = (date: string) => setModal(<WeeklyProductsModal date={date} />);
+
     return(
         <>
         <SectionHeader 
@@ -16,9 +20,9 @@ export default function UpcomingWeekProducts({ weeks }: {
         />
         <Section className="grid gap-2">
             {weeks.map(week => (
-                <Link 
+                <button 
                     className="p-4 flex justify-between border-[1px] border-tertiary hover:bg-secondary transition-colors rounded-md"
-                    href={`/veckans-varor/${week.date}`}
+                    onClick={() => openEditModal(week.date)}
                     key={week.date}
                 >
                     <div className="flex items-center sm:gap-2 flex-col sm:flex-row">
@@ -33,11 +37,11 @@ export default function UpcomingWeekProducts({ weeks }: {
                     </div>
                     <div className="flex items-center gap-2">
                         <span>
-                            {week.products.length} products
+                            {week.group.productCount} products
                         </span>
                         <ArrowIcon size={16} />
                     </div>
-                </Link>
+                </button>
             ))}
         </Section>
         </>

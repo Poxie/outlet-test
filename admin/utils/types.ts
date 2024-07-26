@@ -10,7 +10,9 @@ export type MutableUserProps = Pick<User, 'name' | 'email' | 'role'>;
 export type WeeklyProductGroup = {
     date: string;
     week: number;
-    products: WeeklyProduct[];
+    group: ProductGroup & {
+        products: Product[];
+    };
 }
 export type WeeklyProduct = {
     id: string;

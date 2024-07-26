@@ -1,4 +1,4 @@
-const PRODUCT_COUNT = 12;
+const PRODUCT_COUNT = 6;
 export default function ProductGroupProductsSkeleton() {
     return(
         <div className="p-4 grid grid-cols-3 gap-2">
