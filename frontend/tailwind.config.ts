@@ -55,6 +55,9 @@ const config: Config = {
       padding: {
         section: '4rem 0',
       },
+      scrollMargin: {
+        navbar: '72px',
+      },
     },
   },
   plugins: [],

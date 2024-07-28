@@ -3,7 +3,7 @@ import ProductCard from "@/components/product-card";
 import SectionHeader from "@/components/section-header";
 import { Category, ProductGroup } from "@/utils/types";
 
-export default function HomeProductGroup({ hasCategory, group: { id, name, products } }: {
+export default function HomeProductGroup({ hasCategory, group: { id, name, products, parentId } }: {
     group: ProductGroup;
     hasCategory: boolean;
 }) {
@@ -19,7 +19,7 @@ export default function HomeProductGroup({ hasCategory, group: { id, name, produ
             {hasCategory && (
                 <SectionHeader
                     buttonText="Visa fler"
-                    buttonHref={`/${id}`}
+                    buttonHref={parentId ? `/${parentId}?products=${id}` : `/${id}`}
                 >
                     {name}
                 </SectionHeader>

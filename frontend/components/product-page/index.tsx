@@ -5,26 +5,23 @@ import PageBanner from '../page-banner';
 import { ProductPage } from '@/utils/types';
 import { usePathname } from 'next/navigation';
 
-export default function Products({ header, groups }: {
+export default function Products({ header: { title }, groups }: {
     header: ProductPage['header'];
     groups: ProductPage['groups'];
 }) {
     const path = usePathname();
 
+    const header = {
+        title,
+        path,
+    }
     return(
         <main>
-            <PageBanner 
-                className="main-width"
-                steps={[
-                    { text: 'Start', path: '/' },
-                    { text: header.title, path },
-                ]}
+            <ProductList 
+                groups={groups}
+                header={header}
+                className="pb-8 main-width"
             />
-            <div className="pb-8 main-width divide-y-[1px] divide-tertiary">
-                <ProductList 
-                    groups={groups}
-                />
-            </div>
             <SicklaNotice />
         </main>
     )
