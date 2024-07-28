@@ -1,6 +1,7 @@
 import ArrowIcon from "@/assets/icons/ArrowIcon";
 import { TableColumn } from ".";
 
+const DEFAULT_WIDTH = 250;
 export default function TableHead<T>({ columns, buttonText, onButtonClick }: {
     columns: TableColumn<T>[];
     buttonText?: string;
@@ -14,7 +15,7 @@ export default function TableHead<T>({ columns, buttonText, onButtonClick }: {
                     <th 
                         style={{ 
                             width: column.width || 'auto',
-                            minWidth: column.minWidth || 'auto',
+                            minWidth: column.minWidth || DEFAULT_WIDTH,
                         }}
                         className="px-4 py-3 text-sm text-nowrap"
                         key={index}

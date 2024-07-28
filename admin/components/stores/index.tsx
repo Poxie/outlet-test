@@ -19,8 +19,8 @@ export default function Stores() {
     const openCreateModal = () => setModal(<CreateStoreModal />);
     
     const tableColumns: TableColumn<Store>[] = [
-        { dataIndex: 'name', title: 'Name' },
-        { dataIndex: 'address', title: 'Address' },
+        { dataIndex: 'name', title: 'Name', minWidth: '160px' },
+        { dataIndex: 'address', title: 'Address', minWidth: '320px', render: store => <span className="line-clamp-2">{store.address}</span> },
         { dataIndex: 'email', title: 'Email' },
         { dataIndex: 'phoneNumber', title: 'Phone number' },
     ]
