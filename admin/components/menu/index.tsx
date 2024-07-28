@@ -4,6 +4,7 @@ import MenuGroups from "./MenuGroups";
 import { twMerge } from "tailwind-merge";
 import useClickOutside from "@/hooks/useClickOutside";
 import MenuIcon from "@/assets/icons/MenuIcon";
+import usePrefetchQuery from "@/hooks/usePrefetchQuery";
 
 /**
  * Recommended icon size: 16px
@@ -23,15 +24,22 @@ export type MenuGroup = MenuItem[];
 const SPACE_FROM_BUTTON = 4;
 const INITIAL_SCALE = .95;
 
-export default function Menu({ groups, className }: {
+export default function Menu({ groups, className, prefetchQueryFn, prefetchQueryKey }: {
     groups: MenuGroup[];
     className?: string;
+    prefetchQueryKey?: string[];
+    prefetchQueryFn?: () => Promise<any>;
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
     
     const [open, setOpen] = useState(false);
     const isMenuMount = useRef(true);
+
+    const prefetch = usePrefetchQuery({
+        queryFn: prefetchQueryFn,
+        queryKey: prefetchQueryKey,
+    });
 
     useEffect(() => {
         if(!open) return;
@@ -67,7 +75,10 @@ export default function Menu({ groups, className }: {
         };
     }, [open]);
     
-    const toggleOpen = () => setOpen(!open);
+    const toggleOpen = () => {
+        if(prefetch) prefetch();
+        setOpen(!open);
+    };
     
     useClickOutside(ref, () => setOpen(false));
     return(
