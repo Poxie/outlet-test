@@ -16,15 +16,15 @@ export default function HomeProductHeader({ header: { title, description, banner
                 alt={""}
                 priority={true}
             />
-            <div className="header-background p-8 sm:p-12 lg:w-2/4 flex flex-col items-start justify-center text-light">
-                <h2 className="text-4xl">
+            <div className="header-background p-8 xl:p-12 lg:w-2/4 flex flex-col items-start justify-center text-light">
+                <h2 className="text-3xl">
                     {title}
                 </h2>
                 <p className="mt-2 sm:text-lg">
                     {description}
                 </p>
                 <Link
-                    className="mt-5 py-3 px-5 w-full sm:w-[unset] text-sm flex items-center justify-center gap-3 text-light border-[1px] border-white rounded-md hover:bg-primary hover:text-primary transition-colors"
+                    className="mt-5 py-3 px-4 w-full sm:w-[unset] text-sm flex items-center justify-center gap-3 text-light border-[1px] border-white rounded-md hover:bg-primary hover:text-primary transition-colors"
                     href={path}
                     aria-label="Visa mer"
                 >
