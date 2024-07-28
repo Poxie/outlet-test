@@ -1,7 +1,6 @@
 "use client";
-import getCurrentUser from "@/api/users/getCurrentUser";
 import Sidebar from "@/components/sidebar";
-import { useQuery } from "@tanstack/react-query";
+import useCurrentUser from "@/hooks/useCurrentUser";
 import { useRouter } from "next/navigation";
 
 export default function MainLayout({ children }: {
@@ -9,10 +8,7 @@ export default function MainLayout({ children }: {
 }) {
     const router = useRouter();
 
-    const { data, isPending } = useQuery({
-        queryKey: ['current-user'],
-        queryFn: getCurrentUser,
-    })
+    const { data, isPending } = useCurrentUser();
 
     if(!data && !isPending) {
         router.replace('/login');
