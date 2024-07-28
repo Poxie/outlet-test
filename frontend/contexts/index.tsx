@@ -1,12 +1,15 @@
 "use client";
 import FavoritesProvider from "./favorites";
+import ModalProvider from "./modal";
 
 export default function Providers({ children }: {
     children: React.ReactNode;
 }) {
     return(
         <FavoritesProvider>
-            {children}
+            <ModalProvider>
+                {children}
+            </ModalProvider>
         </FavoritesProvider>
     )
 }
