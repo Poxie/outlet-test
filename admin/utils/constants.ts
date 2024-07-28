@@ -7,3 +7,5 @@ export const PRODUCT_TYPES = {
     PRODUCT: 'PRODUCT',
     WEEKLY_PRODUCT: 'WEEKLY_PRODUCT',
 } as const;
+
+export const STALE_TIME = 1000 * 60 * 5;
