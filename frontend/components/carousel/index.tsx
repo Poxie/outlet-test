@@ -70,50 +70,48 @@ export default function Carousel({ className, items, carouselGap, optimisticItem
         setTranslation(newTranslation);
     }, [currentStep, getItemWidth, setTranslation]);
 
+    // Check if we can go back or forward
     const canGoBack = useMemo(() => currentStep > 0, [currentStep]);
     const canGoForward = useMemo(() => currentStep < items.length - getItemsPerRow(), [currentStep, items.length, getItemsPerRow]);
 
+    // Functions to handle navigation
     const goToNextStep = useCallback(() => {
         if(!canGoForward) return;
         setCurrentStep(currentStep + 1);
     }, [canGoForward, currentStep]);
-
     const goToPreviousStep = useCallback(() => {
         if(!canGoBack) return;
         setCurrentStep(currentStep - 1);
     }, [canGoBack, currentStep]);
 
+    // Functions to handle transitions
     const addTransition = useCallback(() => {
         if(!listRef.current) return;
         listRef.current.style.transition = 'transform 0.5s ease';
     }, []);
-
     const removeTransition = useCallback(() => {
         if(!listRef.current) return;
         listRef.current.style.transition = 'none';
     }, []);
 
-    const onTouchStart = useCallback((e: React.TouchEvent) => {
-        e.preventDefault();
-
+    // Handling touch events for mobile
+    const onTouchStart = useCallback((e: TouchEvent) => {
         startTouch.current = e.touches[0].clientX;
         removeTransition();
-    }, [removeTransition]);
-
-    const onTouchMove = useCallback((e: React.TouchEvent) => {
+        
         e.preventDefault();
-
+    }, [removeTransition]);
+    const onTouchMove = useCallback((e: TouchEvent) => {
         const touch = e.touches[0];
 
         const diff = startTouch.current - touch.clientX;
         const newTranslation = currentTranslation.current - diff;
 
         setTranslation(newTranslation);
-    }, [setTranslation]);
 
-    const onTouchEnd = useCallback((e: React.TouchEvent) => {
         e.preventDefault();
-
+    }, [setTranslation]);
+    const onTouchEnd = useCallback((e: TouchEvent) => {
         addTransition();
 
         const touch = e.changedTouches[0];
@@ -128,7 +126,25 @@ export default function Carousel({ className, items, carouselGap, optimisticItem
         }
 
         setCurrentStep(step);
+
+        e.preventDefault();
     }, [addTransition, getItemWidth, currentStep, setTranslation]);
+
+    // Setup touch handlers manually on mount to prevent passive event listener warning
+    useEffect(() => {
+        const listElement = listRef.current;
+        if(listElement) {
+            listElement.addEventListener('touchstart', onTouchStart, { passive: false });
+            listElement.addEventListener('touchmove', onTouchMove, { passive: false });
+            listElement.addEventListener('touchend', onTouchEnd, { passive: false });
+
+            return () => {
+                listElement.removeEventListener('touchstart', onTouchStart);
+                listElement.removeEventListener('touchmove', onTouchMove);
+                listElement.removeEventListener('touchend', onTouchEnd);
+            };
+        }
+    }, [onTouchStart, onTouchMove, onTouchEnd]);
 
     return (
         <div
@@ -147,9 +163,6 @@ export default function Carousel({ className, items, carouselGap, optimisticItem
                 onClick={goToPreviousStep}
             />
             <ul
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
                 className="flex transition-transform duration-500"
                 style={{ gap: `${carouselGap}px` }}
                 ref={listRef}
