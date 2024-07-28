@@ -25,8 +25,7 @@ export default function Users() {
     const openCreateModal = () => setModal(<CreateUserModal />);
 
     const tableColumns: TableColumn<User>[] = [
-        { dataIndex: 'name', title: 'Name', render: user => <UserInfo user={user} />, renderSkeleton: <UserInfoSkeleton /> },
-        { dataIndex: 'email', title: 'Email' },
+        { dataIndex: 'name', title: 'User', render: user => <UserInfo user={user} />, renderSkeleton: <UserInfoSkeleton /> },
         { dataIndex: 'role', title: 'Role', render: user => getReadableRole(user.role) },
         { dataIndex: 'createdAt', title: 'Added At', render: user => getReadableDate(user.createdAt) },
     ]
