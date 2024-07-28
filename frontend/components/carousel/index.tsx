@@ -1,11 +1,11 @@
 "use client";
 import { twMerge } from "tailwind-merge";
-import CarouselItem from "./CarouselItem";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import CarouselNavigationButton from "./CarouselNavigationButton";
 
 const DEFAULT_MD_ITEMS_PER_ROW = 3;
 const DEFAULT_SM_ITEMS_PER_ROW = 2;
+
 export default function Carousel({ className, items, carouselGap, optimisticItemsPerRow, smItemsPerRow }: {
     items: JSX.Element[];
     optimisticItemsPerRow: number;
@@ -14,126 +14,123 @@ export default function Carousel({ className, items, carouselGap, optimisticItem
     className?: string;
 }) {
     const [currentStep, setCurrentStep] = useState(0);
-
     const listRef = useRef<HTMLUListElement>(null);
-
     const currentTranslation = useRef(0);
     const startTouch = useRef(0);
 
-    // Return to the start of the carousel if the items per row changes
+    const handleResize = useCallback(() => setCurrentStep(0), []);
+
     useEffect(() => {
         if(!listRef.current) return;
-
-        const onResize = () => setCurrentStep(0);
-
-        const resizeObserver = new ResizeObserver(onResize);
+        const resizeObserver = new ResizeObserver(handleResize);
         resizeObserver.observe(listRef.current);
-
         return () => resizeObserver.disconnect();
+    }, [handleResize]);
+
+    useEffect(() => {
+        updateTranslateByStep();
+    }, [currentStep]);
+
+    const getItemsPerRow = useCallback(() => {
+        if(!listRef.current) return optimisticItemsPerRow;
+        return parseInt(getComputedStyle(listRef.current).getPropertyValue('--items-per-row'));
+    }, [optimisticItemsPerRow]);
+
+    const getListRect = useCallback(() => {
+        if(!listRef.current) return { width: 0, left: 0 };
+        return listRef.current.getBoundingClientRect();
     }, []);
 
-    // If the current step changes, update the translation
-    useEffect(() => updateTranslateByStep(), [currentStep]);
-    
-    // Set the translation of the carousel based on the current step
-    const updateTranslateByStep = () => {
+    const getItemWidth = useCallback(() => {
+        const { width } = getListRect();
+        const itemsPerRow = getItemsPerRow();
+        return width / itemsPerRow + (carouselGap / itemsPerRow);
+    }, [getListRect, getItemsPerRow, carouselGap]);
+
+    const setTranslation = useCallback((translation: number) => {
+        if(!listRef.current) return;
+        
+        const itemsPerRow = getItemsPerRow();
+        const itemWidth = getItemWidth();
+
+        const maxTranslation = itemWidth * items.length - itemsPerRow * itemWidth;
+        
+        if(translation > 0) translation = 0;
+        if(Math.abs(translation) > maxTranslation) translation = -maxTranslation;
+
+        listRef.current.style.transform = `translate3d(${translation}px, 0, 0)`;
+    }, [getItemsPerRow, getItemWidth, items.length]);
+
+    const updateTranslateByStep = useCallback(() => {
         const itemWidth = getItemWidth();
 
         const newTranslation = -currentStep * itemWidth;
 
         currentTranslation.current = newTranslation;
         setTranslation(newTranslation);
-    }
+    }, [currentStep, getItemWidth, setTranslation]);
 
-    // The items per row variable changes based on the screen size
-    // Function to get the items per row based on the current screen size
-    const getItemsPerRow = () => {
-        if(!listRef.current) return optimisticItemsPerRow;
-        return parseInt(getComputedStyle(listRef.current).getPropertyValue('--items-per-row'));
-    }
+    const canGoBack = useMemo(() => currentStep > 0, [currentStep]);
+    const canGoForward = useMemo(() => currentStep < items.length - getItemsPerRow(), [currentStep, items.length, getItemsPerRow]);
 
-    // Get width of items based on list width, row count and gap
-    const getListRect = () => {
-        if(!listRef.current) return { width: 0, left: 0 };
-        return listRef.current.getBoundingClientRect();
-    }
-    const getItemWidth = () => {
-        const { width } = getListRect();
-        const itemsPerRow = getItemsPerRow();
-        return width / getItemsPerRow() + (carouselGap / itemsPerRow);
-    }
-
-    // Function to set the translation of the carousel
-    const setTranslation = (translation: number) => {
-        if(!listRef.current) return;
-
-        const itemsPerRow = getItemsPerRow();
-
-        const itemWidth = getItemWidth();
-        const maxTranslation = itemWidth * items.length - itemsPerRow * itemWidth;
-
-        if(translation > 0) translation = 0;
-        if(Math.abs(translation) > maxTranslation) translation = -maxTranslation;
-
-        listRef.current.style.transform = `translateX(${translation}px)`;
-    }
-
-    // Handle navigation buttons of the carousel
-    const canGoBack = () => currentStep > 0;
-    const canGoForward = () => currentStep < items.length - getItemsPerRow();
-    const goToNextStep = () => {
-        if(!canGoForward()) return;
+    const goToNextStep = useCallback(() => {
+        if(!canGoForward) return;
         setCurrentStep(currentStep + 1);
-    }
-    const goToPreviousStep = () => {
-        if(!canGoBack()) return;
-        setCurrentStep(currentStep - 1);
-    }
+    }, [canGoForward, currentStep]);
 
-    // Functions to update the transition of the carousel
-    const addTransition = () => {
+    const goToPreviousStep = useCallback(() => {
+        if(!canGoBack) return;
+        setCurrentStep(currentStep - 1);
+    }, [canGoBack, currentStep]);
+
+    const addTransition = useCallback(() => {
         if(!listRef.current) return;
         listRef.current.style.transition = 'transform 0.5s ease';
-    }
-    const removeTransition = () => {
+    }, []);
+
+    const removeTransition = useCallback(() => {
         if(!listRef.current) return;
         listRef.current.style.transition = 'none';
-    }
+    }, []);
 
-    // Handling touch navigation on mobile
-    const onTouchStart = (e: React.TouchEvent) => {
+    const onTouchStart = useCallback((e: React.TouchEvent) => {
+        e.preventDefault();
+
         startTouch.current = e.touches[0].clientX;
         removeTransition();
-    }
-    const onTouchMove = (e: React.TouchEvent) => {
+    }, [removeTransition]);
+
+    const onTouchMove = useCallback((e: React.TouchEvent) => {
+        e.preventDefault();
+
         const touch = e.touches[0];
 
         const diff = startTouch.current - touch.clientX;
-
         const newTranslation = currentTranslation.current - diff;
 
         setTranslation(newTranslation);
-    }
-    const onTouchEnd = (e: React.TouchEvent) => {
+    }, [setTranslation]);
+
+    const onTouchEnd = useCallback((e: React.TouchEvent) => {
+        e.preventDefault();
+
         addTransition();
 
         const touch = e.changedTouches[0];
 
         const diff = startTouch.current - touch.clientX - currentTranslation.current;
-
         const itemWidth = getItemWidth();
 
         const step = Math.round(diff / itemWidth);
-
         if(step === currentStep) {
             setTranslation(-currentStep * itemWidth);
             return;
         }
 
         setCurrentStep(step);
-    }
+    }, [addTransition, getItemWidth, currentStep, setTranslation]);
 
-    return(
+    return (
         <div
             style={{
                 '--optimistic-per-row': optimisticItemsPerRow,
@@ -141,26 +138,24 @@ export default function Carousel({ className, items, carouselGap, optimisticItem
                 '--sm-items-per-row': smItemsPerRow ?? DEFAULT_SM_ITEMS_PER_ROW,
                 '--carousel-gap': `${carouselGap}px`,
             } as React.CSSProperties}
-            className="[--items-per-row:var(--sm-items-per-row)] md:[--items-per-row:var(--md-items-per-row)] lg:[--items-per-row:var(--optimistic-per-row)] relative overflow-x-hidden"
+            className={twMerge("[--items-per-row:var(--sm-items-per-row)] md:[--items-per-row:var(--md-items-per-row)] lg:[--items-per-row:var(--optimistic-per-row)] relative overflow-x-hidden", className)}
         >
-            <CarouselNavigationButton 
+            <CarouselNavigationButton
                 ariaLabel="Tidigare"
                 className="rotate-90 left-0"
-                disabled={!canGoBack()}
+                disabled={!canGoBack}
                 onClick={goToPreviousStep}
             />
-            <ul 
+            <ul
                 onTouchStart={onTouchStart}
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
                 className="flex transition-transform duration-500"
-                style={{
-                    gap: `${carouselGap}px`,
-                }}
+                style={{ gap: `${carouselGap}px` }}
                 ref={listRef}
             >
                 {items.map((item, index) => (
-                    <li 
+                    <li
                         draggable={false}
                         className="min-w-[calc((1/var(--items-per-row))*(100%-var(--carousel-gap)*(var(--items-per-row)-1)))]"
                         key={`carousel-item-${index}`}
@@ -169,12 +164,12 @@ export default function Carousel({ className, items, carouselGap, optimisticItem
                     </li>
                 ))}
             </ul>
-            <CarouselNavigationButton 
+            <CarouselNavigationButton
                 ariaLabel="Nästa"
                 className="-rotate-90"
-                disabled={!canGoForward()}
+                disabled={!canGoForward}
                 onClick={goToNextStep}
             />
         </div>
-    )
+    );
 }
