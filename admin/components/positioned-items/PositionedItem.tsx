@@ -22,10 +22,10 @@ export default function PositionedItem<T extends ItemWithPosition>({ item, rende
         currentPositionIndex.current = item.position;
     }, [item]);
 
-    const getPositionDiff = (e: MouseEvent | React.MouseEvent) => {
+    const getPositionDiff = (clientX: number, clientY: number) => {
         return {
-            x: e.clientX - initialPosition.current.x,
-            y: e.clientY - initialPosition.current.y,
+            x: clientX - initialPosition.current.x,
+            y: clientY - initialPosition.current.y,
         }
     }
     const setTranslate = (x: number, y: number) => {
@@ -44,11 +44,11 @@ export default function PositionedItem<T extends ItemWithPosition>({ item, rende
         if(!ref.current) return null;
         return ref.current.getBoundingClientRect();
     }
-    const getCurrentMovePosition = (e: MouseEvent) => {
+    const getCurrentMovePosition = (clientX: number, clientY: number) => {
         if(!ref.current) return null;
 
         const { x, y } = initialPosition.current;
-        const { x: diffX, y: diffY } = getPositionDiff(e);
+        const { x: diffX, y: diffY } = getPositionDiff(clientX, clientY);
         const { x: mouseX, y: mouseY } = initialMousePosition.current;
 
         return {
@@ -65,28 +65,30 @@ export default function PositionedItem<T extends ItemWithPosition>({ item, rende
         }));
     }
 
-    const handleMouseDown = (e: React.MouseEvent) => {
+    const handleStart = (clientX: number, clientY: number) => {
         if(!ref.current) return;
         isDragging.current = true;
 
         initialPosition.current = {
-            x: e.clientX,
-            y: e.clientY,
+            x: clientX,
+            y: clientY,
         }
 
         const { left, top } = ref.current.getBoundingClientRect();
         initialMousePosition.current = {
-            x: left - e.clientX,
-            y: top - e.clientY,
+            x: left - clientX,
+            y: top - clientY,
         }
     
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('touchmove', handleTouchMove);
+        document.addEventListener('touchend', handleTouchEnd);
     }
-    const handleMouseMove = (e: MouseEvent) => {
-        const { x, y } = getPositionDiff(e);
+    const handleMove = (clientX: number, clientY: number) => {
+        const { x, y } = getPositionDiff(clientX, clientY);
 
-        const position = getCurrentMovePosition(e);
+        const position = getCurrentMovePosition(clientX, clientY);
         if(!position) return;
         
         setTranslate(position.x, position.y);
@@ -121,7 +123,7 @@ export default function PositionedItem<T extends ItemWithPosition>({ item, rende
 
         onPositionChange({...item, position: currentPositionIndex.current}, intersectingItem);
     }
-    const handleMouseUp = () => {
+    const handleEnd = () => {
         if(!ref.current) return;
 
         isDragging.current = false;
@@ -131,6 +133,29 @@ export default function PositionedItem<T extends ItemWithPosition>({ item, rende
     
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
+        document.removeEventListener('touchmove', handleTouchMove);
+        document.removeEventListener('touchend', handleTouchEnd);
+    }
+
+    const handleMouseDown = (e: React.MouseEvent) => {
+        handleStart(e.clientX, e.clientY);
+    }
+    const handleMouseMove = (e: MouseEvent) => {
+        handleMove(e.clientX, e.clientY);
+    }
+    const handleMouseUp = () => {
+        handleEnd();
+    }
+    const handleTouchStart = (e: React.TouchEvent) => {
+        const touch = e.touches[0];
+        handleStart(touch.clientX, touch.clientY);
+    }
+    const handleTouchMove = (e: TouchEvent) => {
+        const touch = e.touches[0];
+        handleMove(touch.clientX, touch.clientY);
+    }
+    const handleTouchEnd = () => {
+        handleEnd();
     }
 
     return(
@@ -148,6 +173,7 @@ export default function PositionedItem<T extends ItemWithPosition>({ item, rende
                     ariaLabel="Move item"
                     className="top-2 left-2 cursor-grab"
                     onMouseDown={handleMouseDown}
+                    onTouchStart={handleTouchStart}
                 >
                     <MoveIcon size={20} />
                 </ItemButton>

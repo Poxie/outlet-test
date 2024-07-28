@@ -1,10 +1,11 @@
 import { twMerge } from "tailwind-merge";
 
-export default function ItemButton({ children, className, onMouseDown, onClick, ariaLabel }: {
+export default function ItemButton({ children, className, onMouseDown, onTouchStart, onClick, ariaLabel }: {
     children: React.ReactNode;
     className?: string;
     onClick?: () => void;
     onMouseDown?: (e: React.MouseEvent) => void;
+    onTouchStart?: (e: React.TouchEvent) => void;
     ariaLabel: string;
 }) {
     return(
@@ -15,6 +16,7 @@ export default function ItemButton({ children, className, onMouseDown, onClick, 
             )}
             onClick={onClick}
             onMouseDown={onMouseDown}
+            onTouchStart={onTouchStart}
             aria-label={ariaLabel}
             type="button"
         >
