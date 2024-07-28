@@ -36,7 +36,7 @@ export default function useUpdateStore(initialStore: Store) {
             })
 
             refetchQuery(['stores']);
-            refetchQuery(['store', initialStore.id]);
+            refetchQuery(['stores', initialStore.id]);
         } catch(error: any) {
             setFeedback({
                 type: 'danger',

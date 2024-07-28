@@ -38,7 +38,7 @@ export default function useUpdateUser(user: User) {
                 message: 'User has been updated',
             })
 
-            refetchQuery(['user', user.id]);
+            refetchQuery(['users', user.id]);
             refetchQuery(['users']);
             if(user.id === self?.id) {
                 refetchQuery(['current-user']);

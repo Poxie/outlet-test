@@ -7,6 +7,7 @@ import { useModal } from "@/contexts/modal";
 import DeleteUserModal from "@/modals/delete-user";
 import EditUser from "@/modals/user-profile/edit-user";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import getUserById from "@/api/users/getUserById";
 
 export default function UserMenu({ user }: {
     user: User;
@@ -42,7 +43,11 @@ export default function UserMenu({ user }: {
 
     return(
         <div className="flex justify-end">
-            <Menu groups={menuGroups} />
+            <Menu 
+                groups={menuGroups}
+                prefetchQueryKey={['users', user.id]}
+                prefetchQueryFn={() => getUserById(user.id)}
+            />
         </div>
     )
 }

@@ -6,6 +6,7 @@ import EditIcon from "@/assets/icons/EditIcon";
 import { useModal } from "@/contexts/modal";
 import DeleteCategoryModal from "@/modals/category/delete-category";
 import EditCategoryModal from "@/modals/category/edit-category";
+import getCategoryById from "@/api/categories/getCategoryById";
 
 export default function CategoryMenu({ category }: {
     category: Category;
@@ -28,6 +29,8 @@ export default function CategoryMenu({ category }: {
     return(
         <Menu 
             groups={groups}
+            prefetchQueryKey={['categories', category.id]}
+            prefetchQueryFn={() => getCategoryById(category.id)}
         />
     )
 }

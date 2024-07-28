@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function useGetUserById(id: string) {
     return useQuery({
-        queryKey: ["user", id],
+        queryKey: ["users", id],
         queryFn: () => getUserById(id),
     })
 }

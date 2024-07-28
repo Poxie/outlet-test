@@ -9,6 +9,7 @@ import { useModal } from "@/contexts/modal";
 import DeleteStoreModal from "@/modals/delete-store";
 import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
 import EditStoreModal from "@/modals/store/edit-store";
+import getStoreById from "@/api/stores/getStoreById";
 
 export default function StoresTableMenu({ store }: { 
     store: Store; 
@@ -43,6 +44,10 @@ export default function StoresTableMenu({ store }: {
     if(secondGroup.length) menuGroups.push(secondGroup);
 
     return(
-        <Menu groups={menuGroups} />
+        <Menu 
+            groups={menuGroups}
+            prefetchQueryFn={() => getStoreById(store.id)}
+            prefetchQueryKey={['stores', store.id]}
+        />
     )
 }

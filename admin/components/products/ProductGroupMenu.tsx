@@ -6,6 +6,7 @@ import BinIcon from "@/assets/icons/BinIcon";
 import { useModal } from "@/contexts/modal";
 import DeleteProductGroup from "@/modals/product-group/delete-product-group";
 import EditProductGroup from "@/modals/product-group/edit-product-group";
+import getProductGroupById from "@/api/product-groups/getProductGroupById";
 
 export default function ProductGroupMenu({ productGroup }: {
     productGroup: ProductGroup;
@@ -27,6 +28,8 @@ export default function ProductGroupMenu({ productGroup }: {
     return(
         <Menu 
             groups={groups}
+            prefetchQueryKey={['product-groups', productGroup.id]}
+            prefetchQueryFn={() => getProductGroupById(productGroup.id)}
         />
     )
 }
