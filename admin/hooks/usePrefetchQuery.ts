@@ -1,17 +1,24 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
-export default function usePrefetchQuery({ queryKey, queryFn }: {
+export default function usePrefetchQuery({ queryKey, queryFn, prefetchOnMount }: {
     queryKey?: string[];
     queryFn?: () => Promise<any>;
+    prefetchOnMount?: boolean;
 }) {
     const queryClient = useQueryClient();
 
     const hasPrefetched = useRef(false);
+
+    useEffect(() => {
+        if(!prefetchOnMount) return;
+        prefetch();
+    }, [prefetchOnMount, prefetch]);
     
     if(!queryKey || !queryFn) return;
-
-    const prefetch = async () => {
+    
+    async function prefetch() {
+        if(!queryKey || !queryFn) return;
         if(hasPrefetched.current) return;
 
         await queryClient.prefetchQuery({ 

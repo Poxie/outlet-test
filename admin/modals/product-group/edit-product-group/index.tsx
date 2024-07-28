@@ -5,6 +5,8 @@ import { useState } from "react";
 import ProductGroupDetailsTab from "./ProductGroupDetailsTab";
 import ProductGroupCategoryTab from "./ProductGroupCategoryTab";
 import ProductGroupProductsTabWrapper from "./ProductGroupProductsTabWrapper";
+import usePrefetchQuery from "@/hooks/usePrefetchQuery";
+import getProductsByParentId from "@/api/products/getProductsByParentId";
 
 const DETAILS = 'DETAILS';
 const PRODUCTS = 'PRODUCTS';
@@ -30,6 +32,12 @@ export default function EditProductGroup({ productGroupId }: {
     const { data: productGroup } = useQueryProductGroupById(productGroupId);
 
     const [activeTab, setActiveTab] = useState<ProductGroupTab>(DETAILS);
+
+    usePrefetchQuery({
+        queryFn: () => getProductsByParentId(productGroupId),
+        queryKey: ['products', productGroupId],
+        prefetchOnMount: true,
+    })
 
     if(!productGroup) return null;
 
