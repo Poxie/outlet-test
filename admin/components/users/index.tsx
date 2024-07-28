@@ -30,10 +30,7 @@ export default function Users() {
         { dataIndex: 'createdAt', title: 'Added At', render: user => getReadableDate(user.createdAt) },
     ]
 
-    const renderMenu = (user: User) => {
-        if(!self) return null;
-        <UserMenu self={self} user={user} />;
-    }
+    const renderMenu = (user: User) => <UserMenu user={user} />;
 
     return(
         <>

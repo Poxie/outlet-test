@@ -6,12 +6,14 @@ import { User } from "@/utils/types";
 import { useModal } from "@/contexts/modal";
 import DeleteUserModal from "@/modals/delete-user";
 import EditUser from "@/modals/user-profile/edit-user";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
-export default function UserMenu({ user, self }: {
+export default function UserMenu({ user }: {
     user: User;
-    self: User;
 }) {
     const { setModal } = useModal();
+
+    const { data: self } = useCurrentUser();
 
     const openDeleteModal = () => {
         setModal(<DeleteUserModal user={user} />)
@@ -20,8 +22,8 @@ export default function UserMenu({ user, self }: {
         setModal(<EditUser userId={user.id} />);
     }
 
-    const canEdit = self.id === user.id || self.role === 'ADMINISTRATOR';
-    const canRemove = self.role === 'ADMINISTRATOR' && self.id !== user.id;
+    const canEdit = self?.id === user.id || self?.role === 'ADMINISTRATOR';
+    const canRemove = self?.role === 'ADMINISTRATOR' && self?.id !== user.id;
 
     const firstGroup: MenuGroup = [
         { text: 'View user', icon: <PersonIcon size={16} />, onClick: openEditModal },
