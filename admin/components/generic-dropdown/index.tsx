@@ -24,7 +24,10 @@ export default function GenericDropdown<T>({ className, label, items, renderItem
  
     const ref = useRef<HTMLDivElement>(null);
     
-    const closeMenu = () => setOpen(false);
+    const closeMenu = () => {
+        setOpen(false);
+        setSearch('');
+    }
 
     const handleSelect = (item: T) => {
         onSelect?.(item);
