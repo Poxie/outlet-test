@@ -1,13 +1,18 @@
 import CloseIcon from "@/assets/icons/CloseIcon";
 import { Category, ProductGroup } from "@/utils/types"
 import Image from "next/image";
+import { twMerge } from "tailwind-merge";
 
-export default function ProductGroupAssignedCategory({ updateProps, category: { title, description, bannerURL } }: {
+export default function ProductGroupAssignedCategory({ className, updateProps, category: { title, description, bannerURL } }: {
     category: Category;
     updateProps: (changes: Partial<ProductGroup>) => void;
+    className?: string;
 }) {
     return(
-        <div className="flex items-center justify-between gap-3">
+        <div className={twMerge(
+            "flex items-center justify-between gap-3",
+            className,
+        )}>
             <div className="flex items-center gap-3">
                 <Image 
                     className="rounded aspect-video object-cover"

@@ -96,27 +96,22 @@ export default function CategoryProductGroupsTab({ category }: {
             <div className="p-4">
                 <ProductGroupDropdown 
                     onSelect={handleAddProductGroup}
-                    className="mb-4 pb-4 border-b-[1px] border-b-tertiary"
                     selectText="Assign a new product group"
                     shouldRenderAsButton
                 />
-                {hasActiveGroups && (
-                    <div className="grid gap-3">
-                        {activeGroups.map(group => (
-                            <CategoryProductGroup 
-                                onRemove={handleRemoveProductGroup}
-                                productGroup={group}
-                                key={group.id} 
-                            />
-                        ))}
-                    </div>
-                )}
-                {!hasActiveGroups && (
-                    <span className="block w-full text-sm text-center">
-                        This category has no assigned product groups.
-                    </span>
-                )}
             </div>
+
+            {hasActiveGroups && (
+                <div className="p-4 grid gap-3 border-t-[1px] border-t-tertiary">
+                    {activeGroups.map(group => (
+                        <CategoryProductGroup 
+                            onRemove={handleRemoveProductGroup}
+                            productGroup={group}
+                            key={group.id} 
+                        />
+                    ))}
+                </div>
+            )}
 
             <ModalFooter 
                 confirmText="Update groups"

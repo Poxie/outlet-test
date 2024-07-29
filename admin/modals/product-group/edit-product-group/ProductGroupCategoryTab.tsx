@@ -27,24 +27,18 @@ export default function ProductGroupCategoryTab({ productGroup }: {
         <form onSubmit={updateCategory}>
             <CategoryDropdown 
                 onSelect={category => updateProps({ parentId: category.id })}
-                className="p-4 border-b-[1px] border-b-tertiary"
-                selectText="Assign to a category"
+                className="p-4"
+                selectText={activeCategory ? `Assign to another category` : 'Assign to a category'}
                 shouldRenderAsButton
             />
 
-            <div className="p-4">
-                {activeCategory && (
-                    <ProductGroupAssignedCategory 
-                        category={activeCategory}
-                        updateProps={updateProps}
-                    />
-                )}
-                {!activeCategory && (
-                    <span className="block text-sm text-center text-muted">
-                        This group is not assigned to any category.
-                    </span>
-                )}
-            </div>
+            {activeCategory && (
+                <ProductGroupAssignedCategory 
+                    category={activeCategory}
+                    updateProps={updateProps}
+                    className="p-4 border-t-[1px] border-t-tertiary"
+                />
+            )}
 
             <ModalFooter 
                 confirmText="Update category"
