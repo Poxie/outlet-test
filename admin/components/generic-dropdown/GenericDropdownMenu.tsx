@@ -68,6 +68,11 @@ export default function GenericDropdownMenu<T>({ items, renderItem, onSelect, se
                     </button>
                 </li>
             ))}
+            {filteredItems.length === 0 && (
+                <li className="p-2 text-center text-sm text-muted">
+                    No items found
+                </li>
+            )}
         </motion.ul>
     )
 }
