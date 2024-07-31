@@ -5,10 +5,10 @@ import { ProductGroup } from "@prisma/client";
 import { ProductGroupType, ProductGroupWithProducts } from "../types";
 
 export default class ProductGroupQueries {
-    static async getProductGroups(withProducts = false) {
+    static async getProductGroups(withProducts = false, groupType?: ProductGroupType) {
         const groups = await client.productGroup.findMany({
             where: {
-                groupType: PRODUCT_GROUP_TYPE.PRODUCT_GROUP,
+                groupType: groupType || PRODUCT_GROUP_TYPE.PRODUCT_GROUP,
             },
             ...IncludeGroupProps({ products: withProducts })
         });

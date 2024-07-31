@@ -5,5 +5,5 @@ export const createProductGroupSchema = z.object({
     description: z.string().min(1).max(255),
     banner: z.string().optional(),
     parentId: z.string().optional().nullable(),
-    type: z.enum(['PRODUCT_GROUP', 'BLOG']).optional(),
+    groupType: z.enum(['PRODUCT_GROUP', 'BLOG']).optional(),
 })

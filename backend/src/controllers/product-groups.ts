@@ -14,7 +14,7 @@ import productGroupUtils from '@/utils/product-groups/productGroupUtils';
 import ProductMutations from '@/utils/products/productMutations';
 import ProductQueries from '@/utils/products/productQueries';
 import ProductUtils from '@/utils/products/productUtils';
-import { MutableProductGroupProps, ProductGroupWithProducts } from '@/utils/types';
+import { MutableProductGroupProps, ProductGroupType, ProductGroupWithProducts } from '@/utils/types';
 import { createProductGroupSchema } from '@/validation/productGroupSchemas';
 import { ProductGroup } from '@prisma/client';
 import express from 'express';
@@ -23,8 +23,13 @@ const router = express.Router();
 
 router.get('/', asyncHandler(async (req, res) => {
     const withProducts = req.query.withProducts === 'true';
+    const groupType = req.query.groupType as ProductGroupType | undefined;
 
-    const groups = await ProductGroupQueries.getProductGroups(withProducts);
+    if(groupType && !Object.values(PRODUCT_GROUP_TYPE).includes(groupType)) {
+        throw new BadRequestError('Invalid group type');
+    }
+
+    const groups = await ProductGroupQueries.getProductGroups(withProducts, groupType);
 
     res.send(groups);
 }));
@@ -69,8 +74,8 @@ router.post('/', auth, asyncHandler(async (req, res, next) => {
         }
     }
 
-    // If type is blog, use default blog banner
-    if(data.type === 'BLOG') {
+    // If type is blog and banner is not provided, use default blog banner
+    if(data.groupType === 'BLOG' && !data.banner) {
         bannerImage = process.env.DEFAULT_BLOG_BANNER_URL;
     }
 
@@ -87,7 +92,7 @@ router.post('/', auth, asyncHandler(async (req, res, next) => {
         createdAt: Date.now().toString(),
         parentId: null,
         productCount: 0,
-        groupType: data.type || PRODUCT_GROUP_TYPE.PRODUCT_GROUP,
+        groupType: data.groupType || PRODUCT_GROUP_TYPE.PRODUCT_GROUP,
     });
 
     res.send(productGroup);
