@@ -31,7 +31,9 @@ router.get('/', asyncHandler(async (req, res) => {
 
     const groups = await ProductGroupQueries.getProductGroups(withProducts, groupType);
 
-    res.send(groups);
+    const sortedGroups = groups.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1);
+
+    res.send(sortedGroups);
 }));
 
 router.get('/:id', asyncHandler(async (req, res) => {
