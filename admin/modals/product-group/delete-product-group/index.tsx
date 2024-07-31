@@ -24,7 +24,11 @@ export default function DeleteProductGroup({ productGroup }: {
                 type: 'success',
             });
 
-            refetchQuery(['product-groups']);
+            if(productGroup.groupType === 'BLOG') {
+                refetchQuery(['blog-posts']);
+            } else {
+                refetchQuery(['product-groups']);
+            }
             closeModal();
         } catch(error: any) {
             setFeedback({
@@ -36,7 +40,7 @@ export default function DeleteProductGroup({ productGroup }: {
 
     return(
         <ConfirmModal 
-            title="Delete Product Group"
+            title={`Delete ${productGroup.name}`}
             confirmText="Delete group"
             confirmLoadingText="Deleting group..."
             message="Are you sure you want to delete this product group? All products in this group will be deleted as well."

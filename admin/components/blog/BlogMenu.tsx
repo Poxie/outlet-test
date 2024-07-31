@@ -7,6 +7,7 @@ import { useModal } from "@/contexts/modal"
 import useSelfIsAdmin from "@/hooks/useSelfIsAdmin";
 import EditProductGroup from "@/modals/product-group/edit-product-group";
 import getProductGroupById from "@/api/product-groups/getProductGroupById";
+import DeleteProductGroup from "@/modals/product-group/delete-product-group";
 
 export default function BlogMenu({ productGroup }: { 
     productGroup: ProductGroup; 
@@ -16,7 +17,7 @@ export default function BlogMenu({ productGroup }: {
     const isAdmin = useSelfIsAdmin();
 
     const openEditModal = () => setModal(<EditProductGroup productGroupId={productGroup.id} />);
-    const openDeleteModal = () => setModal(<EditProductGroup productGroupId={productGroup.id} />);
+    const openDeleteModal = () => setModal(<DeleteProductGroup productGroup={productGroup} />);
 
     const firstGroup: MenuGroup = [
         { text: 'View blog post', icon: <ViewIcon size={16} />, onClick: openEditModal },
