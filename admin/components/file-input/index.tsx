@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import Button from "../button";
+import UploadButton from "../upload-button";
 
 export default function FileInput({ containerClassName, className, label, value, onChange, multiple, addText, hasEditButton, editText='Edit' }: {
     label?: string;
@@ -66,13 +67,11 @@ export default function FileInput({ containerClassName, className, label, value,
                     ref={ref}
                 />
                 {value && hasEditButton && (
-                    <Button 
-                        type="secondary"
-                        onClick={() => ref.current?.click()}
-                        className="px-3 py-2.5 text-sm absolute right-2 top-2"
-                    >
-                        {editText}
-                    </Button>
+                    <UploadButton 
+                        text={editText}
+                        className="absolute top-0 left-0 w-full"
+                        onChange={image => onChange([image])}
+                    />
                 )}
                 {addText && !value && (
                     <span>
