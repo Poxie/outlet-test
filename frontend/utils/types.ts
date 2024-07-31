@@ -37,6 +37,7 @@ export type ProductGroup = {
     productCount: number;
     products: Product[];
     parentId: string | null;
+    createdAt: string;
 }
 export type ProductListHeader = {
     title: string;
