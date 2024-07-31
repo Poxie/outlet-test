@@ -39,6 +39,7 @@ export type MutableCategoryProps = Pick<Category, 'title' | 'description'> & {
     banner: string;
 };
 
+export type ProductGroupType = 'WEEKLY_PRODUCT' | 'PRODUCT_GROUP' | 'BLOG';
 export type ProductGroup = {
     id: string;
     name: string;
@@ -47,6 +48,7 @@ export type ProductGroup = {
     parentId: string | null;
     createdAt: string;
     productCount: number;
+    groupType: ProductGroupType;
 }
 export type MutableProductGroupProps = Pick<ProductGroup, 'name' | 'description'> & {
     banner: string;

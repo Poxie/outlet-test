@@ -17,7 +17,7 @@ export const getEmptyCategoryObject: () => Category = () => ({
     createdAt: new Date().getTime().toString(),
     groupCount: 0,
 })
-export const getEmptyProductGroupObject: () => ProductGroup = () => ({
+export const getEmptyProductGroupObject: (props?: Partial<ProductGroup>) => ProductGroup = (props) => ({
     id: 'temp-id',
     name: '',
     description: '',
@@ -25,6 +25,8 @@ export const getEmptyProductGroupObject: () => ProductGroup = () => ({
     parentId: '',
     productCount: 0,
     createdAt: new Date().getTime().toString(),
+    groupType: 'PRODUCT_GROUP',
+    ...props,
 })
 export const getEmptyStoreObject: () => Store = () => ({
     id: '',
@@ -72,4 +74,26 @@ export const getWeekText = (date: string) => {
     const today = new Date();
     const isCurrentWeek = dateObj.getTime() - today.getTime() < 0;
     return isCurrentWeek ? 'This week' : `Week ${getWeekOfYear(date)}`;
+}
+
+// Function to deep equal objects
+export function deepEqual<T>(a: T, b: T): boolean {
+    if (a === b) return true;
+
+    if (a == null || b == null) return false;
+
+    if (typeof a !== 'object' || typeof b !== 'object') return false;
+
+    const keysA = Object.keys(a);
+    const keysB = Object.keys(b);
+
+    if (keysA.length !== keysB.length) return false;
+
+    for (let key of keysA) {
+        if (!keysB.includes(key) || !deepEqual((a as any)[key], (b as any)[key])) {
+            return false;
+        }
+    }
+
+    return true;
 }

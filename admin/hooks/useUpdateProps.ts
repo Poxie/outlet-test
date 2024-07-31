@@ -1,3 +1,4 @@
+import { deepEqual } from "@/utils";
 import { useEffect, useState } from "react";
 
 export default function useUpdateProps<T>(initialState: T, options?: {
@@ -7,6 +8,7 @@ export default function useUpdateProps<T>(initialState: T, options?: {
     const [state, setState] = useState(initialState);
 
     useEffect(() => {
+        if(!deepEqual(state, initialState)) return;
         setState(initialState);
     }, [initialState]);
 

@@ -42,7 +42,11 @@ export default function useUpdateProductGroup(productGroup: ProductGroup) {
                 type: 'success',
             })
 
-            refetchQuery(['product-groups']);
+            if(productGroup.groupType === 'BLOG') {
+                refetchQuery(['blog-posts']);
+            } else {
+                refetchQuery(['product-groups']);
+            }
         } catch(error: any) {
             setFeedback({
                 message: error.message,

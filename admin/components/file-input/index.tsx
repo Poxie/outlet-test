@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import Button from "../button";
 import UploadButton from "../upload-button";
 
-export default function FileInput({ containerClassName, className, label, value, onChange, multiple, addText, hasEditButton, editText='Edit' }: {
+export default function FileInput({ containerClassName, className, label, value, onChange, multiple, addText, defaultImage, hasEditButton, editText='Edit' }: {
     label?: string;
     value?: string;
     addText?: string;
@@ -13,6 +13,7 @@ export default function FileInput({ containerClassName, className, label, value,
     editText?: string;
     className?: string;
     containerClassName?: string;
+    defaultImage?: string;
 }) {
     const ref = useRef<HTMLInputElement>(null);
 
@@ -54,7 +55,9 @@ export default function FileInput({ containerClassName, className, label, value,
                     className,
                 )}
                 style={{
-                    backgroundImage: value ? `url(${value})` : undefined,
+                    backgroundImage: value ? `url(${value})` : (
+                        defaultImage ? `url(${defaultImage})` : undefined
+                    ),
                 }}
             >
                 <input 
@@ -66,14 +69,14 @@ export default function FileInput({ containerClassName, className, label, value,
                     multiple={multiple}
                     ref={ref}
                 />
-                {value && hasEditButton && (
+                {(value || defaultImage) && hasEditButton && (
                     <UploadButton 
                         text={editText}
                         className="absolute top-0 left-0 w-full"
                         onChange={image => onChange([image])}
                     />
                 )}
-                {addText && !value && (
+                {addText && !value && !defaultImage && (
                     <span>
                         {addText}
                     </span>

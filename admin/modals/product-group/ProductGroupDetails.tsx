@@ -15,6 +15,9 @@ export default function ProductGroupDetails({ productGroup, updateProps }: {
                 value={bannerURL}
                 addText="Add banner"
                 onChange={bannerURL => updateProps({ bannerURL: bannerURL[0] })}
+                defaultImage={productGroup.groupType === 'BLOG' ? (
+                    process.env.NEXT_PUBLIC_BLOG_BANNER_URL
+                ) : undefined}
                 className="aspect-video"
                 editText="Change banner"
                 hasEditButton

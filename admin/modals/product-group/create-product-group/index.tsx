@@ -1,17 +1,19 @@
 import useCreateProductGroup from "@/hooks/product-groups/useCreateProductGroup";
 import ModalFooter from "@/modals/ModalFooter";
 import ModalHeader from "@/modals/ModalHeader";
-import { getEmptyProductGroupObject } from "@/utils";
 import ProductGroupDetails from "../ProductGroupDetails";
+import { ProductGroupType } from "@/utils/types";
 
-const initialProductGroup = getEmptyProductGroupObject();
-export default function CreateProductGroup() {
-    const { currentProductGroup, updateProps, createProductGroup, isPending } = useCreateProductGroup();
+export default function CreateProductGroup({ groupType, title="Add product group" }: {
+    groupType?: ProductGroupType;
+    title?: string
+}) {
+    const { currentProductGroup, updateProps, createProductGroup, isPending } = useCreateProductGroup({ groupType });
 
     return(
         <>
         <ModalHeader 
-            title="Add product group"
+            title={title}
         />
         <form onSubmit={createProductGroup}>
             <ProductGroupDetails 
