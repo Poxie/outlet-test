@@ -17,7 +17,7 @@ export default function HomeWeeklyProductList({ products }: {
             items={imageComponents}
             smItemsPerRow={1}
             carouselGap={0}
-            optimisticItemsPerRow={3}
+            optimisticItemsPerRow={4}
         />
     )
 }
