@@ -18,15 +18,17 @@ export default function BlogPost({ blogPost: { id, bannerURL, name, description,
                 height={200}
                 alt=""
             />
-            <div className="p-4 grid gap-1">
-                <span className="text-xl font-medium">
-                    {name}
-                </span>
+            <div className="p-4 grid">
+                <div className="flex justify-between items-center">
+                    <span className="text-xl font-medium">
+                        {name}
+                    </span>
+                    <span className="block text-sm text-muted">
+                        {getReadableDate(createdAt)}
+                    </span>
+                </div>
                 <span>
                     {description}
-                </span>
-                <span className="mt-2 block text-sm text-muted">
-                    {getReadableDate(createdAt)}
                 </span>
             </div>
         </Link>
