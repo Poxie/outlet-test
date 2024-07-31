@@ -8,7 +8,7 @@ import useRefetchQuery from "../react-query/useRefetchQuery";
 
 export default function useUpdateProducts(parentId: string, initialProducts: Product[], options?: {
     refetchQueryKeys?: string[];
-    groupType: ProductGroupType;
+    groupType?: ProductGroupType;
 }) {
     const refetchQuery = useRefetchQuery();
 
