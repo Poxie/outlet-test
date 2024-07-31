@@ -14,12 +14,6 @@ const CATEGORY = 'CATEGORY';
 
 type ProductGroupTab = typeof DETAILS | typeof PRODUCTS | typeof CATEGORY;
 
-const PRODUCT_GROUP_TABS: SelectableTab<ProductGroupTab>[] = [
-    { id: DETAILS, text: 'Details' },
-    { id: PRODUCTS, text: 'Products' },
-    { id: CATEGORY, text: 'Category' },
-];
-
 const PRODUCT_GROUP_COMPONENTS = {
     [DETAILS]: ProductGroupDetailsTab,
     [PRODUCTS]: ProductGroupProductsTabWrapper,
@@ -40,6 +34,14 @@ export default function EditProductGroup({ productGroupId }: {
     })
 
     if(!productGroup) return null;
+
+    const PRODUCT_GROUP_TABS: SelectableTab<ProductGroupTab>[] = [
+        { id: DETAILS, text: 'Details' },
+        { id: PRODUCTS, text: 'Products' },
+    ];
+    if(productGroup.groupType !== 'BLOG') {
+        PRODUCT_GROUP_TABS.push({ id: CATEGORY, text: 'Category' });
+    }
 
     const ActiveComponent = PRODUCT_GROUP_COMPONENTS[activeTab];
     return(

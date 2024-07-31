@@ -1,4 +1,4 @@
-import { Product } from "@/utils/types";
+import { Product, ProductGroupType } from "@/utils/types";
 import { useState } from "react";
 import useMutateCreateProducts from "./useMutateCreateProducts";
 import useMutateDeleteProducts from "./useMutateDeleteProducts";
@@ -8,6 +8,7 @@ import useRefetchQuery from "../react-query/useRefetchQuery";
 
 export default function useUpdateProducts(parentId: string, initialProducts: Product[], options?: {
     refetchQueryKeys?: string[];
+    groupType: ProductGroupType;
 }) {
     const refetchQuery = useRefetchQuery();
 
@@ -68,7 +69,11 @@ export default function useUpdateProducts(parentId: string, initialProducts: Pro
             })
 
             refetchQuery(['products', parentId]);
-            refetchQuery(['product-groups']);
+            if(options?.groupType === 'BLOG') {
+                refetchQuery(['blog-posts']);
+            } else {
+                refetchQuery(['product-groups']);
+            }
             if(options?.refetchQueryKeys?.length) {
                 options.refetchQueryKeys.forEach(key => refetchQuery([key]));
             }

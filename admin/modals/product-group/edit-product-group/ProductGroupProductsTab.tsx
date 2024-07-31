@@ -12,7 +12,11 @@ function ProductGroupProductsTab({ products, productGroup }: {
     productGroup: ProductGroup;
     products: Product[];
 }) {
-    const { setCurrentProducts, updateProducts, isPending } = useUpdateProducts(productGroup.id, products || []);
+    const { setCurrentProducts, updateProducts, isPending } = useUpdateProducts(
+        productGroup.id, 
+        products || [],
+        { groupType: productGroup.groupType },
+    );
 
     useEffect(() => setCurrentProducts(products || []), [products]);
 
