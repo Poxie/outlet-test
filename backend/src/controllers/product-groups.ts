@@ -3,6 +3,7 @@ import asyncHandler from '@/utils/asyncHandler';
 import { CategoryNotFound } from '@/utils/categories/categoryErrors';
 import CategoryQueries from '@/utils/categories/categoryQueries';
 import CustomError from '@/utils/errors';
+import { BadRequestError } from '@/utils/errors/commonErrors';
 import { StatusCodes } from '@/utils/errors/statusCodes';
 import ImageHandler from '@/utils/images/imageHandler';
 import { PRODUCT_GROUP_TYPE } from '@/utils/product-groups/productGroupConstants';
@@ -55,15 +56,27 @@ router.post('/', auth, asyncHandler(async (req, res, next) => {
 
     const groupId = await productGroupUtils.generateId(data.name);
 
-    let bannerImage: string;
-    try {
-        bannerImage = await ImageHandler.uploadImage(
-            data.banner,
-            `groups/${groupId}/banner`,
-        );
-    } catch (error) {
-        console.error(error);
-        throw new CustomError('Failed to upload image', StatusCodes.INTERNAL_SERVER_ERROR);
+    let bannerImage: string | undefined;
+    if(data.banner) {
+        try {
+            bannerImage = await ImageHandler.uploadImage(
+                data.banner,
+                `groups/${groupId}/banner`,
+            );
+        } catch (error) {
+            console.error(error);
+            throw new CustomError('Failed to upload image', StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // If type is blog, use default blog banner
+    if(data.type === 'BLOG') {
+        bannerImage = process.env.DEFAULT_BLOG_BANNER_URL;
+    }
+
+    // If no banner was uploaded & type is not of blog, throw an error
+    if(!bannerImage) {
+        throw new BadRequestError('Banner image is required');
     }
 
     const productGroup = await ProductGroupMutations.createProductGroup({
@@ -74,7 +87,7 @@ router.post('/', auth, asyncHandler(async (req, res, next) => {
         createdAt: Date.now().toString(),
         parentId: null,
         productCount: 0,
-        groupType: PRODUCT_GROUP_TYPE.PRODUCT_GROUP,
+        groupType: data.type || PRODUCT_GROUP_TYPE.PRODUCT_GROUP,
     });
 
     res.send(productGroup);

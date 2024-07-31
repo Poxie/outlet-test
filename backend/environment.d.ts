@@ -11,6 +11,7 @@ declare global {
             JWT_SECRET: string;
             PROPERTY_ID: string;
             DEFAULT_WEEKLY_BANNER_URL: string;
+            DEFAULT_BLOG_BANNER_URL: string;
         }
     }
     namespace Express {

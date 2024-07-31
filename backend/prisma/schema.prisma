@@ -21,6 +21,7 @@ enum Role {
 enum GroupType {
   PRODUCT_GROUP
   WEEKLY_PRODUCT
+  BLOG
 }
 
 model User {
