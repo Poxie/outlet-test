@@ -18,7 +18,7 @@ export default function BlogPost({ blogPost: { id, bannerURL, name, description,
                 height={200}
                 alt=""
             />
-            <div className="p-4 grid">
+            <div className="p-4 grid gap-1">
                 <div className="flex justify-between items-center">
                     <span className="text-xl font-medium">
                         {name}
