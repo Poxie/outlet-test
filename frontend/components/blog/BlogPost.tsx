@@ -8,16 +8,18 @@ export default function BlogPost({ blogPost: { id, bannerURL, name, description,
 }) {
     return(
         <Link 
-            className="rounded-md overflow-hidden border-[1px] border-tertiary hover:bg-secondary transition-colors"
+            className="group rounded-md overflow-hidden border-[1px] border-tertiary hover:bg-secondary transition-colors"
             href={`/${id}`}
         >
-            <Image
-                className="w-full aspect-video object-cover" 
-                src={bannerURL}
-                width={350}
-                height={200}
-                alt=""
-            />
+            <div className="w-full aspect-video overflow-hidden">
+                <Image
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform ease-in-out duration-300" 
+                    src={bannerURL}
+                    width={350}
+                    height={200}
+                    alt=""
+                />
+            </div>
             <div className="p-4 grid gap-1">
                 <div className="flex justify-between items-center">
                     <span className="text-xl font-medium">
