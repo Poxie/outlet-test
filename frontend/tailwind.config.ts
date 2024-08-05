@@ -46,10 +46,10 @@ const config: Config = {
         main: '1200px',
       },
       height: {
-        stores: '500px',
+        stores: '650px',
       },
       maxHeight: {
-        stores: '500px',
+        stores: '650px',
       },
       maxWidth: {
         main: '90%',
