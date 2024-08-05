@@ -64,7 +64,7 @@ export default function FileInput({ containerClassName, className, label, value,
                     id={labelId}
                     type="file" 
                     className="absolute w-full h-full left-0 top-0 opacity-0 cursor-pointer"
-                    accept=".jpg,.jpeg,.png"
+                    accept=".jpg,.jpeg,.png,.webp"
                     onChange={handleChange}
                     multiple={multiple}
                     ref={ref}
