@@ -10,7 +10,7 @@ export default function CarouselNavigationButton({ className, disabled, onClick,
     return(
         <button
             className={twMerge(
-                "w-12 flex justify-center items-center aspect-square z-[1] absolute right-0 top-2/4 -translate-y-2/4 text-light bg-black/70 transition-opacity duration-300",
+                "w-10 flex justify-center items-center aspect-square z-[1] absolute right-0 top-2/4 -translate-y-2/4 text-light bg-black/70 transition-opacity duration-300",
                 disabled && "opacity-0",
                 className,
             )}
@@ -18,7 +18,7 @@ export default function CarouselNavigationButton({ className, disabled, onClick,
             disabled={disabled}
             aria-label={ariaLabel}
         >
-            <ArrowIcon size={22} />
+            <ArrowIcon size={18} />
         </button>
     )
 }
