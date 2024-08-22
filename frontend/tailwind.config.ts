@@ -43,7 +43,7 @@ const config: Config = {
         'c-primary': '#E73128',
       },
       width: {
-        main: '1200px',
+        main: '1300px',
       },
       height: {
         stores: '650px',
