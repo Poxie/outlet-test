@@ -14,9 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
-      NEXT_PUBLIC_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}
-      NEXT_PUBLIC_BLOG_BANNER_URL: ${{ secrets.NEXT_PUBLIC_BLOG_BANNER_URL }}
-      NEXT_PUBLIC_PEXELS_API_KEY: ${{ secrets.NEXT_PUBLIC_PEXELS_API_KEY }}
     steps:
       - name: checkout code
         uses: actions/checkout@v2
@@ -39,6 +36,10 @@ jobs:
       - name: Configure Docker to use the gcloud command-line tool as a credential helper
         run: |
           gcloud auth configure-docker europe-north1-docker.pkg.dev
+
+      - name: Fetch .env from Secret Manager
+        run: |
+          gcloud secrets versions access latest --secret="admin-env" > admin/.env.production
 
       - name: Build and push Docker image with docker-compose
         run: |
