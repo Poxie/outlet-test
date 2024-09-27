@@ -27,7 +27,7 @@ router.get('/:date', asyncHandler(async (req, res, next) => {
         throw new InvalidDealDateError();
     }
 
-    return res.json({ date: "2024-09-23", week: "54", group: {
+    res.json({ date: "2024-09-23", week: "54", group: {
         id: "2024-09-23",
         products: [
             { id: "1", parentId: "2024-09-23", position: 0, imageURL: "https://outlet.poxen.dev/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdhmz2d926%2Fimage%2Fupload%2Fv1722461859%2Fgroups%2Ftill-koket%2Fproducts%2F29650390.png&w=750&q=75" },
