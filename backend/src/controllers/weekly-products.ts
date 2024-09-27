@@ -39,20 +39,6 @@ router.get('/:date', asyncHandler(async (req, res, next) => {
         ]
     } })
     
-    const group = await ProductGroupQueries.getProductGroupById(date, true, 'WEEKLY_PRODUCT');
-    if(!group) {
-        throw new ProductGroupNotFoundError();
-    }
-
-    const week = WeeklyProductsUtils.getWeekNumber(date);
-
-    group.products = group?.products.sort((a, b) => a.position - b.position);
-
-    res.json({
-        date,
-        week,
-        group,
-    });
 }))
 
 export default router;
