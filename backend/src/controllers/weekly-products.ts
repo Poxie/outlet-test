@@ -30,12 +30,12 @@ router.get('/:date', asyncHandler(async (req, res, next) => {
     res.json({ date: "2024-09-23", week: "54", group: {
         id: "2024-09-23",
         products: [
-            { id: "1", parentId: "2024-09-23", position: 0, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461859/groups/till-koket/products/29650390.png&w=750&q=75" },
-            { id: "2", parentId: "2024-09-23", position: 1, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461856/groups/till-koket/products/30872602.png&w=750&q=75" },
-            { id: "3", parentId: "2024-09-23", position: 2, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461856/groups/till-koket/products/33563388.png&w=750&q=75" },
-            { id: "4", parentId: "2024-09-23", position: 3, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461856/groups/till-koket/products/39704984.png&w=750&q=75" },
-            { id: "5", parentId: "2024-09-23", position: 4, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461856/groups/till-koket/products/48875035.png&w=750&q=75" },
-            { id: "6", parentId: "2024-09-23", position: 5, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461856/groups/till-koket/products/55839229.png&w=750&q=75" },
+            { id: "1", parentId: "2024-09-23", position: 0, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461859/groups/till-koket/products/29650390.png" },
+            { id: "2", parentId: "2024-09-23", position: 1, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461856/groups/till-koket/products/30872602.png" },
+            { id: "3", parentId: "2024-09-23", position: 2, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461856/groups/till-koket/products/33563388.png" },
+            { id: "4", parentId: "2024-09-23", position: 3, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461856/groups/till-koket/products/39704984.png" },
+            { id: "5", parentId: "2024-09-23", position: 4, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461856/groups/till-koket/products/48875035.png" },
+            { id: "6", parentId: "2024-09-23", position: 5, imageURL: "https://res.cloudinary.com/dhmz2d926/image/upload/v1722461856/groups/till-koket/products/55839229.png" },
         ]
     } })
     
