@@ -26,9 +26,9 @@ export default function HomeProductHeader({ header: { title, description, banner
                 <Link
                     className="mt-5 py-3 px-4 w-full sm:w-[unset] text-sm flex items-center justify-center gap-3 text-light border-[1px] border-white rounded-md hover:bg-primary hover:text-primary transition-colors"
                     href={path}
-                    aria-label="Visa mer"
+                    aria-label="Läs mer"
                 >
-                    Visa mer
+                    Läs mer
                     <ArrowIcon size={20} className="-rotate-90" />
                 </Link>
             </div>
