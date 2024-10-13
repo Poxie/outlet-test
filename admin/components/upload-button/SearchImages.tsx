@@ -60,7 +60,7 @@ export default function SearchImages({ onSelect }: {
                 {!loading && results.map(photo => (
                     <button 
                         onClick={() => onSelect(photo.src.original)}
-                        className="w-full aspect-video rounded-md overflow-hidden"
+                        className="w-full h-full aspect-video rounded-md overflow-hidden"
                         type="button"
                         key={photo.id}
                     >
