@@ -9,7 +9,7 @@ export default function UserInfo({ user }: {
     const userInitials = user.name.split(' ').map(name => name[0]).join('');
     return(
         <div className="flex items-start gap-3">
-            <div className="w-8 aspect-square flex items-center justify-center bg-tertiary border-[1px] border-quaternary rounded-full uppercase text-xs font-bold">
+            <div className="w-8 min-w-8 aspect-square flex items-center justify-center bg-tertiary border-[1px] border-quaternary rounded-full uppercase text-xs font-bold">
                 {userInitials}
             </div>
             <div>
