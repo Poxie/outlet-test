@@ -66,7 +66,7 @@ export default function SearchImages({ onSelect }: {
                     >
                         <img 
                             src={photo.src.medium}
-                            className="w-full h-full object-cover hover:scale-105 transition-transform"
+                            className="w-full aspect-video object-cover hover:scale-105 transition-transform"
                             alt={photo.alt || photo.photographer}
                         />
                     </button>
