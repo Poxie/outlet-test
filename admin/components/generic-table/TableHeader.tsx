@@ -9,9 +9,9 @@ export default function TableHeader<T>({ title, searchKeys, searchPlaceholder, s
     searchResultCount?: number;
 }) {
     return(
-        <div className="p-4 flex items-center justify-between flex-wrap gap-3 border-b-[1px] border-b-tertiary">
+        <div className="px-4 py-3 flex items-center justify-between flex-wrap gap-3 border-b-[1px] border-b-tertiary">
             <div className="flex items-center gap-2">
-                <span className="text-lg">
+                <span className="">
                     {title}
                 </span>
 
